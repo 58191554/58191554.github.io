@@ -49,12 +49,26 @@
         .scaled-image {
             width: 60%;
         }
+        .home-link {
+          display: inline-block;
+          margin-bottom: 20px;
+          background-color: #007bff;
+          color: #fff;
+          padding: 10px 20px;
+          border-radius: 5px;
+          text-decoration: none;
+          margin-left: 500px;
+
+        }
+
     </style>
     <!-- Include MathJax from a CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
     <h1>My Renderer with Fog</h1>
+    <a href="index.html" class="home-link">Home Page</a>
+
     <h2>Introduction</h2>
     <p>Based on the ray tracer, the fog renderer is implemented by two part, the fog particle intersection and fog scattering. </p>
 
@@ -108,16 +122,16 @@
         <div class="image-container">
             <div class="top-images">
                 <div id="folderC">
-                    <img src="images/fog_renderer/UpSpot_8Bounce/0.png" alt="Image from folder C">
+                    <img src="images/fog_renderer/UpSpot_8Bounce/" alt="Image from folder C">
                 </div>
                 <div id="folderD">
                     <img src="images/fog_renderer/FineUpSpot_Global/0.png" alt="Image from folder D">
                 </div>
             </div>
-        </div>
+        </div>  
 
     <p>In the images above, the first image is the function shape in polor space, and the radius reprecents for the probability. The second image is 3 point light, red, green, and blue.
-        The third and the forth image are spot light shine on the bunny. The third is one bounce ray tracing, and the forth is global illunimation. 
+        The third image is an area light, and the forth image is a spot light 
     </p>
     <h2>Model</h2>
     <p>
@@ -146,7 +160,7 @@
             folderA.innerHTML = `<img src="images/fog_renderer/phase/${value*10}.png" alt="Image from folder A">`;
             folderB.innerHTML = `<img src="images/fog_renderer/Point3Color/${value*10}.png" alt="Image from folder B">`;
             folderC.innerHTML = `<img src="images/fog_renderer/UpSpot_8Bounce/${value*10}.png" alt="Image from folder C">`;
-            folderD.innerHTML = `<img src="images/fog_renderer/FineUpSpot_Global/${value*10}.png" alt="Image from folder D">`;
+            folderD.innerHTML = `<img src="images/fog_renderer/UpSpot_Global/${value*10}.png" alt="Image from folder D">`;
         });
     </script>
 </body>
