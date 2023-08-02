@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Improved Algorithm for Traditional Image Inpainting</title>
+    <style>
+        
+        body {
+            margin: 0 400px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            max-width: 500px;
+            max-height: 500px;
+        }
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+    <h1>An Improved Algorithm for Traditional Image Inpainting</h1>
+    <p><strong>Author:</strong> Songlin Zhao, Zijin Cui, Zhen Tong</p>
+    
+    <h2>Motivation</h2>
+    <p>The technology of image inpainting is widely used today. There are many traditional algorithms to achieve that. However, most of them suffer from low speed because of pixel-by-pixel iteration. Besides, due to the roughly designed mask, some information of the original image is lost. Moreover, it can only propagate the texture and structure information in the original input image to fill the blank region. In our project, we propose an improved algorithm, trying to tackle these flaws.</p>
+
+    <h2>Goal</h2>
+    <p>Given an image with an unwanted object, mask the unwanted object and fill the mask region.</p>
+    <h2>Pipeline</h2>
+    <div class="image-container">
+        <img src="images/img_inpaint/pipeline.png" alt="">
+    </div>
+    <div class="image-container">
+        <img src="images/img_inpaint/" alt="">
+    </div>
+    <h2>Methodology</h2>
+    <ol>
+        <li>Segmentation Using Graph Cuts</li>
+        <ol type="a">
+            <li>Image as graph.</li>
+            <div class="image-container">
+                <img src="images/img_inpaint/image_as_graph.png" alt="">
+            </div>
+            <li>Graph cut using Ford-Fulkerson algorithm.</li>
+            <div class="image-container">
+                <img src="images/img_inpaint/image_as_graph-2.png" alt="">
+            </div>
+        </ol>
+        <div class="image-container">
+            <img src="images/img_inpaint/graph_cut.png" alt="graph_cut">
+        </div>
+        <li>Exemplar fill iteration</li>
+        <ol type="a">
+            <li>Find pixel with maximum Priority:</li>
+            <p>Filling order is crucial to non-parametric texture synthesis. Thus Exemplar-Based Inpainting designing a fill order which encourages the propagation of linear
+                structure, together with texture. The algorithm will fill the best priority first. The priority computation is biased toward those patches which are on the continuation of strong edges and which are surrounded by high-confidence pixels.</p>
+                
+                <p>The priority \(P(p)\) of a patch \(\Psi_p\) centred at the point \(p\) for some \(p \in \delta\Omega\) defined as the product of two terms: \(P(p) = C(p)D(p) \) We call \(C(p)\) the confidence term and \(D(p)\) the data term,
+                and they are defined as follows:</p>
+                
+                \[
+                C(p)= \frac{\sum_{q\in \Psi_p \cap\bar{\Omega}}C(q)}{|\Psi_p|}
+                \]
+                
+                \[D(p)= \frac{|\nabla I^{\perp}_{p}|}{\alpha}\]
+                
+                <p>The confidence term \(C(p)\) may be thought of as a measure of the amount of reliable information surrounding the pixel \(p\). The intention is to give preference  to pixels that were filled early on (or that were never part of the target region). The data term \(D(p)\) is a function of the strength of isophotes on the front \(\delta\Omega\). It will propagate the linear structure to the target region, and broken lines tend to connect.</p>
+                <div class="image-container">
+                    <img src="images/img_inpaint/examplar.png" alt="">
+                </div>
+        
+                
+            <li>Find near and similar texture:</li>
+            <p>In the patch matching stage, this algorithm define the distance not only by SSD of two patches but also add the locality similarity as a heuristic. The assumption is that the neighbor patches may contain similar textures, and can avoid matching different objects far from the pixel \(p^*\).</p>
+                
+            \[d(\Psi_p, \Psi_q)= \beta SSD(\Psi_p, \Psi_q)+\gamma \sqrt{(p_x-q_x)^2+(p_y-q_y)^2}\]
+        <div class="image-container">
+            <img src="images/img_inpaint/exemplar_iteration.png" alt="">
+        </div>
+
+    </ol>
+        <li>Using image patch around the mask do template matching (SSD)</li>
+        <p>This section introduces the scene completion algorithm to fill the rest region. Here users are allowed to input additional images similar to the original image. We then do template matching. We will use the patch around the mask as a template, denoted by \(T\). Using additional input matching image as \(I\). Notice that the mask region here should not affect the SSD score. So, we have a mask function as \(M\), which is 0 at the black region and 1 at the white region.</p>
+
+        \[
+        R(x, y)=\sum_{x^{\prime}, y^{\prime}}\left[\left(T\left(x^{\prime}, y^{\prime}\right)-I\left(x+x^{\prime}, y+y^{\prime}\right)\right) * M\left(x^{\prime}, y^{\prime}\right)\right]^{2}
+        \]
+        
+        <div class="image-container">
+            <img src="images/img_inpaint/templateMatching.png" alt="Template matching">
+        </div>
+        
+
+        <li>Using Poisson Blending to blend the best matching patch to the original image</li>
+        <p>In figure <a href="#fig:match">1</a>, the blue rectangle is the best-matching patch. Finally, as shown in figure, we will use Poisson blending to blend the best-matching patch to the template according to the mask.</p>
+        
+        <div class="image-container">
+            <img src="images/img_inpaint/poissonblending.png" alt="Poisson blending example" width="300">
+        </div>
+        
+        <div class="image-container">
+            <img src="images/img_inpaint/poissonimage.png" alt="Blending process" width="300">
+        </div>
+        
+        <p>The process of blending is shown in Figure  where \(g\) is ROI (Source), \(v\) is the gradient of \(g\), \(f^{*}\) is the background image (Target), and \(f\) in \(\Omega\) is the function we want to solve according to \(g\) and \(f^{*}\). To calculate \(f\), we need to solve poissonmin equation . And Equation poisson kkt is the KKT condition for poissonmin equation. These two constraints produce us enough number of equations to construct a Linear system \(Ax = b\). Here \(x\) is the value of \(f\) we want in \(\Omega\).</p>
+        
+        \[
+        \min \iint_{\Omega}|\nabla f-v|^{2} \text { with }\left.f\right|_{\partial \Omega}=f^{*} \mid \partial \Omega
+        \]
+        
+        \[
+        \Delta f=\operatorname{div} v \text { over } \Omega \text { with }\left.f\right|_{\partial \Omega}=f^{*} \mid \partial \Omega
+        \]
+    </ol>
+
+    <h2>Result</h2>
+    <div class="image-container">
+        <img src="images/img_inpaint/result1.png" alt="Inpainted Image Result">
+    </div>
+    <div class="image-container">
+        <img src="images/img_inpaint/result2.png" alt="Inpainted Image Result">
+    </div>
+
+    <h2>References</h2>
+    <ul>
+        <li>Boykov, Yuri Y., and M-P. Jolly. "Interactive graph cuts for optimal boundary & region segmentation of objects in ND images." Proceedings eighth IEEE international conference on computer vision. ICCV 2001. Vol. 1. IEEE, 2001.</li>
+        <li>Criminisi, Antonio, Patrick Pérez, and Kentaro Toyama. "Region filling and object removal by exemplar-based image inpainting." IEEE Transactions on image processing 13.9 (2004): 1200-1212.</li>
+        <li>Hays, James, and Alexei A. Efros. "Scene completion using millions of photographs." ACM Transactions on Graphics (ToG) 26.3 (2007): 4-es.</li>
+        <li>Pérez, Patrick, Michel Gangnet, and Andrew Blake. "Poisson image editing." ACM SIGGRAPH 2003 Papers. 2003. 313-318.</li>
+    </ul>
+</body>
+</html>
