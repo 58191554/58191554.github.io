@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zhen Project Bulletin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1, h2, h3 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    .project {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    overflow: hidden; /* Ensure the container wraps around floated elements */
+    }
+
+    .project img {
+      width: 200px; /* Set a fixed width for the image */
+      border-radius: 5px;
+      margin-bottom: 10px;
+      float: right; /* Align the image to the left */
+      margin-right: 20px; /* Add some spacing between the image and project description */
+    }
+    .project h2 {
+      margin-top: 0;
+    }
+
+    .project p:last-child {
+      margin-bottom: 0;
+    }
+
+    .project-links a {
+      display: inline-block;
+      margin-right: 10px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .project-links a:hover {
+      text-decoration: underline;
+    }
+    .home-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Zhen Project Bulletin</h1>
+  <a href="index.html" class="home-link">Home Page</a>
+
+  <div class="project">
+    <h2>Fog Renderer</h2>
+    <img src="images/fog_renderer/Point3Color/7.png" alt="Fog Renderer Screenshot">
+    <p>A renderer with a fog effect</p>
+    <div class="project-links">
+      <a href="fog_renderer.html" target="_blank">Visit Project Website</a>
+      <a href="https://github.com/58191554/FogRenderer" target="_blank">Visit Github Source Code</a>
+    </div>
+    <div class="project-links">
+      <a  href="https://github.com/58191554/FogRenderer/blob/main/Fog_Renderer.pdf" target="_blank">Paper</a>
+    </div>
+
+  </div>
+
+  <div class="project">
+    <h2>PointNet-pytorch</h2>
+    <p>
+        Research Paper Reproduction for <a  href="https://arxiv.org/abs/1612.00593" target="_blank">PointNet</a>. 2023 UC Berkeley CS182 DeepLearning Final Project
+        <img src="images/point_net/plane.png" alt="Fog Renderer Screenshot">
+        <br>
+    </p>
+    <div class="project-links">
+        <a  href="point_net.html" target="_blank">Visit Project Website</a>
+        <a  href="https://github.com/58191554/PointNet-Project/tree/main" target="_blank">Visit Github Source Code</a>
+    </div>
+    <div class="project-links">
+      <a  href="https://github.com/58191554/FogRenderer/blob/main/Fog_Renderer.pdf" target="_blank">Paper</a>
+    </div>
+
+  </div>
+
+  <div class="project">
+    <h2>End2End Security File System</h2>
+    <p>
+        A Golang Security File System Design. 2023 UC Berkeley CS161 Project
+        <img src="images/end2end/sharelogic.png" alt="">
+        <br>
+    </p>
+    <div class="project-links">
+        <a  href="end2end_fs.html" target="_blank">Visit Project Website</a>
+    </div>
+  </div>
+
+  <div class="project">
+    <h2>An Improved Algorithm for Traditional Image Inpainting</h2>
+    <p>
+        A image inpainting project: Given an image with an unwanted object, mask the unwanted object and fill the mask region. 2022 
+        <img src="images/img_inpaint/result1.png" alt="">
+        <br>
+    </p>
+    <div class="project-links">
+        <a  href="img_inpaint.html" target="_blank">Visit Project Website</a>
+    </div>
+    <div class="project-links">
+      <a  href="https://github.com/ECE-Img-Inpainting/Examplar-based" target="_blank">Code</a>
+    </div>
+    <div class="project-links">
+      <a  href="https://github.com/ECE-Img-Inpainting/Examplar-based/blob/main/ECE4513.pdf" target="_blank">Paper</a>
+    </div>
+  </div>
+
+
+</body>
+</html>
