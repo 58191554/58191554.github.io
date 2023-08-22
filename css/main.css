@@ -48,22 +48,22 @@
   background-color: #000000; }
 
 .timeline-card-success {
-  border-left-color: #37BC9B; }
+  border-left-color: #000000; }
 
 .timeline-card-success:before {
-  border-color: #37BC9B; }
+  border-color: #000000; }
 
 .timeline-card-success:after {
-  background-color: #37BC9B; }
+  background-color: #000000; }
 
 .timeline-card-teach {
-  border-left-color: #92bc37; }
+  border-left-color: #000000; }
 
 .timeline-card-teach:before {
-  border-color: #92bc37; }
+  border-color: #000000; }
 
 .timeline-card-teach:after {
-  background-color: #92bc37; }
+  background-color: #000000; }
   
 
 html {
