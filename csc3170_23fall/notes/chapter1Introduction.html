@@ -1,0 +1,684 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex:2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; outline: 0px; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: auto hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 10px; z-index: 3; overflow-y: hidden; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; inset: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+span.cm-underlined { text-decoration: underline; }
+span.cm-strikethrough { text-decoration: line-through; }
+.cm-tw-syntaxerror { color: rgb(255, 255, 255); background-color: rgb(153, 0, 0); }
+.cm-tw-deleted { text-decoration: line-through; }
+.cm-tw-header5 { font-weight: 700; }
+.cm-tw-listitem:first-child { padding-left: 10px; }
+.cm-tw-box { border-style: solid; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-color: inherit; border-top-width: 0px !important; }
+.cm-tw-underline { text-decoration: underline; }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style><title>chapter1Introduction</title>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='purpose-of-database-systems'><span>Purpose of Database Systems</span></h1><blockquote><p><span>Lecturer: Jane YOU</span></p><p><span>Compiler: Zhen TONG</span></p></blockquote><p><span>In our daily life, we often use file system in our computer operating system to store file, and we have no problems reading, writing, and sharing files. So why cannot we just use file system as a database system? Using a file system as a database system has several limitations and challenges compared to using a dedicated database management system (DBMS). Let&#39;s break down these issues:</span></p><ol start='' ><li><p><strong><span>Data Redundancy and Inconsistency:</span></strong></p><ul><li><p><span>In a file system, data is often stored in multiple files, each with its own format and structure. This leads to duplication of information in different files, which can result in data redundancy and inconsistencies.</span></p></li><li><p><span>For example, if you have customer information in one file and order information in another, you may duplicate customer details for each order, increasing the likelihood of inconsistent or outdated data.</span></p></li></ul></li><li><p><strong><span>Difficulty in Accessing Data:</span></strong></p><ul><li><p><span>In a file system, you typically need to write a new program or script to perform each new data-related task or query. This can be time-consuming and error-prone, as you need to handle data parsing, file I/O, and data manipulation manually. There&#39;s no query language or standard interface for retrieving and managing data in a file system, making it challenging to work with the data efficiently.</span></p></li><li><p><span>We have query language like SQL in DBMS to retrieve data.</span></p></li></ul></li><li><p><strong><span>Data Isolation:</span></strong></p><ul><li><p><span>Data is scattered across multiple files and formats, making it difficult to maintain a consistent and organized data structure. Different departments or users might create their own files with varying structures, leading to data isolation and fragmentation. This isolation makes it challenging to establish relationships between different pieces of data and retrieve meaningful insights.</span></p></li><li><p><span>For example, there are two products in file system</span></p><ul><li><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Product Name: Laptop</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Price: $1000</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Quantity in Stock: 10</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Supplier: SupplierA</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 92px;"></div><div class="CodeMirror-gutters" style="display: none; height: 92px;"></div></div></div></pre></li><li><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Product Name: Smartphone</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Price: $500</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Quantity in Stock: 20</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Supplier: SupplierB</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 92px;"></div><div class="CodeMirror-gutters" style="display: none; height: 92px;"></div></div></div></pre><p><span>Each product&#39;s data is isolated in its own file, making it challenging to analyze overall inventory trends or relationships between products.</span></p></li><li><p><span>However, if we have a DBMS for products</span></p><figure class='table-figure'><table><thead><tr><th><span>Product ID</span></th><th><span>Product Name</span></th><th><span>Price</span></th><th><span>Quantity</span></th><th><span>Supplier</span></th></tr></thead><tbody><tr><td><span>1</span></td><td><span>Laptop</span></td><td><span>1000</span></td><td><span>10</span></td><td><span>SupplierA</span></td></tr><tr><td><span>2</span></td><td><span>Smartphone</span></td><td><span>500</span></td><td><span>20</span></td><td><span>SupplierB</span></td></tr></tbody></table></figure><p><span>All product data is integrated into a single table, enabling you to analyze inventory trends and relationships more efficiently.</span></p></li></ul></li></ul></li><li><p><strong><span>Integrity Problems:</span></strong></p><ul><li><p><span>Integrity constraints, such as ensuring that an account balance remains positive, are often buried within program code.</span></p></li><li><p><span>These constraints are not explicitly defined within the file system, making it hard to enforce data integrity.</span></p></li><li><p><span>Adding new constraints or modifying existing ones can be complex and may require changes to multiple programs, increasing the risk of errors.</span></p></li><li><p><strong><span>Example: Student Enrollment System</span></strong></p><p><span>Suppose you&#39;re tasked with creating a student enrollment system for a university. Students can enroll in courses, and there are certain integrity constraints that need to be maintained.</span></p><p><strong><span>Integrity Constraint 1:</span></strong><span> Each student should be assigned a unique student ID.</span></p><p><strong><span>Integrity Constraint 2:</span></strong><span> Students can only enroll in courses that exist in the course catalog.</span></p><p><span>Now, let&#39;s examine how integrity problems can occur in two scenarios: one using a file system and the other using a database system.</span></p><p><strong><span>File System Approach:</span></strong></p><p><span>In this approach, you decide to use a file for each student and another file for the course catalog. Here&#39;s what your file system might look like:</span></p><ul><li><p><code>student1.txt</code><span> (Student Record):</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">yamlCopy codeStudent ID: 101</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Name: John Doe</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Courses Enrolled: Math101, Chemistry201</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 69px;"></div><div class="CodeMirror-gutters" style="display: none; height: 69px;"></div></div></div></pre></li><li><p><code>course_catalog.txt</code><span> (Course Catalog):</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">yamlCopy code</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Courses Available: Math101, Biology101, Chemistry201</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 46px;"></div><div class="CodeMirror-gutters" style="display: none; height: 46px;"></div></div></div></pre></li></ul><p><strong><span>Integrity Problem 1 (Unique Student IDs):</span></strong><span> In the file system, ensuring unique student IDs is challenging. If you want to add a new student, you must manually check all existing student files to avoid assigning a duplicate ID. If there&#39;s a mistake and two students end up with the same ID (e.g., both have ID 101), it violates the integrity constraint.</span></p><p><strong><span>Integrity Problem 2 (Enrollment in Valid Courses):</span></strong><span> To ensure that students can only enroll in valid courses, you need to manually check if each course listed in a student&#39;s file matches a course in the course catalog. If a student enrolls in a course that doesn&#39;t exist in the catalog (e.g., &quot;History101&quot;), it violates the integrity constraint.</span></p><p><strong><span>Database System Approach:</span></strong></p><p><span>In contrast, using a database system, you&#39;d have two tables: one for students and another for courses. Your data might look like this:</span></p><p><strong><span>Students Table:</span></strong></p><figure class='table-figure'><table><thead><tr><th><span>Student ID</span></th><th><span>Name</span></th></tr></thead><tbody><tr><td><span>101</span></td><td><span>John Doe</span></td></tr><tr><td><span>102</span></td><td><span>Jane Smith</span></td></tr></tbody></table></figure><p><strong><span>Courses Table:</span></strong></p><figure class='table-figure'><table><thead><tr><th><span>Course Code</span></th><th><span>Course Name</span></th></tr></thead><tbody><tr><td><span>Math101</span></td><td><span>Mathematics</span></td></tr><tr><td><span>Biology101</span></td><td><span>Biology</span></td></tr><tr><td><span>Chemistry201</span></td><td><span>Chemistry</span></td></tr></tbody></table></figure><p><strong><span>Integrity Constraint 1 (Unique Student IDs):</span></strong><span> In a database, you can easily enforce unique student IDs by defining the &quot;Student ID&quot; column as a primary key. The database system will ensure that no two students share the same ID.</span></p><p><strong><span>Integrity Constraint 2 (Enrollment in Valid Courses):</span></strong><span> The database system can enforce referential integrity by setting up a foreign key constraint. This ensures that a student can only enroll in courses that exist in the &quot;Courses&quot; table. If a student tries to enroll in a non-existent course, the database system will prevent it, maintaining data integrity.</span></p></li></ul></li><li><p><strong><span>Atomicity of Updates:</span></strong></p><ul><li><p><span>File systems lack built-in mechanisms to ensure the atomicity of transactions.</span></p></li><li><p><span>If a failure occurs during an update operation (e.g., transferring funds between accounts), it may leave the database in an inconsistent state with partial updates.</span></p></li><li><p><span>In a database system, transactions are designed to be atomic, ensuring that either the entire operation completes successfully or none of it occurs.</span></p></li><li><p><strong><span>Scenario: Money Transfer Operation</span></strong></p><p><span>Suppose you&#39;re developing a banking application, and you need to implement a money transfer from one account to another. You want to ensure that the transfer operation is atomic, meaning it either completes successfully or fails entirely without leaving the system in an inconsistent state.</span></p><p><strong><span>File System Approach:</span></strong></p><p><span>In the file system approach, you maintain account information in separate text files, and you need to manually implement the money transfer operation. Here&#39;s a simplified representation:</span></p><ul><li><p><code>account1.txt</code><span> (Account 1 Information):</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">yamlCopy codeAccount Number: 1001</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Balance: $1,000</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 46px;"></div><div class="CodeMirror-gutters" style="display: none; height: 46px;"></div></div></div></pre></li><li><p><code>account2.txt</code><span> (Account 2 Information):</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">yamlCopy codeAccount Number: 1002</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Balance: $500</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 46px;"></div><div class="CodeMirror-gutters" style="display: none; height: 46px;"></div></div></div></pre></li></ul><p><span>To transfer $200 from Account 1 to Account 2:</span></p><ol start='' ><li><p><span>Read </span><code>account1.txt</code><span> and </span><code>account2.txt</code><span> to get their balances.</span></p></li><li><p><span>Deduct $200 from Account 1 and update </span><code>account1.txt</code><span>.</span></p></li><li><p><span>Add $200 to Account 2 and update </span><code>account2.txt</code><span>.</span></p></li></ol><p><span>Now, imagine a failure occurs (e.g., a power outage or a program crash) after step 2 but before step 3. In this case, </span><code>account1.txt</code><span> would show a reduced balance, but </span><code>account2.txt</code><span> wouldn&#39;t reflect the money transfer. The system is in an inconsistent state, and the money appears to have disappeared.</span></p><p><strong><span>Database System Approach:</span></strong></p><p><span>In a database system, the same money transfer operation is managed within a transaction:</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="sql"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="sql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sqlCopy codeBEGIN <span class="cm-keyword">TRANSACTION</span><span class="cm-punctuation">;</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Step 1: Retrieve account balances</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SELECT</span> Balance <span class="cm-keyword">INTO</span> <span class="cm-variable-2">@Balance1</span> <span class="cm-keyword">FROM</span> Accounts <span class="cm-keyword">WHERE</span> AccountNumber <span class="cm-operator">=</span> <span class="cm-number">1001</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SELECT</span> Balance <span class="cm-keyword">INTO</span> <span class="cm-variable-2">@Balance2</span> <span class="cm-keyword">FROM</span> Accounts <span class="cm-keyword">WHERE</span> AccountNumber <span class="cm-operator">=</span> <span class="cm-number">1002</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Step 2: Deduct $200 from Account 1</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">UPDATE</span> Accounts <span class="cm-keyword">SET</span> Balance <span class="cm-operator">=</span> <span class="cm-variable-2">@Balance1</span> <span class="cm-operator">-</span> <span class="cm-number">200</span> <span class="cm-keyword">WHERE</span> AccountNumber <span class="cm-operator">=</span> <span class="cm-number">1001</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Step 3: Add $200 to Account 2</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">UPDATE</span> Accounts <span class="cm-keyword">SET</span> Balance <span class="cm-operator">=</span> <span class="cm-variable-2">@Balance2</span> <span class="cm-operator">+</span> <span class="cm-number">200</span> <span class="cm-keyword">WHERE</span> AccountNumber <span class="cm-operator">=</span> <span class="cm-number">1002</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">COMMIT</span> <span class="cm-keyword">TRANSACTION</span><span class="cm-punctuation">;</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 300px;"></div><div class="CodeMirror-gutters" style="display: none; height: 300px;"></div></div></div></pre><p><span>In a database system:</span></p><ul><li><p><span>The </span><code>BEGIN TRANSACTION</code><span> statement marks the start of a transaction.</span></p></li><li><p><span>All the steps are executed within the same transaction.</span></p></li><li><p><span>If a failure occurs at any point within the transaction (e.g., a power outage or program crash), the database system will automatically roll back the transaction to its initial state (before the </span><code>BEGIN TRANSACTION</code><span> statement), ensuring that no changes are applied.</span></p></li></ul></li></ul></li><li><p><strong><span>Concurrent Access by Multiple Users:</span></strong></p><ul><li><p><span>File systems are not well-suited for concurrent access by multiple users or applications.</span></p></li><li><p><span>When multiple users attempt to read or modify the same data simultaneously, uncontrolled concurrent accesses can lead to data inconsistencies.</span></p></li><li><p><span>Database management systems provide concurrency control mechanisms to handle multiple simultaneous operations.</span></p></li></ul></li><li><p><strong><span>Security Problems:</span></strong></p><ul><li><p><span>Securing data in a file system can be challenging. It&#39;s often hard to provide fine-grained access control to different users or groups.</span></p></li><li><p><span>A database system offers more robust security features, allowing administrators to define user roles, permissions, and access control policies more effectively.</span></p></li></ul></li></ol><h1 id='view-of-data'><span>View of Data</span></h1><p><span>Most of the time, the user of our database system is unprofessional person. Sometimes, even computer programmer can be innocent to the underlying structure of the database, like the front-end programmers. </span></p><h2 id='data-models'><span>Data Models</span></h2><p><span>A data model is a conceptual framework or set of tools used to describe data, data relationships, data semantics, and consistency constraints within a database or information system. Data models provide a structured way to represent and organize data, making it easier to understand, manipulate, and manage. Here are examples of data models that address various aspects of data:</span></p><p><strong><span>1. Relational Model:</span></strong></p><ul><li><p><strong><span>Description:</span></strong><span> The relational model is one of the most widely used data models in database management. It represents data as tables (relations) with rows (tuples) and columns (attributes). Briefly, you can get a first impression for it as a table.</span></p></li><li><p><strong><span>Example:</span></strong><span> In a relational database, you might have a &quot;Faculty&quot; table with columns for customer ID, name, email, and address. This model defines the relationships between tables using keys.</span></p><ul><li><p><strong><span>Table Name:</span></strong><span> Faculty</span></p></li><li><p><strong><span>Columns:</span></strong></p><ol start='' ><li><p><strong><span>Faculty ID (Primary Key):</span></strong><span> This column stores a unique identifier for each faculty member. It serves as the primary key, ensuring each faculty member has a unique ID within this table.</span></p></li><li><p><strong><span>Name:</span></strong><span> This column stores the full name of the faculty member.</span></p></li><li><p><strong><span>Email:</span></strong><span> It stores the faculty member&#39;s email address.</span></p></li><li><p><strong><span>Address:</span></strong><span> This column holds the faculty member&#39;s physical address.</span></p></li></ol></li><li><figure class='table-figure'><table><thead><tr><th><span>Faculty ID</span></th><th><span>Name</span></th><th><span>Email</span></th><th><span>Address</span></th></tr></thead><tbody><tr><td><span>101</span></td><td><span>John Doe</span></td><td><a href='mailto:johndoe@cuhksz.com' target='_blank' class='url'>johndoe@cuhksz.com</a></td><td><span>DaoYuan 311</span></td></tr><tr><td><span>102</span></td><td><span>Jane Smith</span></td><td><a href='mailto:janesmith@cuhksz.com' target='_blank' class='url'>janesmith@cuhksz.com</a></td><td><span>DaoYuan 410</span></td></tr><tr><td><span>103</span></td><td><span>Robert Johnson</span></td><td><a href='mailto:robertj@cuhksz.com' target='_blank' class='url'>robertj@cuhksz.com</a></td><td><span>DaoYuan 209</span></td></tr><tr><td><span>...</span></td><td><span>...</span></td><td><span>...</span></td><td><span>...</span></td></tr></tbody></table></figure></li></ul></li></ul><p><strong><span>2. Entity-Relationship (ER) Data Model:</span></strong></p><ul><li><p><strong><span>Description:</span></strong><span> The ER data model is mainly used for database design. It focuses on entities (objects), attributes, and the relationships between entities.</span></p></li><li><p><strong><span>Example:</span></strong><span> In an ER diagram, you can represent entities like &quot;Customer&quot; and &quot;Order,&quot; their attributes, and the relationships between them (e.g., a customer can place multiple orders).</span></p><ul><li><p><strong><span>Entities:</span></strong></p><ol start='' ><li><p><strong><span>Customer Entity:</span></strong><span> This entity represents customers. It has attributes like &quot;Customer ID,&quot; &quot;Name,&quot; &quot;Email,&quot; and &quot;Address.&quot;</span></p></li><li><p><strong><span>Order Entity:</span></strong><span> This entity represents orders placed by customers. It has attributes like &quot;Order ID,&quot; &quot;Order Date,&quot; and &quot;Total Amount.&quot;</span></p></li></ol></li><li><p><strong><span>Attributes:</span></strong></p><ul><li><p><span>Customer Entity Attributes:</span></p><ul><li><p><span>Customer ID (Primary Key)</span></p></li><li><p><span>Name</span></p></li><li><p><span>Email</span></p></li><li><p><span>Address</span></p></li></ul></li><li><p><span>Order Entity Attributes:</span></p><ul><li><p><span>Order ID (Primary Key)</span></p></li><li><p><span>Order Date</span></p></li><li><p><span>Total Amount</span></p></li></ul></li></ul></li><li><p><strong><span>Relationships:</span></strong></p><ul><li><p><span>A customer can place multiple orders, so there is a &quot;Placed&quot; relationship between the &quot;Customer&quot; and &quot;Order&quot; entities. This is often represented with a connecting line labeled &quot;Placed&quot; and a crow&#39;s foot notation on the &quot;Customer&quot; side, indicating the &quot;one&quot; side of a one-to-many relationship, and a straight line on the &quot;Order&quot; side, indicating the &quot;many&quot; side.</span></p></li></ul></li></ul></li></ul><p><strong><span>3. Object-Based Data Models (Not important in this course):</span></strong></p><ul><li><p><strong><span>Description:</span></strong><span> Object-based data models extend the relational model to support complex data types and object-oriented programming concepts. They allow for the representation of objects with methods and attributes. People taking this course should have a background knowledge of this</span></p></li><li><p><span>Examples:</span></p><ul><li><p><strong><span>Object-Oriented Model:</span></strong><span> In an object-oriented database, you can have classes like &quot;Person&quot; with methods and attributes, representing real-world objects.</span></p></li><li><p><strong><span>Object-Relational Model:</span></strong><span> Combines relational and object-oriented features, allowing you to define structured data types and methods within a relational database.</span></p></li></ul></li></ul><p><strong><span>4. Semi-Structured Data Model(Not important in this course):</span></strong></p><ul><li><p><strong><span>Description:</span></strong><span> Semi-structured data models are used to represent data that doesn&#39;t conform to a strict schema. They allow for flexibility in data representation and are common in scenarios like storing JSON or XML data. People with a web developing background should know JSON, and people with a computer graphics background should have some knowledge of XML</span></p></li><li><p><span>Examples:</span></p><ul><li><p><strong><span>JSON:</span></strong><span> JSON (JavaScript Object Notation) is a semi-structured data model used to represent data as key-value pairs, arrays, and nested structures.</span></p></li><li><p><strong><span>XML:</span></strong><span> XML (eXtensible Markup Language) provides a hierarchical and semi-structured way to represent data with user-defined tags.</span></p></li></ul></li></ul><p><strong><span>5. Other Older Models(Not important in this course):</span></strong></p><ul><li><p><strong><span>Network Model:</span></strong><span> The network data model represents data as a collection of records connected by links, forming a network-like structure. It was prevalent in the early days of databases.</span></p></li><li><p><strong><span>Hierarchical Model:</span></strong><span> The hierarchical data model organizes data in a tree-like structure with parent-child relationships. It was commonly used in early database systems, such as IMS (Information Management System).</span></p></li></ul><p>&nbsp;</p><h2 id='level-of-abstraction'><span>Level of Abstraction</span></h2><p><span>Levels of abstraction in computer science and information technology refer to the degree of detail or complexity at which a system is represented or viewed. There are typically three primary levels of abstraction. They are connected to each other </span></p><ol start='' ><li><p><strong><span>View or User Level (Highest Level):</span></strong></p><ul><li><p><span>The view or user level is how end-users use a system or software application.</span></p></li><li><p><span>It give instruction to the logical level, and get the structured data from the logical level return</span></p></li></ul></li><li><p><strong><span>Logical Level (Intermediate Level):</span></strong></p><ul><li><p><span>The logical level is an abstraction that focuses on how data and processes are organized and structured, independent of the specific hardware or implementation details.</span></p></li><li><p><span>It defines the relationships and interactions between different components of a system in a way that is more human-readable and understandable.</span></p></li><li><p><span>The logical level receive high-level instruction from the user level, and translate it to operation for physical level. After raw data returned from physical level, it pack the data into user readable structure.</span></p></li></ul></li><li><p><strong><span>Physical Level (Lowest Level):</span></strong></p><ul><li><p><span>The physical level deals with the actual hardware and its components. It is the closest to the physical implementation of a system.</span></p></li><li><p><span>At this level, you are concerned with the specific details of how data is stored, transmitted, and processed at the hardware level.</span></p></li><li><p><span>It receive operation from the logical level, and execute them, and return the raw data to the logical level</span></p></li></ul></li></ol><h1 id='instances-and-schemas'><span>Instances and Schemas</span></h1><p><span>People taking this course should have some background in computer programming. If you take GFH in cuhksz, the instances are exactly like Plato&#39;s </span><strong><span>Material World</span></strong><span>, and schemas are like </span><strong><span>World of Forms or Ideas</span></strong><span>, the more abstract one. And the schemas can be described logically and physically. </span></p><ul><li><p><strong><span>Logical Schema</span></strong><span> is the design of a logical structure of a database, the specific usage for the database</span></p></li><li><p><strong><span>Physical Schema</span></strong><span> is the underlying physical structure of the database, like the B+ tree.</span></p></li></ul><p>&nbsp;</p><h1 id='languages'><span>Languages</span></h1><p><span>The database can be described into two parts: the user-end, and the engine-end. In the user end, SQL is used as a language to create, add, delete, and retrieve data. In the engine-end, many languages can be served as building materials, for example, golang, java, c++, and even python. </span></p><h2 id='sql'><span>SQL</span></h2><p><span>We will teach sql later, and now all you need to know is that sql is a language that allows you to create, add, delete, and retrieve data. In sql, there are some classes of operation (language)</span></p><ul><li><p><strong><span>Data Definition Language (DDL)</span></strong></p><ul><li><p><span>To create a database logical schemas, we can use the DDL</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="sql"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="sql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">create</span> <span class="cm-keyword">table</span> instructor <span class="cm-bracket">(</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ID <span class="cm-type">char</span><span class="cm-bracket">(</span><span class="cm-number">5</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">name <span class="cm-type">varchar</span><span class="cm-bracket">(</span><span class="cm-number">20</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">dept_name <span class="cm-type">varchar</span><span class="cm-bracket">(</span><span class="cm-number">20</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">salary <span class="cm-type">numeric</span><span class="cm-bracket">(</span><span class="cm-number">8</span><span class="cm-punctuation">,</span><span class="cm-number">2</span><span class="cm-bracket">))</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 115px;"></div><div class="CodeMirror-gutters" style="display: none; height: 115px;"></div></div></div></pre></li><li><p><span>This table templates is stored in a data dictionary. </span></p></li><li><p><span>The data defining the data is called metadata(data about data), which is stored in data dictionary.</span></p><ul><li><p><span>Database schema  </span></p></li><li><p><span>Integrity constraints </span></p><ul><li><p><span>Primary key (ID uniquely identifies instructors)</span></p></li></ul></li><li><p><span>Authorization </span></p><ul><li><p><span>Who can access what</span></p></li></ul></li></ul></li></ul></li><li><p><strong><span>Data Manipulation Language (DML)</span></strong></p><ul><li><p><span>DML is nothing but a tool to access data (fancy name:( )</span></p><ul><li><p><span>Theoritical(Pure): A mathematical way to optimize the procedure.</span></p></li><li><p><span>Practical(Commercial): SQL is the most widely used commercial database language</span></p></li></ul></li><li><p><span>We can further divide the language into </span><strong><span>Procedural DML</span></strong><span> and </span><strong><span>Declarative DML</span></strong><span>. The former require the knowledge how to get the data, while the later doesn&#39;t, which means that the later is more detached the local physical design like the sql.</span></p></li><li><p>&nbsp;</p></li></ul></li></ul><h1 id='database-design--engine'><span>Database Design &amp; Engine</span></h1><p><span>Assume you are a database designer, what work should you do? This question is too ambiguous, because we first need to know what part are you designing. Is it a logical design or a Physical design. </span></p><ul><li><p><strong><span>logical design</span></strong><span> :Programmers pay more attention to the business requirement, which is related to specific commercial behavior. It is about how are you going to design the relationships between entities.</span></p></li><li><p><strong><span>physical design</span></strong><span>: The engine for the database framework, the database engine. </span></p></li></ul><h2 id='database-engine'><span>Database Engine</span></h2><p><span>The database system can be divided into :</span></p><h3 id='the-storage-manager'><span>The storage manager </span></h3><ul><li><p><span>The storage manager is the interface between the application programs and low-level data. It needs to interact with the os file manager, so that the os file manager can hand over the data to the query operator.</span></p></li><li><p><span>The query processor component </span></p></li><li><p><span>The transaction management component</span></p><ul><li><p><span>Authorization and integrity manager</span></p></li><li><p><span>Transaction manager (TM)</span></p></li><li><p><span>File manager </span></p></li><li><p><span>Buffer manager</span></p></li><li><p><span>Index manager (IM)</span></p></li></ul></li><li><p><span>Data in storage manager </span></p><ul><li><p><strong><span>Data Files:</span></strong></p><ul><li><p><span>Data files are the primary storage units for the database. They store the actual data records, which can include information about customers, products, transactions, and more, depending on the database&#39;s purpose. Data files organize data into tables, rows, and columns. Each table corresponds to a specific entity in the database, and rows contain individual data records, while columns represent attributes or properties of those records.</span></p></li></ul></li><li><p><strong><span>Data Dictionary:</span></strong></p><ul><li><p><span>The data dictionary, also known as the system stores metadata about the structure of the database. It contains information about tables, columns, indexes, constraints, and other database objects.</span></p></li></ul></li><li><p><strong><span>Indices (Indexes):</span></strong></p><ul><li><p><span>Indices are additional data structures used to optimize data retrieval and query performance. They provide fast access to specific data items within a table. An index consists of a set of keys and pointers. The keys are values from one or more columns of a table, and the pointers point to the actual data records containing those values.</span></p></li><li><p><span>When a query includes conditions or filters based on indexed columns, the DBMS can use the index to </span><strong><span>quickly</span></strong><span> locate the relevant data without scanning the entire table.</span></p></li><li><p><span>Common types of indexes include B-tree indexes, hash indexes, and bitmap indexes, which we will learn later.</span></p></li></ul></li></ul></li></ul><p><img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1680249302183/9138ed26-22ed-4dac-bbd8-2701e723d485.jpeg?auto=compress,format&format=webp" style="zoom:50%;" /></p><h3 id='query-processor'><span>Query Processor</span></h3><p><strong><span>Query processing</span></strong><span> is a crucial phase in a database management system (DBMS) that involves translating a user&#39;s query into a series of actions that retrieve the requested data efficiently from the database. Query processing typically consists of three main steps:</span></p><ol><li><p><strong><span>Parsing and Translation:</span></strong></p><ul><li><p><span>In this initial step, the DBMS parses the user&#39;s query to understand its structure and intension. Parsing involves breaking down the query into its constituent elements, such as keywords, table names, conditions, and operators. (People with a security background know that the parsing procedure is crucial in sql injection attack.)</span></p></li><li><p><span>After parsing, the DBMS translates the parsed query into an internal representation that the system can work with. This internal representation often takes the form of a query execution plan or a query tree.</span></p></li><li><p><span>The translation phase also involves checking the query&#39;s </span><strong><span>syntax and semantics for correctness</span></strong><span>. Any syntactical or semantic errors are typically identified and reported to the user.</span></p></li></ul></li><li><p><strong><span>Optimization:</span></strong></p><ul><li><p><span>Once the query is parsed and translated, the DBMS aims to optimize the query execution plan to maximize efficiency and minimize resource usage.</span></p></li><li><p><span>Query optimization involves selecting the most efficient way to access and retrieve data from the database. The DBMS considers various factors, such as available indexes, join algorithms, and access paths, to determine the optimal execution plan.</span></p></li><li><p><span>The goal of query optimization is to reduce the query&#39;s response time by minimizing the number of disk I/O operations and other resource-intensive tasks.</span></p></li><li><p><span>The DBMS may use cost-based or rule-based optimization strategies to select the best execution plan.</span></p></li></ul></li><li><p><strong><span>Evaluation:</span></strong></p><ul><li><p><span>In the final step, the DBMS executes the optimized query by following the execution plan generated in the previous step.</span></p></li><li><p><span>Data retrieval and processing take place according to the chosen plan. This may involve accessing data from tables, applying filters, joining tables, aggregating results, and sorting data as needed.</span></p></li><li><p><span>The DBMS collects and returns the results of the query to the user or application.</span></p></li><li><p><span>During evaluation, the DBMS may use techniques such as caching, buffering, and pipelining to improve query performance.</span></p></li></ul></li></ol><p><img src="https://static.javatpoint.com/dbms/images/query-processing-in-dbms.png" referrerpolicy="no-referrer"></p><p>&nbsp;</p><p>&nbsp;</p><h3 id='transaction-management-tm'><span>Transaction Management (TM)</span></h3><p><strong><span>Transaction management</span></strong><span> is a fundamental aspect of database management systems (DBMS) that ensures the integrity, consistency, and reliability of data within a database, especially in a multi-user and concurrent access environment. It revolves around the concept of a &quot;transaction,&quot; which is a sequence of one or more database operations that together form a single logical unit of work. </span><strong><u><span>Don&#39;t worry with this conception nowing, we will teach this in detail later. Just give an impression.</span></u></strong><span> In short, it is dealing with database event in a short period of time.</span></p><ol><li><p><strong><span>Definition of a Transaction:</span></strong></p><ul><li><p><span>A transaction is a set of database operations that are treated as a single, indivisible unit of work. These operations can include inserting, updating, deleting, or querying data in the database.</span></p></li><li><p><span>Transactions are used to maintain data integrity and consistency by ensuring that a series of related operations either all succeed or all fail. In other words, transactions are atomic, meaning they are treated as an all-or-nothing proposition.</span></p></li></ul></li><li><p><strong><span>ACID Properties:</span></strong></p><ul><li><p><span>Transactions are typically required to adhere to the ACID properties, which stand for:</span></p><ul><li><p><strong><span>Atomicity:</span></strong><span> Transactions are atomic, ensuring that either all operations within the transaction are completed successfully, or none of them are. There are no partial changes to the database.</span></p></li><li><p><strong><span>Consistency:</span></strong><span> Transactions bring the database from one consistent state to another. Consistency constraints are enforced to maintain data integrity.</span></p></li><li><p><strong><span>Isolation:</span></strong><span> Transactions are isolated from each other to prevent interference or conflicts. Even when multiple transactions are executing concurrently, their operations should not interfere with each other.</span></p></li><li><p><strong><span>Durability:</span></strong><span> Once a transaction is committed (successfully completed), its changes become permanent and are stored safely in the database, even in the face of system failures like power outages or crashes.</span></p></li></ul></li></ul></li><li><p><strong><span>Concurrency Control Manager:</span></strong></p><ul><li><p><span>In a multi-user environment where multiple transactions may be executed simultaneously, a concurrency control manager is responsible for coordinating the execution of these transactions.</span></p></li><li><p><span>Concurrency control mechanisms, such as locks and timestamps, are used to ensure that transactions do not interfere with each other in a way that violates data integrity or consistency.</span></p></li><li><p><span>The concurrency control manager enforces isolation among concurrent transactions, making sure that their effects on the database remain as if they had executed serially, even though they may be executed in parallel.</span></p></li></ul></li><li><p><strong><span>Recovery Manager:</span></strong></p><ul><li><p><span>The recovery manager is responsible for ensuring the durability of transactions. It maintains a transaction log that records changes made by transactions before they are committed.</span></p></li><li><p><span>In the event of a system failure, the recovery manager can use the transaction log to bring the database back to a consistent state by replaying or undoing transactions as necessary.</span></p></li></ul></li></ol><h1 id='architecture'><span>Architecture</span></h1><p><span>Centralized databases, client-server systems, parallel databases, and distributed databases are different architectures for organizing and managing databases. Each of these approaches has distinct characteristics and is suitable for specific use cases. Here&#39;s an explanation of each:</span></p><ol><li><p><strong><span>Centralized Databases:</span></strong></p><ul><li><p><span>In a centralized database architecture, all data and database operations are managed on a single central server or system. Your first few homework will based on your local computer which is this design.</span></p></li></ul></li><li><p><strong><span>Client-Server:</span></strong></p><ul><li><p><span>In a client-server architecture, the database server is responsible for storing and managing data, while multiple client machines or devices interact with the server to access and manipulate data. </span><strong><u><span>Your final project could be this architecture!</span></u></strong></p></li><li><p><span>Characteristics:</span></p><ul><li><p><span>Separation of concerns between clients (users or applications) and the server.</span></p></li><li><p><span>Allows multiple clients to access and share data from a centralized database server.</span></p></li><li><p><span>Supports concurrent access and often used in enterprise-level applications.</span></p></li></ul></li><li><p><span>Advantages: Scalability, centralized management, and concurrent access.</span></p></li><li><p><span>Disadvantages: Potential bottlenecks if not properly designed, security concerns.</span></p></li></ul></li><li><p><strong><span>Parallel Databases:</span></strong></p><ul><li><p><span>Parallel databases leverage multiple cores, shared memory, and parallel processing to improve data processing performance.</span></p></li><li><p><span>Characteristics:</span></p><ul><li><p><span>Use multiple processors or cores to process data in parallel.</span></p></li><li><p><span>Can have various configurations, such as shared-memory, shared-disk, or shared-nothing architectures.</span></p></li><li><p><span>Suitable for data-intensive applications that require high processing power.</span></p></li></ul></li><li><p><span>Advantages: Enhanced performance for data-intensive tasks, scalability.</span></p></li><li><p><span>Disadvantages: Complexity in setup and management, cost.</span></p></li></ul></li><li><p><strong><span>Distributed Databases:</span></strong></p><ul><li><p><span>Distributed databases are designed to manage data across multiple geographical locations or nodes.</span></p></li><li><p><span>Characteristics:</span></p><ul><li><p><span>Data is distributed across different servers or nodes, which can be in different physical locations.</span></p></li><li><p><span>Often used in scenarios where data needs to be accessible from various locations.</span></p></li><li><p><span>Can handle schema and data heterogeneity, making it suitable for large-scale and diverse data environments.</span></p></li></ul></li><li><p><span>Advantages: Geographical distribution, fault tolerance, scalability, support for diverse data types.</span></p></li><li><p><span>Disadvantages: Complex to manage and coordinate, potential latency due to distributed nature.</span></p></li></ul></li></ol><p><strong><span>2 and 3 Tier architectures</span></strong></p><p><strong><span>Advantages of 2-Tier Architecture:</span></strong></p><ul><li><p><span>Simplicity: Easier to design and implement for small-scale applications.</span></p></li><li><p><span>Low latency: Direct communication between the client and server tiers can result in faster response times for certain tasks.</span></p></li></ul><p><strong><span>Disadvantages of 2-Tier Architecture:</span></strong></p><ul><li><p><span>Scalability limitations: Limited scalability due to the client handling both the presentation and business logic.</span></p></li><li><p><span>Security concerns: Security risks associated with exposing business logic on the client-side.</span></p></li></ul><p><strong><span>Advantages of 3-Tier Architecture:</span></strong></p><ul><li><p><span>Improved scalability: Separation of business logic and data management allows for better scalability as the load can be distributed across multiple application servers.</span></p></li><li><p><span>Enhanced security: Business logic is not exposed on the client side, reducing security risks.</span></p></li><li><p><span>Maintenance and flexibility: Easier to maintain and update individual tiers without affecting others.</span></p></li></ul><p><strong><span>Disadvantages of 3-Tier Architecture:</span></strong></p><ul><li><p><span>Increased complexity: More components and interactions make the architecture more complex to design and manage.</span></p></li><li><p><span>Potential latency: The additional communication layer between the client and server may introduce some latency compared to the 2-Tier model.</span></p></li></ul><p><img src="https://i.stack.imgur.com/hJFtV.png" referrerpolicy="no-referrer"></p><p>&nbsp;</p></div></div>
+</body>
+</html>
