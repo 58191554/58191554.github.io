@@ -1,0 +1,775 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex:2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG2"] path[data-c], mjx-container[jax="SVG2"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+							stroke-width: 0;
+						}
+            .container {
+            background-color: #f2f2f2; /* 容器的背景颜色 */
+            padding: 20px; /* 可根据需要调整内边距 */
+            border-radius: 10px; /* 容器的圆角半径 */
+            text-align: center; /* 居中文本 */
+}
+.rounded-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d8d8d8;
+    color: #fff;
+    border-radius: 5px; /* 圆角半径可以根据需要进行调整 */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.rounded-button:hover {
+    background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+
+
+</style><title>chapter 3 The ER Model</title>
+</head>
+    <div class="container">
+        <a class="rounded-button" href="https://58191554.github.io/csc3170_23fall/dashboard.html">Back to Dashboard</a>
+    </div><body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='chapter-3-the-entity-relationship-model'><span>Chapter 3: The Entity-Relationship Model</span></h1><blockquote><p><span>Lecturer: Jane YOU, Compiler: Zhen, TONG</span></p></blockquote><p><span>Before everything, The </span><a href='https://58191554.github.io/csc3170_23fall/labs/lab1/lab1.html'><span>first lab</span></a><span> is released, please follow the docs and implement it, which will do you good in your final project😗</span></p><h2 id='design-db-in-3-phase'><span>Design DB in 3 Phases</span></h2><p><span>First, let&#39;s have a high-level overview of the typical stages involved in designing a database. Let&#39;s break down 3 phases:</span></p><p><strong><span>1. Initial Phase - Characterizing Data Needs:</span></strong></p><ul><li><p><span>In this phase, you start by understanding the data requirements of the prospective database users. This involves gathering detailed information about what kind of data the users need, how they will use it, and what specific data elements are important to them.</span></p></li><li><p><span>You may conduct interviews, surveys, or analyze existing processes and documents to collect this information.</span></p></li></ul><p><strong><span>2. Second Phase - Choosing a Data Model:</span></strong></p><ul><li><p><span>In this phase, you decide on the data model that best suits the requirements gathered in the initial phase. Common data models include relational, hierarchical, network, or object-oriented models (we have talked about it in the first lecture).</span></p></li><li><p><span>You apply the chosen data model&#39;s concepts to translate the data requirements into a conceptual </span><strong><span>schema</span></strong><span>. This schema represents the high-level structure of the database without specifying implementation details.</span></p></li><li><p><span>The conceptual schema helps identify the functional requirements of the enterprise, including the kinds of </span><strong><span>operations or transactions</span></strong><span> that will be performed on the data. This phase is crucial for understanding how data will be used.</span></p></li></ul><p><strong><span>3. Final Phase - Moving to Implementation:</span></strong></p><p><span>This phase involves transitioning from the abstract data model to the </span><strong><span>actual implementation of the database</span></strong><span>, which is the most exciting part! 😋 It includes two sub-phases:</span></p><p><strong><span>a. Logical Design:</span></strong><span> - In the logical design phase, you decide on the database schema, which is the blueprint for the database structure. This includes defining tables, relationships between tables, primary keys, foreign keys, and attributes. - Business decisions are made to determine what specific attributes (data fields) should be recorded in the database to meet the users&#39; needs. - Computer science decisions involve defining the relation schemas (tables) and how attributes should be organized within these schemas to ensure data integrity and efficiency.</span></p><p><strong><span>b. Physical Design:</span></strong><span> - The physical design phase focuses on the actual storage and access mechanisms for the database. It involves decisions such as how data will be stored on disk, indexing strategies, partitioning, and optimization for performance. - This phase is where you consider factors like hardware capabilities, database management system (DBMS) selection, and tuning for efficient data retrieval and storage.</span></p><p>&nbsp;</p><p><strong><span>Caution❗</span></strong></p><p><span>When designing a database schema, it&#39;s crucial to avoid redundancy and incompleteness while also considering that there can be multiple good design alternatives. Let&#39;s explore these concepts further:</span></p><p><strong><span>1. Redundancy:</span></strong></p><ul><li><p><span>Redundancy occurs when the same data is stored in multiple places within the database. This can lead to several problems, including:</span></p><ul><li><p><span>Data Inconsistency: If redundant data is updated in one place but not in another, it can result in inconsistencies and errors.</span></p></li><li><p><span>Increased Storage Costs: Storing the same data multiple times consumes more storage space.</span></p></li><li><p><span>Maintenance Challenges: Redundant data requires more effort to update and maintain.</span></p></li></ul></li><li><p><span>To avoid redundancy, </span><strong><span>normalization</span></strong><span> techniques are often used in relational database design. These techniques help eliminate or minimize redundancy by organizing data into separate tables and establishing relationships between them.</span></p></li><li><p><span>However, redundancy sometimes can be a good thing, we&#39;ll see later😆</span></p></li></ul><p><strong><span>2. Incompleteness:</span></strong></p><ul><li><p><span>Incompleteness occurs when a database schema does not adequately represent all the aspects of the enterprise it is designed to model. This can lead to difficulties or limitations in using the database to support business processes.</span></p></li><li><p><span>To address incompleteness, it&#39;s important to thoroughly analyze the data requirements during the </span><strong><span>initial phase</span></strong><span> of database design. </span></p></li></ul><p>&nbsp;</p><p>&nbsp;</p><h2 id='good-design-approach😜'><span>Good Design Approach😜</span></h2><p><span>The Entity-Relationship (ER) model and normalization theory are two fundamental design approaches in database design. Let&#39;s explore each of these approaches in more detail:</span></p><p><strong><span>1. Entity-Relationship Model:</span></strong></p><ul><li><p><strong><span>Definition:</span></strong><span> The Entity-Relationship (ER) model is a conceptual data model that represents an enterprise or system as a collection of entities and the relationships between them.</span></p></li><li><p><span>Key Concepts:</span></p><ul><li><p><strong><span>Entity:</span></strong><span> An entity is a distinct &quot;thing&quot; or &quot;object&quot; in the enterprise that can be uniquely distinguished from other objects. Each entity is described by a set of attributes that define its properties or characteristics.</span></p></li><li><p><strong><span>Relationship:</span></strong><span> A relationship represents an </span><strong><span>association</span></strong><span> or </span><strong><span>connection</span></strong><span> among several </span><strong><span>entities</span></strong><span>. It defines how entities are related to each other and can be </span><strong><span>one-to-one, one-to-many, or many-to-many</span></strong><span>.😎 We will take care of them later!</span></p></li></ul></li><li><p><strong><span>Entity-Relationship Diagram (ERD):</span></strong><span> ER modeling is often represented diagrammatically using ERDs. These diagrams visually depict entities as rectangles, attributes as ovals or ellipses connected to entities, and relationships as lines connecting entities.</span></p></li></ul><p><strong><span>2. Normalization Theory:</span></strong></p><ul><li><p><strong><span>Definition:</span></strong><span> Normalization is a formal process in database design that aims to </span><strong><span>minimize data redundancy</span></strong><span> and improve data integrity by organizing data into tables (relations) in a way that reduces or eliminates data anomalies.</span></p></li><li><p><span>Key Concepts:</span></p><ul><li><p><strong><span>Functional Dependencies:</span></strong><span> Normalization theory is based on the concept of functional dependencies, which defines relationships between attributes in a table.</span></p></li><li><p><strong><span>Normal Forms:</span></strong><span> There are several normal forms (</span><em><span>1NF, 2NF, 3NF, BCNF</span></em><span>, etc.), each with specific rules for organizing data to achieve progressively higher levels of normalization. These rules help identify and eliminate data redundancy.</span></p></li></ul></li><li><p><strong><span>Benefits:</span></strong><span> Normalization helps ensure that data is stored efficiently and avoids update anomalies such as insertion, deletion, and modification anomalies. It improves data integrity by reducing the risk of inconsistent data.</span></p></li></ul><p>&nbsp;</p><h2 id='er-model'><span>ER Model</span></h2><p><span> Here are the key concepts and components of the ER model:</span></p><p><strong><span>Entity Set:</span></strong></p><ul><li><p><span>An entity set is a collection or set of entities of the same type that share the same properties or characteristics. In other words, an entity set groups together entities that have common attributes and represent the same type of real-world object.</span><span>	</span></p></li><li><p><strong><span>Attributes:</span></strong></p><ul><li><p><span>We have talked about it in the last note.</span></p></li></ul><p><strong><span>Primary Key:</span></strong></p><ul><li><p><span>We have also talked about it in the last note. Using underline to indicate it</span>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHPyB2Txw5wIoJLV8jDGzXXjh_1hzo2r1pBw&amp;usqp=CAU" referrerpolicy="no-referrer"></p></li></ul></li></ul><p>&nbsp;</p><p><strong><span>Relationship Set:</span></strong></p><ul><li><p><span>A relationship set is a mathematical relation among n (where n ≥ 2) entities, with each entity taken from specific entity sets. It defines a collection of related instances, each comprising entities from their respective sets.</span></p></li><li><p><span>The notation for a relationship set is typically written as </span><mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg xmlns="http://www.w3.org/2000/svg" width="48.65ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 21503.2 1000" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" style="vertical-align: -0.566ex;"><defs><path id="MJX-4-TEX-N-7B" d="M434 -231Q434 -244 428 -250H410Q281 -250 230 -184Q225 -177 222 -172T217 -161T213 -148T211 -133T210 -111T209 -84T209 -47T209 0Q209 21 209 53Q208 142 204 153Q203 154 203 155Q189 191 153 211T82 231Q71 231 68 234T65 250T68 266T82 269Q116 269 152 289T203 345Q208 356 208 377T209 529V579Q209 634 215 656T244 698Q270 724 324 740Q361 748 377 749Q379 749 390 749T408 750H428Q434 744 434 732Q434 719 431 716Q429 713 415 713Q362 710 332 689T296 647Q291 634 291 499V417Q291 370 288 353T271 314Q240 271 184 255L170 250L184 245Q202 239 220 230T262 196T290 137Q291 131 291 1Q291 -134 296 -147Q306 -174 339 -192T415 -213Q429 -213 431 -216Q434 -219 434 -231Z"></path><path id="MJX-4-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-4-TEX-I-1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path><path id="MJX-4-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-4-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-4-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-4-TEX-N-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path id="MJX-4-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-4-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path id="MJX-4-TEX-N-3A" d="M78 370Q78 394 95 412T138 430Q162 430 180 414T199 371Q199 346 182 328T139 310T96 327T78 370ZM78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path id="MJX-4-TEX-N-2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path><path id="MJX-4-TEX-I-1D438" d="M492 213Q472 213 472 226Q472 230 477 250T482 285Q482 316 461 323T364 330H312Q311 328 277 192T243 52Q243 48 254 48T334 46Q428 46 458 48T518 61Q567 77 599 117T670 248Q680 270 683 272Q690 274 698 274Q718 274 718 261Q613 7 608 2Q605 0 322 0H133Q31 0 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H757Q764 676 764 669Q764 664 751 557T737 447Q735 440 717 440H705Q698 445 698 453L701 476Q704 500 704 528Q704 558 697 578T678 609T643 625T596 632T532 634H485Q397 633 392 631Q388 629 386 622Q385 619 355 499T324 377Q347 376 372 376H398Q464 376 489 391T534 472Q538 488 540 490T557 493Q562 493 565 493T570 492T572 491T574 487T577 483L544 351Q511 218 508 216Q505 213 492 213Z"></path><path id="MJX-4-TEX-N-7D" d="M65 731Q65 745 68 747T88 750Q171 750 216 725T279 670Q288 649 289 635T291 501Q292 362 293 357Q306 312 345 291T417 269Q428 269 431 266T434 250T431 234T417 231Q380 231 345 210T298 157Q293 143 292 121T291 -28V-79Q291 -134 285 -156T256 -198Q202 -250 89 -250Q71 -250 68 -247T65 -230Q65 -224 65 -223T66 -218T69 -214T77 -213Q91 -213 108 -210T146 -200T183 -177T207 -139Q208 -134 209 3L210 139Q223 196 280 230Q315 247 330 250Q305 257 280 270Q225 304 212 352L210 362L209 498Q208 635 207 640Q195 680 154 696T77 713Q68 713 67 716T65 731Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><use data-c="7B" xlink:href="#MJX-4-TEX-N-7B"></use></g><g data-mml-node="mo" transform="translate(500,0)"><use data-c="28" xlink:href="#MJX-4-TEX-N-28"></use></g><g data-mml-node="mi" transform="translate(889,0)"><use data-c="1D452" xlink:href="#MJX-4-TEX-I-1D452"></use></g><g data-mml-node="mn" transform="translate(1355,0)"><use data-c="31" xlink:href="#MJX-4-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(1855,0)"><use data-c="2C" xlink:href="#MJX-4-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(2299.7,0)"><use data-c="1D452" xlink:href="#MJX-4-TEX-I-1D452"></use></g><g data-mml-node="mn" transform="translate(2765.7,0)"><use data-c="32" xlink:href="#MJX-4-TEX-N-32"></use></g><g data-mml-node="mo" transform="translate(3265.7,0)"><use data-c="2C" xlink:href="#MJX-4-TEX-N-2C"></use></g><g data-mml-node="mo" transform="translate(3710.3,0)"><use data-c="2E" xlink:href="#MJX-4-TEX-N-2E"></use></g><g data-mml-node="mo" transform="translate(4155,0)"><use data-c="2E" xlink:href="#MJX-4-TEX-N-2E"></use></g><g data-mml-node="mo" transform="translate(4599.7,0)"><use data-c="2E" xlink:href="#MJX-4-TEX-N-2E"></use></g><g data-mml-node="mo" transform="translate(5044.3,0)"><use data-c="2C" xlink:href="#MJX-4-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(5489,0)"><use data-c="1D452" xlink:href="#MJX-4-TEX-I-1D452"></use></g><g data-mml-node="mi" transform="translate(5955,0)"><use data-c="1D45B" xlink:href="#MJX-4-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(6555,0)"><use data-c="29" xlink:href="#MJX-4-TEX-N-29"></use></g><g data-mml-node="mo" transform="translate(7221.8,0)"><use data-c="3A" xlink:href="#MJX-4-TEX-N-3A"></use></g><g data-mml-node="mi" transform="translate(7777.6,0)"><use data-c="1D452" xlink:href="#MJX-4-TEX-I-1D452"></use></g><g data-mml-node="mn" transform="translate(8243.6,0)"><use data-c="31" xlink:href="#MJX-4-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(9021.3,0)"><use data-c="2208" xlink:href="#MJX-4-TEX-N-2208"></use></g><g data-mml-node="mi" transform="translate(9966.1,0)"><use data-c="1D438" xlink:href="#MJX-4-TEX-I-1D438"></use></g><g data-mml-node="mn" transform="translate(10730.1,0)"><use data-c="31" xlink:href="#MJX-4-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(11230.1,0)"><use data-c="2C" xlink:href="#MJX-4-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(11674.8,0)"><use data-c="1D452" xlink:href="#MJX-4-TEX-I-1D452"></use></g><g data-mml-node="mn" transform="translate(12140.8,0)"><use data-c="32" xlink:href="#MJX-4-TEX-N-32"></use></g><g data-mml-node="mo" transform="translate(12918.6,0)"><use data-c="2208" xlink:href="#MJX-4-TEX-N-2208"></use></g><g data-mml-node="mi" transform="translate(13863.3,0)"><use data-c="1D438" xlink:href="#MJX-4-TEX-I-1D438"></use></g><g data-mml-node="mn" transform="translate(14627.3,0)"><use data-c="32" xlink:href="#MJX-4-TEX-N-32"></use></g><g data-mml-node="mo" transform="translate(15127.3,0)"><use data-c="2C" xlink:href="#MJX-4-TEX-N-2C"></use></g><g data-mml-node="mo" transform="translate(15572,0)"><use data-c="2E" xlink:href="#MJX-4-TEX-N-2E"></use></g><g data-mml-node="mo" transform="translate(16016.7,0)"><use data-c="2E" xlink:href="#MJX-4-TEX-N-2E"></use></g><g data-mml-node="mo" transform="translate(16461.3,0)"><use data-c="2E" xlink:href="#MJX-4-TEX-N-2E"></use></g><g data-mml-node="mo" transform="translate(16906,0)"><use data-c="2C" xlink:href="#MJX-4-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(17350.7,0)"><use data-c="1D452" xlink:href="#MJX-4-TEX-I-1D452"></use></g><g data-mml-node="mi" transform="translate(17816.7,0)"><use data-c="1D45B" xlink:href="#MJX-4-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(18694.4,0)"><use data-c="2208" xlink:href="#MJX-4-TEX-N-2208"></use></g><g data-mml-node="mi" transform="translate(19639.2,0)"><use data-c="1D438" xlink:href="#MJX-4-TEX-I-1D438"></use></g><g data-mml-node="mi" transform="translate(20403.2,0)"><use data-c="1D45B" xlink:href="#MJX-4-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(21003.2,0)"><use data-c="7D" xlink:href="#MJX-4-TEX-N-7D"></use></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo fence="false" stretchy="false">{</mo><mo stretchy="false">(</mo><mi>e</mi><mn>1</mn><mo>,</mo><mi>e</mi><mn>2</mn><mo>,</mo><mo>.</mo><mo>.</mo><mo>.</mo><mo>,</mo><mi>e</mi><mi>n</mi><mo stretchy="false">)</mo><mo>:</mo><mi>e</mi><mn>1</mn><mo>∈</mo><mi>E</mi><mn>1</mn><mo>,</mo><mi>e</mi><mn>2</mn><mo>∈</mo><mi>E</mi><mn>2</mn><mo>,</mo><mo>.</mo><mo>.</mo><mo>.</mo><mo>,</mo><mi>e</mi><mi>n</mi><mo>∈</mo><mi>E</mi><mi>n</mi><mo fence="false" stretchy="false">}</mo></math></mjx-assistive-mml></mjx-container><script type="math/tex">\{(e1, e2, ..., en) : e1 ∈ E1, e2 ∈ E2, ..., en ∈ En\}</script><span>, where </span><mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg xmlns="http://www.w3.org/2000/svg" width="14.579ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 6444 1000" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" style="vertical-align: -0.566ex;"><defs><path id="MJX-6-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-6-TEX-I-1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path><path id="MJX-6-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-6-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-6-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-6-TEX-N-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path id="MJX-6-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-6-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><use data-c="28" xlink:href="#MJX-6-TEX-N-28"></use></g><g data-mml-node="mi" transform="translate(389,0)"><use data-c="1D452" xlink:href="#MJX-6-TEX-I-1D452"></use></g><g data-mml-node="mn" transform="translate(855,0)"><use data-c="31" xlink:href="#MJX-6-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(1355,0)"><use data-c="2C" xlink:href="#MJX-6-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(1799.7,0)"><use data-c="1D452" xlink:href="#MJX-6-TEX-I-1D452"></use></g><g data-mml-node="mn" transform="translate(2265.7,0)"><use data-c="32" xlink:href="#MJX-6-TEX-N-32"></use></g><g data-mml-node="mo" transform="translate(2765.7,0)"><use data-c="2C" xlink:href="#MJX-6-TEX-N-2C"></use></g><g data-mml-node="mo" transform="translate(3210.3,0)"><use data-c="2E" xlink:href="#MJX-6-TEX-N-2E"></use></g><g data-mml-node="mo" transform="translate(3655,0)"><use data-c="2E" xlink:href="#MJX-6-TEX-N-2E"></use></g><g data-mml-node="mo" transform="translate(4099.7,0)"><use data-c="2E" xlink:href="#MJX-6-TEX-N-2E"></use></g><g data-mml-node="mo" transform="translate(4544.3,0)"><use data-c="2C" xlink:href="#MJX-6-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(4989,0)"><use data-c="1D452" xlink:href="#MJX-6-TEX-I-1D452"></use></g><g data-mml-node="mi" transform="translate(5455,0)"><use data-c="1D45B" xlink:href="#MJX-6-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(6055,0)"><use data-c="29" xlink:href="#MJX-6-TEX-N-29"></use></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mi>e</mi><mn>1</mn><mo>,</mo><mi>e</mi><mn>2</mn><mo>,</mo><mo>.</mo><mo>.</mo><mo>.</mo><mo>,</mo><mi>e</mi><mi>n</mi><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container><script type="math/tex">(e1, e2, ..., en) </script><span>represents a specific relationship instance.</span></p></li><li><p><span>In example, the relationship set &quot;advisor&quot; represents the associations between students and the instructors who serve as their advisors.</span>
+<img src="./imgs/3-1.png" style="zoom:50%;" /><img src="./imgs/3-2.png" style="zoom:67%;" /></p></li></ul><p><strong><span>Relationship Sets with Attributes</span></strong></p><ul><li><p><span>An attribute can also be associated with a relationship set, sometimes called descriptive attribute </span></p></li><li><p><span>For instance, the advisor relationship set between entity sets instructor and student may have the attribute date which tracks when the student started being associated with the advisor</span>
+<img src="./imgs/3-3.png" style="zoom:50%;" /><img src="./imgs/3-4.png" style="zoom:50%;" /></p></li></ul><h2 id='degree-of-a-relationship-set'><span>Degree of a Relationship Set</span></h2><p><span>The degree of a relationship set refers to the number of entity sets participating in a relationship. In other words, it indicates how many entity sets are connected by a single relationship set, </span><u><span>which is the same definition in graph theory.</span></u><span> </span></p><p><strong><span>Binary Relationship:</span></strong></p><ul><li><p><span>A binary relationship is a relationship set that connects exactly two entity sets. It&#39;s the most common type of relationship encountered in database modeling.</span></p></li></ul><p><strong><span>Higher-Degree Relationships (Ternary and Beyond):</span></strong></p><ul><li><p><span>Relationships that involve more than two entity sets are less common but do exist. A ternary relationship is one that connects three entity sets, making it a &quot;degree-three&quot; relationship.</span></p></li><li><p><span>Higher-degree relationships, such as ternary (degree-three) or quaternary (degree-four) relationships, are used when modeling more complex scenarios that require relationships among multiple entities simultaneously.</span></p></li><li><p><span>An example you provided is the &quot;proj_guide&quot; relationship, which is a ternary relationship connecting the &quot;instructor,&quot; &quot;student,&quot; and &quot;project&quot; entity sets. It represents the association between an instructor guiding a student in a research project.</span>
+<img src="./imgs/3-5.png" style="zoom:50%;" /></p></li></ul><h2 id='complex-attributes-🙄'><strong><span>Complex Attributes</span></strong><span> 🙄</span></h2><p><span>Let&#39;s expand on each kind of attributes one by one :</span></p><p><strong><span>1. Simple Attributes:</span></strong></p><ul><li><p><span>A simple attribute is an attribute that cannot be divided any further into meaningful components. It represents an atomic value that describes a specific property or characteristic of an entity.</span></p></li><li><p><span>Examples of simple attributes include &quot;Name,&quot; &quot;Age,&quot; and &quot;Address.&quot; These attributes have single values and don&#39;t need further decomposition.</span></p></li></ul><p><strong><span>2. Composite Attributes:</span></strong></p><ul><li><p><span>A composite attribute is an attribute that can be divided into subparts, each with its own meaning. These subparts represent more granular properties of the entity.</span></p></li><li><p><span>For example, an &quot;Address&quot; attribute can be composed of subparts such as &quot;Street,&quot; &quot;City,&quot; &quot;State,&quot; and &quot;Zip Code.&quot; Each subpart contributes to the overall &quot;Address&quot; attribute.</span>
+<img src="./imgs/3-7.png" style="zoom:50%;" /></p></li></ul><p><strong><span>3. Single-Valued Attributes:</span></strong></p><ul><li><p><span>A single-valued attribute is an attribute that holds a single value for each entity. It is straightforward and has no multiple values or components.</span></p></li><li><p><span>An example of a single-valued attribute &quot;Social Security Number,&quot; where each entity has a single, unique value for the attribute.</span></p></li></ul><p><strong><span>4. Multivalued Attributes:</span></strong></p><ul><li><p><span>A multivalued attribute is an attribute that can hold multiple values for an entity. It represents a property that can have multiple components, each with a distinct meaning.</span></p></li><li><p><span>An example is the &quot;phone_numbers&quot; attribute, where an entity (e.g., a person) may have </span><strong><span>multiple phone numbers</span></strong><span> (e.g., home, work, mobile) associated with it.</span></p></li></ul><p><strong><span>5. Derived Attributes:</span></strong></p><ul><li><p><span>A derived attribute is an attribute whose value can be computed or derived from other attributes in the database. It doesn&#39;t require direct input but is instead calculated based on existing data.</span></p></li><li><p><span>For example, &quot;Age&quot; can be a derived attribute computed from the &quot;Date of Birth&quot; attribute. The database system can automatically calculate the age of a person based on their birthdate.</span></p></li></ul><p><strong><span>6. Domain:</span></strong></p><ul><li><p><span>The domain of an attribute defines the set of permissible values that the attribute can take. It specifies the data type, format, and constraints for the attribute.</span></p></li><li><p><span>For instance, the domain of an attribute might specify that it can only contain integer values between 1 and 100, or it might define a specific format for dates (e.g., YYYY-MM-DD).</span></p></li></ul><p><strong><span>Now can you tell the difference of ❓</span></strong></p><ul><li><p><span>Simple and composite attributes</span></p></li><li><p><span>Single-valued and multivalued attributes</span></p></li></ul><p>&nbsp;</p><p>&nbsp;</p><h2 id='mapping💘'><span>Mapping💘</span></h2><p><strong><span>Types of Mapping Cardinality Constraints for Binary Relationships:</span></strong></p><ol><li><p><strong><span>One-to-One (1:1) Relationship:</span></strong></p><ul><li><p><span>In a one-to-one relationship, each entity in one entity set is associated with exactly one entity in the other entity set, and vice versa.</span></p></li><li><p><span>Representation: Use a directed line (→) connecting the relationship set to both entity sets.</span></p></li></ul></li><li><p><strong><span>One-to-Many (1:N) Relationship:</span></strong></p><ul><li><p><span>In a one-to-many relationship, each entity in one entity set can be associated with multiple entities in the other entity set, but each entity in the other entity set is associated with at most one entity in the first entity set.</span></p></li><li><p><span>Representation: Use a directed line (→) from the one side (with the &quot;one&quot; end) and an undirected line (—) from the many side (with the &quot;many&quot; end) connecting the relationship set to the entity sets.</span></p></li></ul></li><li><p><strong><span>Many-to-One (N:1) Relationship:</span></strong></p><ul><li><p><span>In a many-to-one relationship, each entity in one entity set is associated with at most one entity in the other entity set, but each entity in the first entity set can be associated with multiple entities in the other entity set.</span></p></li><li><p><span>Representation: Use a directed line (→) from the many side (with the &quot;many&quot; end) and an undirected line (—) from the one side (with the &quot;one&quot; end) connecting the relationship set to the entity sets.</span></p></li></ul></li><li><p><strong><span>Many-to-Many (N:N) Relationship:</span></strong></p><ul><li><p><span>In a many-to-many relationship, each entity in one entity set can be associated with multiple entities in the other entity set, and vice versa.</span></p></li><li><p><span>Representation: Use undirected lines (—) connecting the relationship set to both entity sets.</span></p></li></ul></li></ol><p>&nbsp;</p><p>&nbsp;</p><h2 id='primary-key-for-relationship-sets'><strong><span>Primary Key for Relationship Sets:</span></strong></h2><ul><li><p><span>To distinguish between different instances of a relationship within a relationship set, you use the primary keys of the entities involved in the relationship set.</span></p></li><li><p><span>If a relationship set &quot;R&quot; involves entity sets &quot;E1,&quot; &quot;E2,&quot; ..., &quot;En,&quot; then the primary key for &quot;R&quot; is the union of the primary keys of &quot;E1,&quot; &quot;E2,&quot; ..., &quot;En.&quot;</span></p></li><li><p><span>For example, in the &quot;advisor&quot; relationship set, which involves the &quot;instructor&quot; and &quot;student&quot; entity sets, the primary key for &quot;advisor&quot; consists of the union of the primary keys &quot;instructor.ID&quot; and &quot;student.ID.&quot;</span></p></li></ul><p><strong><span>Choice of Primary Key for Binary Relationship Sets:</span></strong></p><ul><li><p><span>The choice of the primary key for a binary relationship set depends on the cardinality of the relationship:</span></p><ul><li><p><strong><span>Many-to-Many Relationships:</span></strong><span> In many-to-many relationships, the union of the primary keys of the participating entities forms a minimal superkey and is chosen as the primary key for the relationship set.</span></p></li><li><p><strong><span>One-to-Many Relationships:</span></strong><span> In one-to-many relationships, the primary key of the &quot;Many&quot; side (i.e., the side with multiple entities) is typically a minimal superkey and is used as the primary key for the relationship set.</span></p></li><li><p><strong><span>Many-to-One Relationships:</span></strong><span> Similar to one-to-many relationships, in many-to-one relationships, the primary key of the &quot;Many&quot; side is typically a minimal superkey and serves as the primary key for the relationship set.</span></p></li><li><p><strong><span>One-to-One Relationships:</span></strong><span> In one-to-one relationships, the primary key of either one of the participating entity sets forms a minimal superkey, and you can choose either entity&#39;s primary key as the primary key for the relationship set.</span></p></li></ul></li></ul><p>&nbsp;</p><h2 id='weak-entity🤔'><span>Weak Entity🤔</span></h2><p><span>Weak entity sets are essential for modeling entities whose existence </span><strong><span>depends on the existence of another entity</span></strong><span>, called the identifying entity. </span></p><p><span>Instead of having its own primary key, a weak entity set uses the attributes of the identifying entity set along with additional discriminator attributes to uniquely identify its entities.</span></p><p><strong><span>Identifying Entity Set:</span></strong></p><ul><li><p><span>The </span><strong><span>identifying entity</span></strong><span> set is the one on which the weak entity set depends for identification.</span></p></li><li><p><span>The identifying entity set &quot;owns&quot; the weak entity set that it identifies, and the relationship connecting them is called the &quot;identifying relationship.&quot;</span></p></li></ul><p><strong><span>Discriminator Attributes:</span></strong></p><ul><li><p><span>Discriminator attributes are extra attributes added to the weak entity set to </span><strong><span>help distinguish entities within the weak entity set</span></strong><span> that have the same values in the attributes inherited from the identifying entity set.</span></p></li><li><p><span>These discriminator attributes are typically used to ensure uniqueness within the weak entity set.</span></p></li></ul><p><strong><span>Representation in E-R Diagrams:</span></strong></p><ul><li><p><span>In E-R diagrams, a weak entity set is typically depicted using a double rectangle.</span></p></li><li><p><span>The discriminator attributes are underlined with a dashed line to indicate their role in identifying the weak entity set.</span></p></li><li><p><span>The relationship set connecting the weak entity set to the identifying strong entity set is represented by a double diamond.</span></p></li></ul><p><strong><span>Total Participation:</span></strong></p><ul><li><p><span>Typically, a weak entity must have total participation (or existence dependency) in its identifying relationship set. This means that every entity in the weak entity set must be associated with an entity in the identifying entity set.</span></p></li></ul><p><strong><span>Primary Key for Weak Entity Sets:</span></strong></p><ul><li><p><span>The primary key for a weak entity set is composed of the attributes from the identifying entity set along with the discriminator attributes specific to the weak entity set.</span></p></li><li><p><span>This combination of attributes ensures the uniqueness of each entity within the weak entity set.</span></p></li></ul><p>&nbsp;</p><h2 id='redundant-attributes😏'><span>Redundant Attributes😏</span></h2><p><span>According to the ER Diagram, sometimes an attribute can be redundant like:</span></p><p><img src="./imgs/3-8.png" style="zoom:50%;" /></p><p><span>The dept_name in instructor entity is redundant, because the attribute has already been represented in the relationship.</span></p><p><span> </span></p><h2 id='reduction-to-relation-schemas🏆'><span>Reduction to Relation Schemas🏆</span></h2><p><span>Now it&#39;s time for us to sum everything we learn together!🥇</span></p><ol><li><p><strong><span>Strong Entity Set:</span></strong><span> A strong entity set is represented as a schema with attributes corresponding to the entity&#39;s attributes, including the primary key.</span></p><ul><li><p><span>Example: The &quot;student&quot; entity set is represented as the &quot;student&quot; schema with attributes (ID, name, tot_cred).</span></p></li></ul></li><li><p><strong><span>Weak Entity Set:</span></strong><span> A weak entity set is represented as a schema that includes a column for the primary key of the identifying strong entity set. This schema also includes attributes specific to the weak entity set.</span></p><ul><li><p><span>Example: The &quot;section&quot; weak entity set is represented as the &quot;section&quot; schema with attributes (course_id, sec_id, semester, year).</span></p></li></ul></li><li><p><strong><span>Take care of attributes</span></strong></p><ul><li><p><span>Pay attention to everything we discussed about attributes</span></p></li></ul></li></ol><p><strong><span>Representation of Relationship Sets:</span></strong></p><ul><li><p><span>Find out the mapping truth.</span></p></li></ul><p><strong><span>Combination of Schemas:</span></strong></p><ul><li><p><span>Combine all the ERs together in a diagram</span></p></li><li><p><span>Schemas for weak entity sets can be combined with schemas for the identifying strong entity sets.</span></p></li></ul></div></div>
+</body>
+</html>
