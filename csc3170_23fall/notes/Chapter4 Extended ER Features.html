@@ -1,0 +1,718 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex:2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; outline: 0px; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: auto hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 10px; z-index: 3; overflow-y: hidden; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; inset: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+span.cm-underlined { text-decoration: underline; }
+span.cm-strikethrough { text-decoration: line-through; }
+.cm-tw-syntaxerror { color: rgb(255, 255, 255); background-color: rgb(153, 0, 0); }
+.cm-tw-deleted { text-decoration: line-through; }
+.cm-tw-header5 { font-weight: 700; }
+.cm-tw-listitem:first-child { padding-left: 10px; }
+.cm-tw-box { border-style: solid; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-color: inherit; border-top-width: 0px !important; }
+.cm-tw-underline { text-decoration: underline; }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+.container {
+            background-color: #f2f2f2; /* 容器的背景颜色 */
+            padding: 20px; /* 可根据需要调整内边距 */
+            border-radius: 10px; /* 容器的圆角半径 */
+            text-align: center; /* 居中文本 */
+}
+.rounded-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d8d8d8;
+    color: #fff;
+    border-radius: 5px; /* 圆角半径可以根据需要进行调整 */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.rounded-button:hover {
+    background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+
+
+
+</style><title>Chapter 4 Extended ER Features</title>
+</head>
+
+<div class="container">
+    <a class="rounded-button" href="https://58191554.github.io/csc3170_23fall/dashboard.html">Back to Dashboard</a>
+</div>
+
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='note-4-extended-er-features'><span>Note 4 Extended ER Features</span></h1><blockquote><p><span>Lecturer: Jane YOU</span>
+<span>Note Author: Zhen Tong</span></p></blockquote><p><span>After we have the basic knowledge of Entity-Relationship Model, this week, let’s go deeper into ER design tips.</span></p><p><span>First of all let’s take this example, and see why we need the first thing we are caring about Specialization.</p><h2 id='specialization'><span>Specialization</span></h2><p><img src="Note%204%20Extended%20ER%20Features%20d5b6bd5ca55246639f52d80ca1186aca/Untitled.png" alt="Untitled" style="zoom:50%;" /></p><p><strong><span>Overlapping Specialization:</span></strong>
+<span>In an overlapping specialization scenario, entities can belong to multiple specialized sub-groups simultaneously. Consider an entity set &quot;Person&quot; and two sub-groupings &quot;Employee&quot; and &quot;Student.&quot; In this case, a person can be </span><strong><span>both</span></strong><span> an employee and a student at the same time, which is why it&#39;s considered overlapping specialization.</span></p><ul><li><p><strong><span>Person (Higher-level entity set):</span></strong></p><ul><li><p><span>Attributes: Name, Date of Birth, Address, Phone Number</span></p></li></ul></li><li><p><strong><span>Employee (Lower-level entity set):</span></strong></p><ul><li><p><span>Attributes: Employee ID, Job Title, Salary</span></p></li><li><p><span>Relationships: Works_For (relating to a department)</span></p></li></ul></li><li><p><strong><span>Student (Lower-level entity set):</span></strong></p><ul><li><p><span>Attributes: Student ID, Major, GPA</span></p></li><li><p><span>Relationships: Enrolled_In (relating to courses)</span></p></li></ul></li></ul><p><span>In this example, a person can be a student and an employee at the same time, as some individuals work part-time while pursuing their studies.</span></p><p><strong><span>Disjoint Specialization:</span></strong></p><p><span>Let’s assume in this problem the secretary can’t be an instructor(which is a common case because they only study management🥱).</span>
+<span>In a disjoint specialization scenario, entities can belong to only one specialized sub-group. Consider an entity set &quot;Employee&quot; and two sub-groupings &quot;Instructor&quot; and &quot;Secretary.&quot; In this case, a person can be </span><strong><span>either</span></strong><span> an instructor </span><strong><span>or</span></strong><span> a secretary, </span><strong><span>but not both</span></strong><span>, which is why it&#39;s considered a disjoint specialization.</span></p><ul><li><p><strong><span>Employee (Higher-level entity set):</span></strong></p><ul><li><p><span>Attributes: Employee ID, Job Title, Salary</span></p></li><li><p><span>Relationships: Works_For (relating to a department)</span></p></li></ul></li><li><p><strong><span>Instructor (Lower-level entity set):</span></strong></p><ul><li><p><span>Attributes: Employee ID, Subject Taught, Office Location</span></p></li><li><p><span>Relationships: Teaches (relating to courses)</span></p></li></ul></li><li><p><strong><span>Secretary (Lower-level entity set):</span></strong></p><ul><li><p><span>Attributes: Employee ID, Department, Extension Number</span></p></li><li><p><span>Relationships: Assists (relating to an executive or manager)</span></p></li></ul></li></ul><p><span>Okay, now let’s take over this problem. How do we do?</span></p><p><span>A very intuitive way is you create a separate database schema for each class (or entity) in the specialization hierarchy. This is the </span><strong><span>specialization via schemas</span></strong><span> also known as the </span><strong><span>&quot;Schema per Class Hierarchy&quot;</span></strong><span> approach. Here&#39;s how it works and its drawbacks:</span></p><p><strong><span>1. Form a Schema for the Higher-Level Entity:</span></strong></p><ul><li><p><span>Create a database schema for the higher-level entity in the specialization hierarchy. This schema includes attributes that are common to all entities in the hierarchy. The primary key for the higher-level entity is typically included in this schema.</span></p><figure class='table-figure'><table><thead><tr><th><span>schema</span></th><th><span>attributes</span></th></tr></thead><tbody><tr><td><span>person</span></td><td><span>ID, name, address</span></td></tr><tr><td><span>student</span></td><td><span>ID, GPA</span></td></tr><tr><td><span>employee</span></td><td><span>ID, salary</span></td></tr></tbody></table></figure></li></ul><p><strong><span>2. Form a Schema for Each Lower-Level Entity Set:</span></strong></p><ul><li><p><span>For each lower-level entity in the specialization hierarchy, you create a separate schema. These schemas </span><strong><span>include the primary key of the higher-level entity</span></strong><span> and local attributes that are specific to each lower-level entity.</span></p></li></ul><p><strong><span>Drawback:</span></strong>
+<span>The main drawback of this approach is that it can lead to </span><strong><span>complex queries</span></strong><span> and potential </span><strong><span>performance issues</span></strong><span> when retrieving information about a specific entity. Here&#39;s why:</span></p><ul><li><p><span>When you want to access information about a lower-level entity (e.g., an employee), you need to perform joins between the high-level schema (e.g., &quot;</span><strong><span>Person</span></strong><span>&quot;) and the low-level schema (e.g., &quot;</span><strong><span>Employee</span></strong><span>&quot;). This means you must access two relations and perform JOIN operations to retrieve the complete information about an employee.</span></p></li><li><p><span>Join operations can be computationally expensive and may result in slower query performance, especially when dealing with large datasets.</span></p></li><li><p><span>Additionally, managing and maintaining multiple schemas can be more complex and require extra effort.</span></p></li></ul><p><span>However, this approach offers the </span><strong><span>advantage</span></strong><span> of maintaining data integrity and ensuring that each entity type has its own specific attributes. It&#39;s suitable when there are substantial differences between entities in terms of attributes.</span></p><p><span>Another way is to </span><strong><span>represent specialization as schemas</span></strong><span> is known as the </span><strong><span>&quot;Single Table Inheritance&quot;</span></strong><span> approach. In this approach, you create a single database schema for each entity in the specialization hierarchy. Each schema includes all the local attributes for that entity and any inherited attributes. </span></p><p><strong><span>1. Form a Schema for Each Entity Set:</span></strong></p><ul><li><p><span>For each entity in the specialization hierarchy, you create a separate schema or table.</span></p></li><li><p><span>Each schema includes </span><strong><span>not only the local attributes</span></strong><span> specific to that entity </span><strong><span>but also</span></strong><span> any attributes inherited from </span><strong><span>higher-level entities</span></strong><span>.</span></p></li></ul><figure class='table-figure'><table><thead><tr><th><span>schema</span></th><th><span>attributes</span></th></tr></thead><tbody><tr><td><span>person</span></td><td><span>ID, name, address</span></td></tr><tr><td><span>student</span></td><td><span>ID, name, address, GPA</span></td></tr><tr><td><span>employee</span></td><td><span>ID, name, address, salary</span></td></tr></tbody></table></figure><p><strong><span>Drawback:</span></strong>
+<span>The primary drawback of this approach is data </span><strong><span>redundancy</span></strong><span>.</span></p><ul><li><p><span>Since each schema includes all local and inherited attributes, some attributes may be stored redundantly for entities that belong to multiple lower-level entities. For example, if a person is both a student and an employee, their name, street address, and city might be stored redundantly in both the &quot;Student&quot; and &quot;Employee&quot; schemas.</span></p></li></ul><p><span>Despite the data redundancy drawback, this approach has the advantage of simplifying queries. You don&#39;t need to perform joins to retrieve data specific to a particular entity type, as all the data is available in a single table.</span></p><h2 id='completeness-constraint'><span>Completeness </span><strong><span>Constraint</span></strong></h2><p><span>Next, think of a bigger question, is a person necessary to be either a student or an employee? The answer depends on the problem context but in reality, someone like a visiting scholar can not fit into these two categories. This is the Completeness Constaint problem.</span></p><p><span>It specifies whether an entity in the higher-level entity set must belong to at least one of the lower-level entity sets within a generalization. There are two types of completeness constraints: total and partial.</span></p><ol start='' ><li><p><strong><span>Total Completeness Constraint:</span></strong></p><ul><li><p><span>In a total completeness constraint, it is specified that every entity in the higher-level entity set must belong to one of the lower-level entity sets. In other words, there are no entities that exist solely at the higher level; they are always specialized into one of the lower-level entities.</span></p></li></ul><p><span>Example: If we have a generalization hierarchy that combines &quot;Person,&quot; &quot;Student,&quot; and &quot;Employee,&quot; with a total completeness constraint, every person must be either a student or an employee, ensuring that no person exists without one of these specific roles.</span></p></li><li><p><strong><span>Partial Completeness Constraint:</span></strong></p><ul><li><p><span>In a partial completeness constraint, it is specified that an entity in the higher-level entity set may or may not belong to one of the lower-level entity sets. In this case, there can be entities at the higher level that are not specialized into any of the lower-level entities.</span></p></li></ul></li></ol><p><span>Consider an entity-relationship model that represents vehicles, with a generalization hierarchy involving &quot;Vehicles,&quot; &quot;Cars,&quot; and &quot;Trucks.&quot;</span></p><ol start='' ><li><p><strong><span>Total Completeness Constraint:</span></strong></p><ul><li><p><span>Total completeness would mean that every entity in the &quot;Vehicles&quot; higher-level entity set must belong to one of the lower-level entity sets, &quot;Cars&quot; or &quot;Trucks.&quot; No vehicle can exist without being classified as either a car or a truck.</span></p><p><img src="Note%204%20Extended%20ER%20Features%20d5b6bd5ca55246639f52d80ca1186aca/Untitled%201.png" referrerpolicy="no-referrer" alt="Untitled"></p><p><img src="Note%204%20Extended%20ER%20Features%20d5b6bd5ca55246639f52d80ca1186aca/Untitled%202.png" referrerpolicy="no-referrer" alt="Untitled"></p></li></ul></li><li><p><strong><span>Partial Completeness Constraint:</span></strong></p><ul><li><p><span>Partial completeness allows for the possibility of entities in the higher-level &quot;Vehicles&quot; entity set that are not specialized into &quot;Cars&quot; or &quot;Trucks.&quot; Some vehicles, like a bus, can remain unclassified in this case.</span></p><p><img src="Note%204%20Extended%20ER%20Features%20d5b6bd5ca55246639f52d80ca1186aca/Untitled%203.png" referrerpolicy="no-referrer" alt="Untitled"></p></li></ul></li></ol><h2 id='aggregation'><span>Aggregation</span></h2><p><span>Recall that aggregation is often used when you have a complex entity that can be broken down into smaller, related entities. In this case, you&#39;re discussing the ternary relationship </span><strong><code>proj_guide</code></strong><span>, which involves students, instructors, and projects, and you want to model evaluations of students by instructors on projects using an entity called &quot;evaluation.&quot;</span></p><p><img src="Note%204%20Extended%20ER%20Features%20d5b6bd5ca55246639f52d80ca1186aca/Untitled%204.png" alt="Untitled" style="zoom:50%;" /></p><p><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>Reduce to Relational Schemas*</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>**</span></strong><strong><span>*</span></strong></p><p><span>Now how can we take this aggregation into Relational Schemas?  </span></p><p><span>The way we do this is encode the aggregation directly into a schema, because it has the nature of a table.</span></p><ol start='' ><li><p><strong><code>eval_for</code><span> Schema:</span></strong></p><ul><li><p><span>This schema will capture the aggregation of data related to evaluations. It includes attributes from the &quot;evaluation&quot; entity and links them to the primary keys of the associated entity sets.</span></p></li><li><p><strong><code>s_ID</code></strong><span> is the primary key from the &quot;student&quot; entity.</span></p></li><li><p><strong><code>project_id</code></strong><span> is the primary key from the &quot;project&quot; entity.</span></p></li><li><p><strong><code>i_ID</code></strong><span> is the primary key from the &quot;instructor&quot; entity.</span></p></li><li><p><strong><code>evaluation_id</code></strong><span> is the primary key of the &quot;evaluation&quot; entity.</span></p></li></ul></li></ol><p><span>Here&#39;s what the &quot;eval_for&quot; schema might look like in SQL-like notation:</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="sql"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="sql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.51562px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> eval_for <span class="cm-bracket">(</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  s_ID <span class="cm-type">INT</span><span class="cm-punctuation">,</span> <span class="cm-comment">-- Student ID</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  project_id <span class="cm-type">INT</span><span class="cm-punctuation">,</span> <span class="cm-comment">-- Project ID</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  i_ID <span class="cm-type">INT</span><span class="cm-punctuation">,</span> <span class="cm-comment">-- Instructor ID</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  evaluation_id <span class="cm-type">INT</span><span class="cm-punctuation">,</span> <span class="cm-comment">-- Evaluation ID</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">-- Other attributes specific to the evaluation entity</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">-- ... (evaluation_date, evaluation_score, etc.)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>s_ID<span class="cm-punctuation">,</span> project_id<span class="cm-punctuation">,</span> i_ID<span class="cm-punctuation">,</span> evaluation_id<span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>s_ID<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> student <span class="cm-bracket">(</span>student_id<span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>project_id<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> project <span class="cm-bracket">(</span>project_id<span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>i_ID<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> instructor <span class="cm-bracket">(</span>instructor_id<span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>evaluation_id<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> evaluation <span class="cm-bracket">(</span>evaluation_id<span class="cm-bracket">)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 299px;"></div><div class="CodeMirror-gutters" style="display: none; height: 299px;"></div></div></div></pre><h2 id='entities-vs-attributes'><span>Entities vs Attributes</span></h2><p><span>Let&#39;s evaluate the two designs in the scenario of dealing with instructor information and phone numbers</span></p><p><img src="Note%204%20Extended%20ER%20Features%20d5b6bd5ca55246639f52d80ca1186aca/Untitled%205.png" alt="Untitled"  /></p><p><strong><span>Attributes Design:</span></strong>
+<span>Instructor as an entity with attributes:</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="sql"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="sql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.51562px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> instructor <span class="cm-bracket">(</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  ID <span class="cm-type">INT</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  name <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">255</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span> </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  salary <span class="cm-type">DECIMAL</span><span class="cm-bracket">(</span><span class="cm-number">10</span><span class="cm-punctuation">,</span> <span class="cm-number">2</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span> </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  phone_number <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">15</span><span class="cm-bracket">)</span> <span class="cm-comment">-- Assuming phone numbers as strings</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 138px;"></div><div class="CodeMirror-gutters" style="display: none; height: 138px;"></div></div></div></pre><p><strong><span>Entities Design:</span></strong>
+<span>Instructor and phone as separate entities with a relationship:</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="sql" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="sql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.51562px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Create the 'instructor' table</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> instructor <span class="cm-bracket">(</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  ID <span class="cm-type">INT</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  name <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">255</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  salary <span class="cm-type">DECIMAL</span><span class="cm-bracket">(</span><span class="cm-number">10</span><span class="cm-punctuation">,</span> <span class="cm-number">2</span><span class="cm-bracket">)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Create the 'phone' table</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> phone <span class="cm-bracket">(</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  phone_number <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">15</span><span class="cm-bracket">)</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  location <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">255</span><span class="cm-bracket">)</span> </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Create the 'instructor_phone' join table to establish the relationship</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> instructor_phone <span class="cm-bracket">(</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  instructor_ID <span class="cm-type">INT</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  phone_number <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">15</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>instructor_ID<span class="cm-punctuation">,</span> phone_number<span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>instructor_ID<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> instructor<span class="cm-bracket">(</span>ID<span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>phone_number<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> phone<span class="cm-bracket">(</span>phone_number<span class="cm-bracket">)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 484px;"></div><div class="CodeMirror-gutters" style="display: none; height: 484px;"></div></div></div></pre><p><span>Here&#39;s a comparison of the two designs:</span></p><p><strong><span>Attributes Design:</span></strong></p><ul><li><p><span>Simplicity: The attributes design is simpler and more straightforward, as it represents the instructor&#39;s phone number as an attribute of the instructor entity.</span></p></li></ul><p><strong><span>Entities Design:</span></strong></p><ul><li><p><span>Additional Phone Information: It allows you to capture additional information about phone numbers (e.g., location) if that information is relevant.</span></p></li></ul><h2 id='entities-vs-relationship-sets'><span>Entities vs Relationship Sets</span></h2><p><span>In database modeling, the choice between using entity sets and relationship sets depends on how you want to represent the data and the nature of the associations between entities. </span></p><p><img src="Note%204%20Extended%20ER%20Features%20d5b6bd5ca55246639f52d80ca1186aca/Untitled%206.png" alt="Untitled" style="zoom:50%;" /></p><p><span>Here&#39;s an analysis of the example you provided, which involves the &quot;section,&quot; &quot;registration,&quot; and &quot;student&quot; entities:</span></p><p><strong><span>Entity Sets Approach:</span></strong></p><p><span>In this approach, you represent both students and sections as entities, and you use a relationship to associate them:</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="sql" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="sql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.51562px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Entity Sets</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> student <span class="cm-bracket">(</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  student_id <span class="cm-type">INT</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  name <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">255</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">-- Other student attributes</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> section <span class="cm-bracket">(</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  sec_id <span class="cm-type">INT</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  semester <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">255</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-type">year</span> <span class="cm-type">INT</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">-- Other section attributes</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Relationship</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> registration <span class="cm-bracket">(</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  student_id <span class="cm-type">INT</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  sec_id <span class="cm-type">INT</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">-- Other attributes like registration date, grade, etc.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>student_id<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> student<span class="cm-bracket">(</span>student_id<span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>sec_id<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> section<span class="cm-bracket">(</span>sec_id<span class="cm-bracket">)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 507px;"></div><div class="CodeMirror-gutters" style="display: none; height: 507px;"></div></div></div></pre><p><span>In this design:</span></p><ul><li><p><span>Each student and each section are represented as entities with their attributes.</span></p></li><li><p><span>The &quot;registration&quot; table captures the relationship between students and sections. It includes foreign keys referencing the primary keys of the &quot;student&quot; and &quot;section&quot; tables.</span></p></li></ul><p><strong><span>Relationship Sets Approach:</span></strong></p><p><span>In this approach, you represent the &quot;registration&quot; as an entity itself to describe the relationship:</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="sql" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="sql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.51562px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Entity Sets</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> student <span class="cm-bracket">(</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  student_id <span class="cm-type">INT</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span><span class="cm-punctuation">,</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  name <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">255</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">-- Other student attributes</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> section <span class="cm-bracket">(</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  sec_id <span class="cm-type">INT</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  semester <span class="cm-type">VARCHAR</span><span class="cm-bracket">(</span><span class="cm-number">255</span><span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-type">year</span> <span class="cm-type">INT</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">-- Other section attributes</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">-- Relationship Set (Registration)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> registration <span class="cm-bracket">(</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  registration_id <span class="cm-type">INT</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  student_id <span class="cm-type">INT</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  sec_id <span class="cm-type">INT</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">-- Other attributes like registration date, grade, etc.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>student_id<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> student<span class="cm-bracket">(</span>student_id<span class="cm-bracket">)</span><span class="cm-punctuation">,</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span> <span class="cm-bracket">(</span>sec_id<span class="cm-bracket">)</span> <span class="cm-keyword">REFERENCES</span> section<span class="cm-bracket">(</span>sec_id<span class="cm-bracket">)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-bracket">)</span><span class="cm-punctuation">;</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 530px;"></div><div class="CodeMirror-gutters" style="display: none; height: 530px;"></div></div></div></pre><p><span>In this design:</span></p><ul><li><p><span>Each student and each section are represented as entities with their attributes, just as in the entity sets approach.</span></p></li><li><p><span>However, the relationship between students and sections is captured using a &quot;registration&quot; entity with a unique identifier (&quot;registration_id&quot;). The relationship attributes are part of this entity.</span></p></li></ul><p><span>Which Approach to Choose:</span></p><p><span>Consider your specific modeling requirements and whether you want to </span><strong><span>capture additional information</span></strong><span> about the registration process when deciding between these two approaches.</span></p><h2 id='non-binary-to-binary'><span>Non-Binary to Binary</span></h2><p><span>No offense 🌈 but converting non-binary relationships to binary form is a common practice in database design when you want to represent relationships involving more than two entities using binary relationships. This approach simplifies data modeling and maintains the integrity and clarity of the relationships. Here&#39;s how it&#39;s done:</span></p><p><img src="Note%204%20Extended%20ER%20Features%20d5b6bd5ca55246639f52d80ca1186aca/Untitled%207.png" referrerpolicy="no-referrer" alt="Untitled"></p><ol start='' ><li><p><strong><span>Create a Middle Artificial Entity Set:</span></strong></p><ul><li><p><span>To represent the non-binary relationship, you introduce an artificial entity set (let&#39;s call it &quot;E&quot;). This artificial entity set will serve as a connector between the original entities involved in the non-binary relationship.</span></p></li></ul></li><li><p><strong><span>Create Binary Relationship Sets:</span></strong></p><ul><li><p><span>For each original entity set involved in the non-binary relationship (let&#39;s call them A, B, and C), create a binary relationship set between &quot;E&quot; and the respective entity set. This effectively converts the non-binary relationship into several binary relationships.</span></p></li></ul></li><li><p><strong><span>Assign Entities to Binary Relationships:</span></strong></p><ul><li><p><span>For each tuple (a, b, c) in the non-binary relationship (let&#39;s call it &quot;R&quot;), you create a new entity (let&#39;s call it &quot;e&quot;) in the artificial entity set &quot;E.&quot; Then, you establish relationships between &quot;e&quot; and each of the original entities (a, b, and c) using the binary relationship sets created in step 2.</span></p></li></ul></li></ol></div></div>
+</body>
+</html>
