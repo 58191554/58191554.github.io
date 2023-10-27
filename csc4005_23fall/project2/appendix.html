@@ -1,0 +1,599 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex:2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style><title>appendix</title>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h2 id='profiling'><span>Profiling </span></h2><ul><li><p><strong><span>Profiling Results &amp; Analysis with </span><code>perf</code><span> </span></strong></p></li></ul><h4 id='naive'><span>Naive</span></h4><figure class='table-figure'><table><thead><tr><th><span>Matrix size</span></th><th><span>Execution Time (ms)</span></th><th><span>Cache References</span></th><th><span>Cache Misses (%)</span></th><th><span>Page Faults</span></th><th><span>Cycles</span></th><th><span>Instructions (insn per cycle)</span></th><th><span>Time Elapsed (s)</span></th><th><span>User Time (s)</span></th><th><span>Sys Time (s)</span></th></tr></thead><tbody><tr><td><span>4x4</span></td><td><span>0</span></td><td><span>15,059</span></td><td><span>7,880 (52.33%)</span></td><td><span>350</span></td><td><span>1,645,064</span></td><td><span>1,499,957 (0.91)</span></td><td><span>0.006876428</span></td><td><span>0.001486000</span></td><td><span>0.000743000</span></td></tr><tr><td><span>128x128</span></td><td><span>12</span></td><td><span>20,542</span></td><td><span>7,989 (38.89%)</span></td><td><span>401</span></td><td><span>45,638,597</span></td><td><span>92,867,897 (2.03)</span></td><td><span>0.024913198</span></td><td><span>0.015714000</span></td><td><span>0.001964000</span></td></tr><tr><td><span>1024x1024</span></td><td><span>8098</span></td><td><span>68,405,312</span></td><td><span>153,895 (0.23%)</span></td><td><span>10,069</span></td><td><span>23,902,613,961</span></td><td><span>35,919,507,009 (1.50)</span></td><td><span>8.410229329</span></td><td><span>8.265018000</span></td><td><span>0.029934000</span></td></tr><tr><td><span>2048x2048</span></td><td><span>84405</span></td><td><span>542,915,007</span></td><td><span>129,186,888 (23.80%)</span></td><td><span>54,722</span></td><td><span>245,535,142,712</span></td><td><span>281,103,204,474 (1.14)</span></td><td><span>85.622553390</span></td><td><span>84.912009000</span></td><td><span>0.132696000</span></td></tr></tbody></table></figure><h4 id='memory-locality'><span>Memory Locality</span></h4><figure class='table-figure'><table><thead><tr><th><span>Matrix size</span></th><th><span>Execution Time (ms)</span></th><th><span>Cache References</span></th><th><span>Cache Misses (%)</span></th><th><span>Page Faults</span></th><th><span>Cycles</span></th><th><span>Instructions (insn per cycle)</span></th><th><span>Time Elapsed (s)</span></th><th><span>User Time (s)</span></th><th><span>Sys Time (s)</span></th></tr></thead><tbody><tr><td><span>4x4</span></td><td><span>0</span></td><td><span>14,927</span></td><td><span>7,575 (50.75%)</span></td><td><span>349</span></td><td><span>1,634,691</span></td><td><span>1,508,247 (0.92)</span></td><td><span>0.006073757</span></td><td><span>0.000703000</span></td><td><span>0.001406000</span></td></tr><tr><td><span>128x128</span></td><td><span>1</span></td><td><span>24,096</span></td><td><span>8,014 (33.26%)</span></td><td><span>450</span></td><td><span>14,265,534</span></td><td><span>41,337,323 (2.90)</span></td><td><span>0.010781986</span></td><td><span>0.004723000</span></td><td><span>0.002361000</span></td></tr><tr><td><span>1024x1024</span></td><td><span>592</span></td><td><span>68,703,460</span></td><td><span>583,328 (0.85%)</span></td><td><span>6,552</span></td><td><span>2,508,334,843</span></td><td><span>9,916,745,223 (3.95)</span></td><td><span>1.011168101</span></td><td><span>0.878656000</span></td><td><span>0.035945000</span></td></tr><tr><td><span>2048x2048</span></td><td><span>5049</span></td><td><span>545,134,374</span></td><td><span>122,248,794 (22.43%)</span></td><td><span>51,633</span></td><td><span>16,556,640,721</span></td><td><span>66,554,110,649 (4.02)</span></td><td><span>6.263003508</span></td><td><span>5.742302000</span></td><td><span>0.148697000</span></td></tr></tbody></table></figure><h4 id='simd--memory-locality'><strong><span>SIMD + Memory Locality</span></strong></h4><figure class='table-figure'><table><thead><tr><th><span>Matrix Size</span></th><th><span>Execution Time (ms)</span></th><th><span>Cache References</span></th><th><span>Cache Misses (%)</span></th><th><span>Page Faults</span></th><th><span>Cycles</span></th><th><span>Instructions (insn per cycle)</span></th><th><span>Time Elapsed (s)</span></th><th><span>User Time (s)</span></th><th><span>Sys Time (s)</span></th></tr></thead><tbody><tr><td><span>4x4</span></td><td><span>0</span></td><td><span>15,324</span></td><td><span>8,036 (52.44%)</span></td><td><span>352</span></td><td><span>1,658,805</span></td><td><span>1,525,188 (0.92)</span></td><td><span>0.005522463</span></td><td><span>0.001371000</span></td><td><span>0.000685000</span></td></tr><tr><td><span>128x128</span></td><td><span>0</span></td><td><span>24,126</span></td><td><span>8,013 (33.21%)</span></td><td><span>465</span></td><td><span>11,883,415</span></td><td><span>29,497,713 (2.48)</span></td><td><span>0.009254048</span></td><td><span>0.006170000</span></td><td><span>0.000000000</span></td></tr><tr><td><span>1024x1024</span></td><td><span>231</span></td><td><span>9,741,688</span></td><td><span>574,065 (5.89%)</span></td><td><span>6,652</span></td><td><span>1,382,821,719</span></td><td><span>3,855,495,348 (2.79)</span></td><td><span>0.646677788</span></td><td><span>0.531073000</span></td><td><span>0.021961000</span></td></tr><tr><td><span>2048x2048</span></td><td><span>1834</span></td><td><span>71,703,054</span></td><td><span>18,617,438 (25.97%)</span></td><td><span>44,224</span></td><td><span>6,640,389,416</span></td><td><span>18,087,217,743 (2.72)</span></td><td><span>3.051195702</span></td><td><span>2.553388000</span></td><td><span>0.133072000</span></td></tr></tbody></table></figure><h4 id='openmp--simd--memory-locality'><strong><span>openmp + SIMD + Memory Locality</span></strong></h4><p><span>Size = (1024x1024) x  (1024x1024)</span></p><figure class='table-figure'><table><thead><tr><th><span>Number of Cores</span></th><th><span>Execution Time (ms)</span></th><th><span>Cache References</span></th><th><span>Cache Misses (%)</span></th><th><span>Page Faults</span></th><th><span>Cycles</span></th><th><span>Instructions (insn per cycle)</span></th><th><span>Time Elapsed (s)</span></th><th><span>User Time (s)</span></th><th><span>Sys Time (s)</span></th></tr></thead><tbody><tr><td><span>1</span></td><td><span>180</span></td><td><span>35,735,697</span></td><td><span>529,023 (1.48%)</span></td><td><span>6,720</span></td><td><span>1,719,419,319</span></td><td><span>3,745,134,379 (2.18)</span></td><td><span>0.608006180</span></td><td><span>0.655374000</span></td><td><span>0.033915000</span></td></tr><tr><td><span>2</span></td><td><span>180</span></td><td><span>35,828,139</span></td><td><span>532,107 (1.49%)</span></td><td><span>6,719</span></td><td><span>1,721,031,788</span></td><td><span>3,745,488,445 (2.18)</span></td><td><span>0.607123866</span></td><td><span>0.664244000</span></td><td><span>0.024934000</span></td></tr><tr><td><span>4</span></td><td><span>107</span></td><td><span>35,742,443</span></td><td><span>722,581 (2.02%)</span></td><td><span>6,725</span></td><td><span>1,788,278,975</span></td><td><span>3,756,960,867 (2.10)</span></td><td><span>0.541872765</span></td><td><span>0.713217000</span></td><td><span>0.034010000</span></td></tr><tr><td><span>8</span></td><td><span>68</span></td><td><span>50,515,828</span></td><td><span>778,685 (1.54%)</span></td><td><span>6,737</span></td><td><span>1,857,770,853</span></td><td><span>3,777,157,390 (2.03)</span></td><td><span>0.533851150</span></td><td><span>0.789563000</span></td><td><span>0.042976000</span></td></tr><tr><td><span>16</span></td><td><span>52</span></td><td><span>51,659,963</span></td><td><span>720,180 (1.39%)</span></td><td><span>6,763</span></td><td><span>2,176,615,555</span></td><td><span>3,820,804,788 (1.76)</span></td><td><span>0.516569947</span></td><td><span>0.990392000</span></td><td><span>0.044151000</span></td></tr><tr><td><span>32</span></td><td><span>43</span></td><td><span>43,359,618</span></td><td><span>666,146 (1.54%)</span></td><td><span>6,814</span></td><td><span>2,972,420,024</span></td><td><span>3,922,431,309 (1.32)</span></td><td><span>0.512431069</span></td><td><span>1.430720000</span></td><td><span>0.069196000</span></td></tr></tbody></table></figure><p><span>Size = (2048x2048) x  (2048x2048)</span></p><figure class='table-figure'><table><thead><tr><th><span>Number of Cores</span></th><th><span>Execution Time (ms)</span></th><th><span>Cache References</span></th><th><span>Cache Misses (%)</span></th><th><span>Page Faults</span></th><th><span>Cycles</span></th><th><span>Instructions (insn per cycle)</span></th><th><span>Time Elapsed (s)</span></th><th><span>User Time (s)</span></th><th><span>Sys Time (s)</span></th></tr></thead><tbody><tr><td><span>1</span></td><td><span>1694</span></td><td><span>281,435,292</span></td><td><span>67,810,759 (24.10%)</span></td><td><span>45,192</span></td><td><span>11,600,419,676</span></td><td><span>20,329,444,499 (1.75)</span></td><td><span>3.342514567</span></td><td><span>4.497190000</span></td><td><span>0.134855000</span></td></tr><tr><td><span>2</span></td><td><span>1694</span></td><td><span>282,296,131</span></td><td><span>68,767,488 (24.36%)</span></td><td><span>46,130</span></td><td><span>11,607,809,489</span></td><td><span>20,337,826,665 (1.75)</span></td><td><span>3.341796224</span></td><td><span>4.511263000</span></td><td><span>0.123787000</span></td></tr><tr><td><span>4</span></td><td><span>1041</span></td><td><span>337,747,913</span></td><td><span>140,765,153 (41.68%)</span></td><td><span>37,685</span></td><td><span>12,044,433,638</span></td><td><span>20,348,731,391 (1.69)</span></td><td><span>2.795482975</span></td><td><span>4.696208000</span></td><td><span>0.148626000</span></td></tr><tr><td><span>8</span></td><td><span>512</span></td><td><span>293,565,151</span></td><td><span>72,124,546 (24.57%)</span></td><td><span>25,313</span></td><td><span>12,358,982,875</span></td><td><span>20,375,709,121 (1.65)</span></td><td><span>2.268546157</span></td><td><span>4.904354000</span></td><td><span>0.129824000</span></td></tr><tr><td><span>16</span></td><td><span>378</span></td><td><span>323,499,810</span></td><td><span>62,453,073 (19.30%)</span></td><td><span>25,347</span></td><td><span>12,937,708,531</span></td><td><span>20,421,322,398 (1.58)</span></td><td><span>2.066236412</span></td><td><span>5.331375000</span></td><td><span>0.131614000</span></td></tr><tr><td><span>32</span></td><td><span>221</span></td><td><span>301,917,831</span></td><td><span>38,546,078 (12.77%)</span></td><td><span>25,414</span></td><td><span>13,058,545,816</span></td><td><span>20,467,635,895 (1.57)</span></td><td><span>1.912390218</span></td><td><span>5.734781000</span></td><td><span>0.143543000</span></td></tr></tbody></table></figure><h4 id='mpi--openmp--simd--memory-locality'><span>MPI + </span><strong><span>openmp + SIMD + Memory Locality</span></strong></h4><p><strong><span>Number of Processes: 1, Number of Threads: 32</span></strong></p><figure class='table-figure'><table><thead><tr><th>&nbsp;</th><th><span>cache-references</span></th><th><span>cache-misses:u</span></th><th><span>% of all cache refs</span></th><th><span>page-faults:u</span></th><th><span>cycles:u</span></th><th><span>instructions:u</span></th><th><span>insn per cycle</span></th><th><span>seconds time elapsed</span></th><th><span>seconds user</span></th><th><span>seconds sys</span></th></tr></thead><tbody><tr><td><span>MPI</span></td><td><span>53,531,599</span></td><td><span>573,448</span></td><td><span>1.071</span></td><td><span>8,193</span></td><td><span>2,631,554,077</span></td><td><span>3,145,888,030</span></td><td><span>1.2</span></td><td><span>0.40927466</span></td><td><span>1.313346</span></td><td><span>0.047192</span></td></tr></tbody></table></figure><p>&nbsp;</p><p><strong><span>Number of Processes: 2, Number of Threads: 16</span></strong></p><figure class='table-figure'><table><thead><tr><th>&nbsp;</th><th><span>cache-references</span></th><th><span>cache-misses:u</span></th><th><span>% of all cache refs</span></th><th><span>page-faults:u</span></th><th><span>cycles:u</span></th><th><span>instructions:u</span></th><th><span>insn per cycle</span></th><th><span>seconds time elapsed</span></th><th><span>seconds user</span></th><th><span>seconds sys</span></th></tr></thead><tbody><tr><td><span>Run 1</span></td><td><span>18,387,521</span></td><td><span>638,882</span></td><td><span>3.475%</span></td><td><span>7,201</span></td><td><span>1,794,540,131</span></td><td><span>3,103,282,451</span></td><td><span>1.73</span></td><td><span>0.403728107</span></td><td><span>0.863765000</span></td><td><span>0.022835000</span></td></tr><tr><td><span>Run 2</span></td><td><span>18,512,037</span></td><td><span>433,639</span></td><td><span>2.342%</span></td><td><span>8,032</span></td><td><span>1,285,180,822</span></td><td><span>2,355,963,191</span></td><td><span>1.83</span></td><td><span>0.544637732</span></td><td><span>0.674788000</span></td><td><span>0.046545000</span></td></tr></tbody></table></figure><p><strong><span>Number of Processes: 4, Number of Threads: 8</span></strong></p><figure class='table-figure'><table><thead><tr><th><span>Process</span></th><th><span>cache-references</span></th><th><span>cache-misses:u</span></th><th><span>% of all cache refs</span></th><th><span>page-faults:u</span></th><th><span>cycles:u</span></th><th><span>instructions:u</span></th><th><span>insn per cycle</span></th><th><span>seconds time elapsed</span></th><th><span>seconds user</span></th><th><span>seconds sys</span></th></tr></thead><tbody><tr><td><span>1</span></td><td><span>11,624,426</span></td><td><span>347,147</span></td><td><span>2.986%</span></td><td><span>6,148</span></td><td><span>1,285,759,934</span></td><td><span>2.13</span></td><td><span>0.411279954</span></td><td><span>0.549887000</span></td><td><span>0.039560000</span></td><td><span>0.039560000</span></td></tr><tr><td><span>2</span></td><td><span>11,373,436</span></td><td><span>428,685</span></td><td><span>3.769%</span></td><td><span>6,661</span></td><td><span>1,212,875,856</span></td><td><span>2.24</span></td><td><span>0.798180252</span></td><td><span>0.555392000</span></td><td><span>0.030021000</span></td><td><span>0.030021000</span></td></tr><tr><td><span>3</span></td><td><span>11,580,639</span></td><td><span>1,132,947</span></td><td><span>9.783%</span></td><td><span>6,660</span></td><td><span>1,297,436,685</span></td><td><span>2.10</span></td><td><span>0.405662909</span></td><td><span>0.568450000</span></td><td><span>0.036899000</span></td><td><span>0.036899000</span></td></tr><tr><td><span>4</span></td><td><span>10,044,076</span></td><td><span>676,713</span></td><td><span>6.737%</span></td><td><span>7,847</span></td><td><span>959,176,494</span></td><td><span>2.09</span></td><td><span>0.864433109</span></td><td><span>0.450446000</span></td><td><span>0.049157000</span></td><td><span>0.049157000</span></td></tr></tbody></table></figure><p><strong><span>Number of Processes: 8, Number of Threads: 4</span></strong></p><figure class='table-figure'><table><thead><tr><th><span>Process</span></th><th><span>Cache References</span></th><th><span>Cache Misses (%)</span></th><th><span>Page Faults</span></th><th><span>Cycles</span></th><th><span>Instructions</span></th><th><span>Instructions per Cycle</span></th></tr></thead><tbody><tr><td><span>1</span></td><td><span>7,103,554</span></td><td><span>5.643%</span></td><td><span>5,887</span></td><td><span>1,095,412,904</span></td><td><span>2,644,775,225</span></td><td><span>2.41</span></td></tr><tr><td><span>2</span></td><td><span>4,974,409</span></td><td><span>8.437%</span></td><td><span>5,887</span></td><td><span>2,644,775,225</span></td><td><span>2,565,722,673</span></td><td><span>2.49</span></td></tr><tr><td><span>3</span></td><td><span>4,965,116</span></td><td><span>29.409%</span></td><td><span>5,887</span></td><td><span>1,059,540,343</span></td><td><span>2,714,194,905</span></td><td><span>2.42</span></td></tr><tr><td><span>4</span></td><td><span>4,952,993</span></td><td><span>28.320%</span></td><td><span>5,887</span></td><td><span>1,076,613,438</span></td><td><span>2,562,567,134</span></td><td><span>2.39</span></td></tr><tr><td><span>5</span></td><td><span>4,916,100</span></td><td><span>38.812%</span></td><td><span>6,399</span></td><td><span>1,042,072,492</span></td><td><span>2,440,878,243</span></td><td><span>2.27</span></td></tr><tr><td><span>6</span></td><td><span>4,913,112</span></td><td><span>8.880%</span></td><td><span>6,398</span></td><td><span>1,816,047,284</span></td><td><span>2,562,567,134</span></td><td><span>2.46</span></td></tr><tr><td><span>7</span></td><td><span>4,918,485</span></td><td><span>33.651%</span></td><td><span>6,398</span></td><td><span>1,074,992,911</span></td><td><span>2,440,878,243</span></td><td><span>2.27</span></td></tr><tr><td><span>8</span></td><td><span>5,224,037</span></td><td><span>34.665%</span></td><td><span>8,109</span></td><td><span>812,317,982</span></td><td><span>1,816,047,284</span></td><td><span>2.24</span></td></tr></tbody></table></figure><p><strong><span>Number of Processes: 16, Number of Threads: 2</span></strong></p><figure class='table-figure'><table><thead><tr><th><span>Process</span></th><th><span>Cache References</span></th><th><span>Cache Misses (%)</span></th><th><span>Page Faults</span></th><th><span>Cycles</span></th><th><span>Instructions</span></th><th><span>Instructions per Cycle</span></th></tr></thead><tbody><tr><td><span>Average</span></td><td><span>2,726,474</span></td><td><span>43%</span></td><td><span>6373</span></td><td><span>986,932,298</span></td><td><span>2,410,212,529</span></td><td><span>2.43</span></td></tr></tbody></table></figure><p><strong><span>Number of Processes: 32, Number of Threads: 1</span></strong></p><figure class='table-figure'><table><thead><tr><th><span>Process</span></th><th><span>Cache References</span></th><th><span>Cache Misses (%)</span></th><th><span>Page Faults</span></th><th><span>Cycles</span></th><th><span>Instructions</span></th><th><span>Instructions per Cycle</span></th></tr></thead><tbody><tr><td><span>Average</span></td><td><span>2,716,216</span></td><td><span>72.204 %</span></td><td><span>6,231</span></td><td><span>1,606,922,431</span></td><td><span>2,286,784,103</span></td><td><span>1.42</span></td></tr></tbody></table></figure></div></div>
+</body>
+</html>
