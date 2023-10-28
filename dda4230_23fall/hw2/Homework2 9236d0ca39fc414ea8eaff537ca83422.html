@@ -1,0 +1,941 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Homework2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+
+
+.container {
+            background-color: #f2f2f2; /* 容器的背景颜色 */
+            padding: 20px; /* 可根据需要调整内边距 */
+            border-radius: 10px; /* 容器的圆角半径 */
+            text-align: center; /* 居中文本 */
+}
+.rounded-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d8d8d8;
+    color: #fff;
+    border-radius: 5px; /* 圆角半径可以根据需要进行调整 */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.rounded-button:hover {
+    background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+
+
+</style><title>Homework2 Vaule/Policy Iteration, Q-learning</title>
+</head>
+    <div class="container">
+        <a class="rounded-button" href="https://58191554.github.io/project_page.html">Back to Dashboard</a>
+    </div>
+
+
+<article id="9236d0ca-39fc-414e-a8ea-ff537ca83422" class="page sans"><header><h1 class="page-title">Homework2</h1><p class="page-description"></p></header><div class="page-body"><blockquote id="cf33a9d4-e4cc-469d-aecd-dd6539a9ef0b" class="">Author: Zhen Tong 120090694</blockquote><h2 id="80af7d1e-fa7e-4e45-b6eb-c4a993adb7ed" class="">Problem 1: Value and Policy Iteration Computation</h2><p id="41d8e24a-7011-4cf3-837d-347f33c3b454" class="">Consider a simple MDP with 3 states <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>s</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>s</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">s_1, s_2, s_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> and 2 actions <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>a</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">a_1, a_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>. The transition probabilities and expected rewards are shown in Figure 1 (e.g., The transition probability of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>s</mi><mn>1</mn><mo separator="true">,</mo><mi>a</mi><mn>1</mn><mo separator="true">,</mo><mi>s</mi><mn>2</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0.6</mn></mrow><annotation encoding="application/x-tex">P(s1, a1, s2) = 0.6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">a</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">s</span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0.6</span></span></span></span></span><span>﻿</span></span>, and the reward of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>a</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mn>8.0</mn></mrow><annotation encoding="application/x-tex">R(s_1, a_1) = 8.0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8.0</span></span></span></span></span><span>﻿</span></span>. Assume discount factor <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">γ = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span>.</p><figure id="794612bf-e806-476e-9da4-edf9d12aca56" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled.png"><img style="width:460px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled.png"/></a></figure><ol type="1" id="a8c37d3b-cff6-4625-9c78-6296ee49a6d8" class="numbered-list" start="1"><li>Initialize the value function for each state to be it’s max (over actions) reward, i.e., we initialize the Value Function to be <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mn>0</mn></msub><mo stretchy="false">(</mo><msub><mi>s</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mn>10.0</mn><mo separator="true">,</mo><msub><mi>V</mi><mn>0</mn></msub><mo stretchy="false">(</mo><msub><mi>s</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mn>1.0</mn><mo separator="true">,</mo><msub><mi>V</mi><mn>0</mn></msub><mo stretchy="false">(</mo><msub><mi>s</mi><mn>3</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mn>0.0.</mn></mrow><annotation encoding="application/x-tex"> V_0 (s_1) = 10.0, V_0 (s_2) = 1.0, V_0 (s_3) = 0.0.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">10.0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1.0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0.0.</span></span></span></span></span><span>﻿</span></span> Then manually perform two iterations of value iterations. Show the final values for each state and the computation process. </li></ol><p id="c6674f24-f554-4153-89d3-a82abd08efec" class=""><strong><strong><strong><strong><strong><strong><strong>Answer:</strong></strong></strong></strong></strong></strong></strong></p><p id="d55144c5-c615-47b3-9346-77b3ca293d24" class="">According to the algorithm:</p><figure id="a01972cb-1ca6-475f-acba-27c6e6a24e94" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%201.png"><img style="width:604px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%201.png"/></a></figure><pre id="361e1ce0-0b47-4fec-bfd1-bcaf147d906b" class="code"><code>&#x27;&#x27;&#x27;
+reword R matrix is |S|x|A|
+V vector is |S|
+P matrix is |S|x|A|x|S&#x27;|
+&#x27;&#x27;&#x27;
+R = np.array([
+    [8, 10],
+    [1, -1],
+    [0, 0]
+])
+
+V = np.array([10, 1, 0])
+P = np.array([
+    [
+        [0.2, 0.6, 0.2],
+        [0.1, 0.2, 0.7]
+    ],
+    [
+        [0.3, 0.3, 0.4],
+        [0.5, 0.3, 0.2]
+    ],
+    [
+        [0, 0, 1],
+        [0, 0, 1]
+    ]
+])
+
+def update_V(V:np.ndarray, R:np.ndarray, P:np.ndarray, gamma:float):
+    V_prime = np.zeros(V.shape)
+    for s in range(V.shape[0]):
+        # R[s] is 1x2
+        # P[s] is 2x3
+        # V[s].t is 3x1
+        # P[s]*V[s].T is 2x1
+        bellmans = R[s].T + np.dot(P[s], V.T)
+        V_prime[s] = np.max(bellmans, axis=0)
+    return V_prime</code></pre><p id="f9730780-7fb3-40c1-9809-0c1b8e853691" class="">iteration1<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mn>11.2</mn><mo separator="true">,</mo><mi>V</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mn>4.3</mn><mo separator="true">,</mo><mi>V</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mn>3</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex"> V(s_1)= 11.2,   V(s_2)=4.3   ,V(s_3)=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">11.2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">4.3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></span><span>﻿</span></span>
+iteration2<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mn>12.82</mn><mo separator="true">,</mo><mi>V</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mn>5.89</mn><mo separator="true">,</mo><mi>V</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mn>3</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex"> V(s_1)12.82 ,  V(s_2)= 5.89 ,  V(s_3)=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">12.82</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">5.89</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></span><span>﻿</span></span></p><p id="d699aef5-4f61-4410-8752-9caaf4bfee89" class="">
+</p><ol type="1" id="b3ac1f2f-6746-4e37-8d82-b566fb7ba900" class="numbered-list" start="2"><li>Let <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>k</mi></msub><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">π_k(s)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> denote the extracted policy after k iterations of value iteration. Argue that <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>k</mi></msub><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>π</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">π_k(s) = π_2(s)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> for all states s. [15 points]</li></ol><div id="feb11ae6-155e-426a-964b-abfdb18ce313" class="column-list"><div id="3d015451-b09f-476a-ba31-e3d6cb14236b" style="width:50%" class="column"><figure id="ead9c9be-cfc6-4c39-a7ad-e0a2289d40ef" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%202.png"><img style="width:596px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%202.png"/></a></figure></div><div id="f473f8fd-1139-4c0a-ae88-bc495953ca61" style="width:50%" class="column"><figure id="28f4f2e2-3ef9-4370-8426-ca78ca65a31a" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%203.png"><img style="width:611px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%203.png"/></a></figure></div></div><p id="9602802a-5464-48cd-8fb7-69b5e98873a3" class="">According to my computation result, the Value function of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">s_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> is bigger than the other two since the first iteration. Therefore, the policy will always choose to trigger the </p><h2 id="0853fbeb-06e4-4736-9557-2d2e3daf09fd" class="">Problem 1:Value and Policy Iteration Implementation</h2><p id="cf0c4552-10fb-4595-9eea-69a5053300ba" class="">In this problem, you will program value iteration, policy iteration, and modified policy iteration for Markov decision processes in Python. More specifically, fill in the functions in the<mark class="highlight-blue"> </mark><mark class="highlight-blue"><a href="https://cuhko365-my.sharepoint.com/personal/223040246_link_cuhk_edu_cn/_layouts/15/onedrive.aspx?id=%2Fpersonal%2F223040246%5Flink%5Fcuhk%5Fedu%5Fcn%2FDocuments%2FDDA4230%2DAssignment2%2Dskeleton%2Dcode&amp;ga=1">skeleton code</a></mark><a href="https://cuhko365-my.sharepoint.com/personal/223040246_link_cuhk_edu_cn/_layouts/15/onedrive.aspx?id=%2Fpersonal%2F223040246%5Flink%5Fcuhk%5Fedu%5Fcn%2FDocuments%2FDDA4230%2DAssignment2%2Dskeleton%2Dcode&amp;ga=1"> </a>of the file <a href="http://mdp.py/">MDP.py</a>. The file <a href="http://testmdp.py/">TestMDP.py</a> contains the simple MDP example as shown in Figure 2. You can verify that your code compiles properly with <a href="http://testmdp.py/">TestMDP.py</a> by running ”python <a href="http://testmdp.py/">TestMDP.py</a>”. Add print statements to this file to verify that the output of each function makes sense.
+Note that you need to submit the following material:</p><figure id="4e8a1f7a-8002-4792-a351-59d28afc351a" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%204.png"><img style="width:476px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%204.png"/></a></figure><h2 id="52b40272-d969-49a2-bcbe-94583d071e08" class="">Python code Run Instruction and Code Explanation.</h2><p id="7535a652-f501-4832-982f-03d8ac000b7d" class=""><strong><strong><strong>Run</strong></strong></strong></p><pre id="b544e8f1-f4d7-464f-8f23-b81bfa35f972" class="code"><code>python3 TestMDPmaze.py</code></pre><p id="9d7b6311-8f3a-4966-9de9-970fc54da6ca" class=""><strong>Value Iteration</strong></p><pre id="0a398fb5-d21b-4db2-b988-4746659ff447" class="code"><code>def valueIteration(self, initialV, nIterations=np.inf, tolerance=0.01):
+    # Initialize some variables
+    V_prime = np.zeros(self.nStates)  # Initialize a value function V&#x27; with zeros
+    V = np.ones(self.nStates) * np.inf  
+    V_record = V_prime  # Record the value function V&#x27;
+    e_record = []  # Record the maximum difference in value functions in each iteration
+    iterId = 0  # Initialize the iteration counter
+
+    # Perform the value iteration loop
+    while iterId &lt; nIterations:
+        if np.max(V - V_prime) &lt; tolerance:
+            # If the difference between V and V&#x27; is below the tolerance, return the results
+            return V_prime, iterId, np.max(V - V_prime), V_record.reshape((iterId + 1, self.nStates)), e_record
+
+        V = np.copy(V_prime)  # Update V with the values of V&#x27;
+
+        # Update the value function for each state
+        for s in range(self.nStates):
+            # R[:, s] is |A| x 1
+            # T[:, s, :] is |A| x 1 x |S|
+            # trans_mat is |A| x |S|
+            trans_mat = self.T[:, s, :].reshape((self.nActions, self.nStates))
+            # Calculate the new value for the state s using the Bellman equation
+            V_prime[s] = np.max(self.R[:, s] + np.squeeze(self.discount * np.dot(trans_mat, V.reshape(-1, 1)), axis=0), axis=0)
+
+        iterId += 1  # Increment the iteration counter
+        V_record = np.append(V_record, V_prime)  # Record the updated V&#x27;
+        e_record.append(np.max(V - V_prime))  # Record the maximum difference between V and V&#x27; in this iteration
+
+    # If the loop reaches the maximum number of iterations, return the results
+    return V_prime, iterId, np.max(V - V_prime), V_record.reshape((iterId + 1, self.nStates)), e_record</code></pre><p id="7b0d1a4e-d600-4a30-8e86-27bcc6bb5a2d" class="">The goal is to find the optimal value function <code><strong>V</strong></code> for a given MDP using the Bellman equation, where <code><strong>V</strong></code> represents the expected cumulative reward for each state. The code iteratively updates the value function until it converges or reaches a specified number of iterations. The inline comments explain the purpose of each part of the code and the mathematical operations being performed.</p><p id="59f98e15-bbb8-4ef1-a315-5e4a92c831f4" class=""><strong><strong>Policy Iteration</strong></strong></p><pre id="569f901a-d85b-4a34-9344-3d1e7b7c37bb" class="code"><code>def extractPolicy(self,V):
+    &#x27;&#x27;&#x27;Procedure to extract a policy from a value function
+    pi &lt;-- argmax_a R^a + gamma T^a V
+    Inputs:
+    V -- Value function: array of |S| entries
+    Output:
+    policy -- Policy: array of |S| entries&#x27;&#x27;&#x27;
+    policy = np.zeros(self.nStates)
+    for s in range(self.nStates):
+        trans_mat = self.T[:, s, :].reshape((self.nActions, self.nStates))
+        policy[s] = np.argmax(self.R[:, s] + np.squeeze(self.discount*np.dot(trans_mat, V.reshape(-1, 1))), axis=0)
+    return policy
+
+def evaluatePolicy(self,policy):
+    &#x27;&#x27;&#x27;Evaluate a policy by solving a system of linear equations
+    V^pi = R^pi + gamma T^pi V^pi
+    Input:
+    policy -- Policy: array of |S| entries
+    Ouput:
+    V -- Value function: array of |S| entries&#x27;&#x27;&#x27;
+    # T_pi is |S|x|S&#x27;|
+    T_pi = np.zeros((self.nStates, self.nStates))
+    # R_pi is |S|x1
+    R_pi = np.zeros(self.nStates)
+    for s in range(self.nStates):
+        a = int(policy[s])
+        # self.T is |A|x|S|x|S&#x27;|
+        T_pi[s] = self.T[a, s, :]
+        # self.R is |A|x|S|
+        R_pi[s] = self.R[a, s]
+    # |S|x|S| dot |S|x1
+    V = np.dot(
+        np.linalg.inv((np.identity(self.nStates)-self.discount*T_pi)),
+        R_pi
+    )
+    return V</code></pre><ol type="1" id="372d574d-45fb-4740-8157-ab44c416bf21" class="numbered-list" start="1"><li><code><strong>extractPolicy</strong></code> Function:<ul id="37a2f2ec-f429-440a-8d2b-995d91556e4e" class="bulleted-list"><li style="list-style-type:disc">This function takes a value function <code><strong>V</strong></code> as input and extracts a policy based on the given MDP parameters. The policy is represented as an array of actions for each state in the MDP.</li></ul><ul id="e880235f-b3f0-4a62-b88f-62b28b97a8c3" class="bulleted-list"><li style="list-style-type:disc">It iterates over all states in the MDP (indexed by <code><strong>s</strong></code>) and calculates the action that maximizes the expression <code><strong>R^a + gamma * T^a * V</strong></code>, where <code><strong>a</strong></code> is the action, <code><strong>R^a</strong></code> is the reward for taking action <code><strong>a</strong></code> in state <code><strong>s</strong></code>, <code><strong>gamma</strong></code> is the discount factor, <code><strong>T^a</strong></code> is the transition model for action <code><strong>a</strong></code>, and <code><strong>V</strong></code> is the value function.</li></ul><ul id="8c4795b9-931a-4390-8d36-8c913acc7c0e" class="bulleted-list"><li style="list-style-type:disc">The result is an array <code><strong>policy</strong></code> where <code><strong>policy[s]</strong></code> contains the action that maximizes the expression for state <code><strong>s</strong></code>.</li></ul></li></ol><ol type="1" id="c1bb0da9-c23e-41c2-8d8c-80c0f5c8148c" class="numbered-list" start="2"><li><code><strong>evaluatePolicy</strong></code> Function:<ul id="cb07daec-36d4-4433-8005-6e474bc1dc88" class="bulleted-list"><li style="list-style-type:disc">This function evaluates a given policy by solving a system of linear equations that represent the Bellman equation for the value function of the policy.</li></ul><ul id="b6b21e4c-2e3d-47ea-a19e-372e21f9b7cd" class="bulleted-list"><li style="list-style-type:disc">It takes a policy (an array of actions) as input and calculates the value function <code><strong>V</strong></code> for that policy.</li></ul><ul id="d3eaa9f1-9c4c-4f7a-9d3b-5e90a4794024" class="bulleted-list"><li style="list-style-type:disc">It iterates over all states in the MDP (indexed by <code><strong>s</strong></code>) and for each state, it selects the action <code><strong>a</strong></code> based on the given policy.</li></ul><ul id="a7841d6c-af15-48de-b25d-340143ef9f8e" class="bulleted-list"><li style="list-style-type:disc">It then constructs the transition model <code><strong>T^pi</strong></code> and the reward vector <code><strong>R^pi</strong></code> for the given policy. <code><strong>T^pi</strong></code> contains the transition probabilities for the policy, and <code><strong>R^pi</strong></code> contains the expected rewards for the policy.</li></ul><ul id="8349fc99-4416-4f66-856f-7cb9db2f20e6" class="bulleted-list"><li style="list-style-type:disc">The value function <code><strong>V</strong></code> is calculated by solving the linear system of equations: <code><strong>(I - gamma * T^pi) * V = R^pi</strong></code>, where <code><strong>I</strong></code> is the identity matrix and <code><strong>gamma</strong></code> is the discount factor.</li></ul><ul id="530dec68-9964-460d-84c3-c1efd76f1ee7" class="bulleted-list"><li style="list-style-type:disc">The function returns the calculated value function <code><strong>V</strong></code>.</li></ul></li></ol><pre id="460493fc-4467-445d-9412-7da6d0222289" class="code"><code>def evaluatePolicyPartially(self,policy,initialV,nIterations=np.inf,tolerance=0.01):
+        &#x27;&#x27;&#x27;Partial policy evaluation:
+        Repeat V^pi &lt;-- R^pi + gamma T^pi V^pi
+
+        Inputs:
+        policy -- Policy: array of |S| entries
+        initialV -- Initial value function: array of |S| entries
+        nIterations -- limit on the # of iterations: scalar (default: infinity)
+        tolerance -- threshold on ||V^n-V^n+1||_inf: scalar (default: 0.01)
+
+        Outputs: 
+        V -- Value function: array of |S| entries
+        iterId -- # of iterations performed: scalar
+        epsilon -- ||V^n-V^n+1||_inf: scalar&#x27;&#x27;&#x27;
+        iterId = 0
+        epsilon = np.inf
+        V = np.copy(initialV)
+        V_prime = np.copy(initialV)
+        while(iterId &lt;= nIterations and epsilon &gt; tolerance):
+            V = np.copy(V_prime)
+            for s in range(self.nStates):
+                V_prime[s] = self.R[int(policy[s]), s] + self.discount*np.dot(\
+                    self.T[int(policy[s]), s, :], V)
+            iterId+=1
+            epsilon = np.max(V_prime-V)
+        return [V,iterId,epsilon]
+
+    def modifiedPolicyIteration(self,initialPolicy,initialV,nEvalIterations=5,nIterations=np.inf,tolerance=0.01):
+        &#x27;&#x27;&#x27;Modified policy iteration procedure: alternate between
+        partial policy evaluation (repeat a few times V^pi &lt;-- R^pi + gamma T^pi V^pi)
+        and policy improvement (pi &lt;-- argmax_a R^a + gamma T^a V^pi)
+
+        Inputs:
+        initialPolicy -- Initial policy: array of |S| entries
+        initialV -- Initial value function: array of |S| entries
+        nEvalIterations -- limit on # of iterations to be performed in each partial policy evaluation: scalar (default: 5)
+        nIterations -- limit on # of iterations to be performed in modified policy iteration: scalar (default: inf)
+        tolerance -- threshold on ||V^n-V^n+1||_inf: scalar (default: 0.01)
+
+        Outputs: 
+        policy -- Policy: array of |S| entries
+        V -- Value function: array of |S| entries
+        iterId -- # of iterations peformed by modified policy iteration: scalar
+        epsilon -- ||V^n-V^n+1||_inf: scalar&#x27;&#x27;&#x27;
+
+        policy = initialPolicy
+        V = initialV
+        iterId = 0
+        epsilon = 0
+        while True:
+            # partial evaluation for many times
+            [V_eval,partial_iterId,epsilon] = self.evaluatePolicyPartially(policy, V, nEvalIterations, tolerance)
+            # policy improvement
+            policy_next = np.zeros(self.nStates)
+            for s in range(self.nStates):
+                # self.T is |A|x|S|x|S&#x27;|
+                sub_T = self.T[:, s, :].reshape((self.nActions, self.nStates))
+                # self.R is |A|x|S|
+                policy_next[s] = np.argmax(self.R[:, s] + self.discount*np.dot(sub_T, V_eval))
+            if(np.array_equal(V, V_eval)):
+                break
+            else:
+                policy = np.copy(policy_next)
+            V = np.copy(V_eval)
+            iterId += 1
+        return [policy,V,iterId, epsilon]</code></pre><ol type="1" id="b7654f35-b8ee-4cc1-9303-ec8da8821465" class="numbered-list" start="1"><li><code><strong>evaluatePolicyPartially</strong></code> Function:<ul id="2d6e0836-dd0b-4f4a-b5e2-560ea5497faf" class="bulleted-list"><li style="list-style-type:disc">This function performs partial policy evaluation, which is an iterative process to estimate the value function of a given policy. The process repeats the equation <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>V</mi><mi>π</mi></msup><mo>=</mo><msup><mi>R</mi><mi>π</mi></msup><mo>+</mo><mi>γ</mi><msup><mi>T</mi><mi>π</mi></msup><msup><mi>V</mi><mi>π</mi></msup></mrow><annotation encoding="application/x-tex">V^{\pi}= R^{\pi} + \gamma T^{\pi}V^\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>several times. <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mi>π</mi></msup></mrow><annotation encoding="application/x-tex">T^{\pi}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> is the transition matrix according to the given policy.</li></ul><ul id="aaef0030-13b5-412c-9106-e57cc1de18b8" class="bulleted-list"><li style="list-style-type:disc">The function initializes <code><strong>V</strong></code> and <code><strong>V_prime</strong></code> with the initial value function and iterates until one of the stopping conditions is met: either the number of iterations exceeds <code><strong>nIterations</strong></code> or the <code><strong>epsilon</strong></code> (the maximum difference between <code><strong>V</strong></code> and <code><strong>V_prime</strong></code>) is less than <code><strong>tolerance</strong></code>.</li></ul><ul id="a33fd089-8fd1-4ecc-9181-7d88e76bfe88" class="bulleted-list"><li style="list-style-type:disc">In each iteration, it updates the <code><strong>V_prime</strong></code> values by applying the Bellman equation for the policy.</li></ul></li></ol><ol type="1" id="bdb2cd3d-ec39-42e3-b61b-2fcf00ba62d4" class="numbered-list" start="2"><li><code><strong>modifiedPolicyIteration</strong></code> Function:<ul id="e0ddcf5e-363e-45f8-b8f3-a096ac039386" class="bulleted-list"><li style="list-style-type:disc">This function implements a modified policy iteration procedure, which alternates between partial policy evaluation and policy improvement.</li></ul><ul id="8bddeb39-a5a0-4b3c-9bed-8a773118c7b0" class="bulleted-list"><li style="list-style-type:disc">The function repeatedly evaluates the current policy partially using <code><strong>evaluatePolicyPartially</strong></code> and then performs policy improvement by selecting actions that maximize the expected return based on the value function obtained from partial evaluation.</li></ul><ul id="dbb08a96-ff00-4d9b-bb1a-d9a1571567bc" class="bulleted-list"><li style="list-style-type:disc">It continues this process until the estimated value function no longer changes between iterations (convergence).</li></ul><ul id="9fe0ed74-1f99-4db3-856c-f79e12eb354d" class="bulleted-list"><li style="list-style-type:disc">The function returns the improved policy, the estimated value function, the number of iterations performed (<code><strong>iterId</strong></code>), and the final <code><strong>epsilon</strong></code> value.</li></ul></li></ol><h2 id="2436052b-05e2-4720-9ef1-cd50f178e13f" class="">Result of the maze problem described in <a href="http://testmdpmaze.py/">TestMDPmaze.py</a>.</h2><p id="1c1b664e-1ad6-45d5-8fcb-4e0d4b9452d7" class="">(a) Report the policy, value function, and number of iterations needed by <strong>value iteration</strong> when using a tolerance of 0.01 and starting from a value function set to 0 for all states. 
+<strong><strong><strong><strong><strong>Answer:</strong></strong></strong></strong></strong></p><div id="bf0f9a2e-9a56-4bca-8bd9-57441ca3a948" class="column-list"><div id="e754a63e-24ec-42bc-bc7e-dd4062a2c0aa" style="width:50%" class="column"><figure id="029a6635-9648-4132-be49-e236f21faece" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/value-iteration-Vhotmap.jpg"><img style="width:640px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/value-iteration-Vhotmap.jpg"/></a></figure></div><div id="af1ac4ae-bf8c-4f4c-bbf9-4a8f26e3e731" style="width:50%" class="column"><figure id="f1f1873d-a756-455a-ab3e-f50ba72e6ae4" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid_value-iteration.jpg"><img style="width:640px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid_value-iteration.jpg"/></a></figure></div></div><figure id="5ee7b537-6a5f-4573-90a7-401dad2b5633" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%205.png"><img style="width:1461px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%205.png"/></a></figure><p id="7e86d31d-ecfa-4b98-a678-1265cdadedfc" class="">It goes 26 iterations and reaches the optimal. 
+
+(b) Report the policy, value function, and number of iterations needed by <strong>policy iteration</strong> to find an optimal policy when starting from the policy that chooses action 0 in all states.</p><p id="75cfcc38-f036-475f-837b-a02a53a339e8" class=""><strong><strong><strong><strong><strong>Answer:</strong></strong></strong></strong></strong></p><div id="6f5375ab-c3f5-4461-8ffe-57ab033f7b7f" class="column-list"><div id="0612e523-19f0-4d3b-ae55-a6f060b87187" style="width:50%" class="column"><figure id="4e2d20f8-1e06-42b1-8883-1f591ccc1953" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/policy-iteration-Vhotmap.jpg"><img style="width:640px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/policy-iteration-Vhotmap.jpg"/></a></figure></div><div id="04bfb748-b20e-415b-8743-90d1451c348c" style="width:50%" class="column"><figure id="43ba5cdd-50ab-46f6-bb72-7f99f76bae10" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%206.png"><img style="width:602px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%206.png"/></a></figure></div></div><figure id="1ab537b1-23c9-46f6-9a1c-ad822dd1e7b8" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%207.png"><img style="width:850px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%207.png"/></a></figure><p id="c7ce3cad-0b79-4282-a10b-10e50e57838e" class="">It goes 7 iterations and reaches the optimal. </p><p id="f3905365-30d8-4a66-a4b1-cd8d1c929902" class="">
+</p><h2 id="1c35eaa3-b65f-48b1-b761-c08380ba3e4d" class="">Partial Policy Iteration Output</h2><p id="72a308ff-5099-4ca1-9445-93f09b736fc6" class="">Report the number of iterations needed by <strong>modified policy iteration</strong> to converge when varying the number of iterations in partial policy evaluation from 1 to 10. Use a tolerance of 0.01, start with the policy that chooses action 0 in all states and start with the value function that assigns 0 to all states. </p><p id="3a9e3a49-4e1c-4bc7-84ca-2f697df57c1e" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Answer: </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><p id="54c81a5b-4334-400c-a351-a707a3541ee3" class=""><strong><strong><strong><strong><strong><strong>Output</strong></strong></strong></strong></strong></strong></p><p id="7e19420c-d316-4c59-a81b-b46b5f24540f" class="">Please check the image in the <code>/img/q2/partial-policy/</code></p><div id="bb4c67ab-31ee-4480-8269-b9f44ab56417" class="column-list"><div id="f6e18724-bdff-4ea8-b95d-0ae234c8bf17" style="width:50%" class="column"><figure id="dd5273cc-6b50-435e-ad8c-ca54b7d2afea" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%208.png"><img style="width:520px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%208.png"/></a></figure></div><div id="08b6ce3a-8e76-4c07-9da7-fdfeeae5868f" style="width:50%" class="column"><figure id="eb655f4b-a092-4693-9899-ee2ff83c8cb7" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%209.png"><img style="width:529px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/Untitled%209.png"/></a></figure></div></div><table id="b995657c-12dd-4bda-8eea-deb69d2ae858" class="simple-table"><tbody><tr id="05f94d0f-260c-4cb6-ad53-0a0a7e4d8e24"><td id="wSxz" class="" style="width:63.45531671697443px">Policy Evaluation Times</td><td id="vtaG" class="" style="width:63.45531671697443px">1</td><td id="_Uw=" class="" style="width:63.45531671697443px">2</td><td id="OzmG" class="" style="width:63.45531671697443px">3</td><td id="[aPY" class="" style="width:63.45531671697443px">4</td><td id="x&lt;c\" class="" style="width:63.45531671697443px">5</td><td id="Xuio" class="" style="width:63.45531671697443px">6</td><td id="BAgb" class="" style="width:63.45531671697443px">7</td><td id="`qRc" class="" style="width:63.45531671697443px">8</td><td id="gTE=" class="" style="width:63.45531671697443px">9</td><td id="J=[;" class="" style="width:63.45531671697443px">10</td></tr><tr id="3aefafec-62a5-4af6-b0cd-d6542e081dff"><td id="wSxz" class="" style="width:63.45531671697443px">Outer Policy Iteration Times</td><td id="vtaG" class="" style="width:63.45531671697443px">26</td><td id="_Uw=" class="" style="width:63.45531671697443px">15</td><td id="OzmG" class="" style="width:63.45531671697443px">11</td><td id="[aPY" class="" style="width:63.45531671697443px">9</td><td id="x&lt;c\" class="" style="width:63.45531671697443px">8</td><td id="Xuio" class="" style="width:63.45531671697443px">8</td><td id="BAgb" class="" style="width:63.45531671697443px">8</td><td id="`qRc" class="" style="width:63.45531671697443px">7</td><td id="gTE=" class="" style="width:63.45531671697443px">7</td><td id="J=[;" class="" style="width:63.45531671697443px">7</td></tr></tbody></table><p id="55862740-3019-4cc5-96ed-ff1b74df1e54" class="">The value function and the policy are the same with the previous value iteration and policy iteration. check <code>/img/q2/partial-policy/</code></p><p id="1c4ccccb-c6eb-4cc9-b9dd-9be57b2d5e6f" class="">Interestingly, the three algorithm all converge to the same optimal. And the partial policy iteration has the outer iteration time between 6 to 26. That is because partial policy iteration change the inner loop times is actully changing the `depth` of the value function update with a certain policy update. The deeper policy evaulation is done, the further the value function can update. Because <code>evaluatePolicyPartially()</code> checks the convergency of the Value update, it can always make no waste of time.</p><p id="3248c76a-48f7-4b13-bec0-0a0c547acbf7" class="">The figure below can explain this problem intuitively, the <strong><mark class="highlight-red">red arrow path</mark></strong> is the paritial policy, and the <strong>black arrow path</strong> is the policy iteration. From the same starting point of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\pi_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, the two algorithm takes different steps number to get to the convergence. Because naive policy iteration can not fully use the new policy to update the new Value function, it will take more outer iteration.</p><figure id="7d82d15a-4d32-418c-8284-6645990a9852" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/partial-policy-iter.jpg"><img style="width:545px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/partial-policy-iter.jpg"/></a></figure><h2 id="60e90f1e-d8fc-41bb-92f9-77d7f31a8ea5" class="">Problem 3: Q-learning</h2><p id="531453b1-3595-4ec8-a716-9881ac64b763" class="">In this problem, you will program the Q-learning algorithm in Python. More specifically, fill in the functions in the skeleton code of the file <a href="http://rl.py/">RL.py</a>. This file require the file <a href="http://mdp.py/">MDP.py</a> that you programmed for Problem 2 so make sure to include it in the same directory. The file <a href="http://testrl.py/">TestRL.py</a> contains a simple RL problem to test your functions (i.e. the output of each function will be printed to the screen). You can verify that your code compiles properly by running ”python <a href="http://testrl.py/">TestRL.py</a>”.</p><p id="2c4bc920-ee97-4e50-a75a-43e546bb2a8c" class="">Note that you need to submit the following material:</p><h2 id="189b0dca-02eb-4567-8fbc-d7b978f9d360" class="">code run instruction with the maze problem described in <a href="http://testrlmaze.py/">TestRLmaze.py</a>.</h2><pre id="81df3383-6bee-42ff-85b8-69e260081614" class="code"><code>python3 TestRLmaze.py</code></pre><h3 id="27bad0a3-e85e-48bc-9c7d-cd26f97ba5a3" class="">Code Explanation</h3><p id="e559e9ec-90d0-4688-bf3f-ec41e83fd29f" class=""><mark class="highlight-teal"><strong>Epsilon Greedy Q-learning</strong></mark></p><pre id="a3a1d54b-31e8-4d45-a598-9fd35984991f" class="code"><code># Initialize the policy as an array of zeros with a size equal to the number of states.
+policy = np.zeros(self.mdp.nStates, int)
+# Loop over a specified number of episodes.
+for episode in range(nEpisodes):
+    # Initialize the total reward for the episode and the step counter.
+    sum_reward = 0
+    step_i = 0
+    s = s0  # Set the current state to the initial state.
+    # Continue the episode until the episode reaches the END_STATE or the step limit is reached.
+    while s != END_STATE and step_i &lt; nSteps:
+        step_i += 1
+        # Choose an action using an epsilon-greedy strategy.
+        if np.random.random() &lt; epsilon:
+            a = np.random.randint(self.mdp.nActions)
+        else:
+            a = policy[s]
+        # Sample the reward and next state using the provided function.
+        [r, s_next] = self.sampleRewardAndNextState(s, a)
+        # Calculate the cumulative reward for this step using the discount factor.
+        sum_reward += self.mdp.discount ** step_i * r
+        # Update the Q-values for the selected action-state pair.
+        Q[a, s] = Q[a, s] + alpha * (r + self.mdp.discount * np.max(Q[:, s_next]) - Q[a, s])
+        # Update the policy for the current state by selecting the action with the highest Q-value.
+        policy[s] = np.argmax(Q[:, s]
+        # Move to the next state.
+        s = s_next
+    # Append the total reward for this episode to a reward history list.
+    sum_reward_vec.append(sum_reward)</code></pre><p id="16881ab4-0812-48cb-b6fd-60e7e76bfc26" class="block-color-teal"><strong>Boltzmann Exploration Q-learning</strong></p><pre id="d5a1b645-be58-4739-8404-ca5b26b7a508" class="code"><code># Initialize the policy with equal probabilities for each action in all states.
+policy = np.ones((self.mdp.nStates, self.mdp.nActions), float) * 1/4
+# Loop over a specified number of episodes.
+for episode in range(nEpisodes):
+    s = s0  # Set the current state to the initial state.
+    sum_reward = 0
+    step_i = 0
+    # Continue the episode until the episode reaches the END_STATE or the step limit is reached.
+    while s != END_STATE and step_i &lt; nSteps:
+        # Choose an action using the current policy as a probability distribution.
+        a = np.random.choice(self.mdp.nActions, p=policy[s, :])
+        # Sample the reward and next state using the provided function.
+        [r, s_next] = self.sampleRewardAndNextState(s, a)
+        sum_reward += r
+        # Update the Q-values for the selected action-state pair.
+        Q[a, s] = Q[a, s] + alpha * (r + self.mdp.discount * np.max(Q[:, s_next]) - Q[a, s])
+        # Update the policy using the Boltzmann exploration strategy.
+        exp_sum = 0
+        # Calculate the sum of exponentials of Q-values for all actions at the current state.
+        for ai in range(self.mdp.nActions):
+            exp_sum += np.exp(Q[ai, s] / temperature)
+        # Update the policy probabilities for all actions at the current state using Boltzmann exploration.
+        for ai in range(self.mdp.nActions):
+            policy[s, ai] = np.exp(Q[ai, s] / temperature) / exp_sum
+        # Move to the next state.
+        s = s_next
+    # Append the total reward for this episode to a reward history list.
+    sum_reward_vec.append(sum_reward)</code></pre><h2 id="39404bb5-cb9b-45b7-9558-b354ed55149f" class="">Policy Output</h2><p id="e6ceb234-396d-4891-9487-ed9ec3ba659d" class="">Please check the image in the <code>/img/q3/</code></p><div id="83a8f217-90d2-494d-abaa-82ecab886522" class="column-list"><div id="23abbd77-d295-436c-b747-e9556fff7934" style="width:50%" class="column"><figure id="72424d74-6725-4157-be2f-9c761d85c1f4" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-epsilon-0.1.jpg"><img style="width:640px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-epsilon-0.1.jpg"/></a></figure><figure id="c6b17ed0-fc2b-44b2-a0ed-93594c3e9475" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-epsilon-0.5.jpg"><img style="width:640px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-epsilon-0.5.jpg"/></a></figure></div><div id="6f615f18-b7b6-4207-84a8-da7d08c4de1c" style="width:50%" class="column"><figure id="8415df69-86af-4d44-adc6-42e294eb3d06" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-epsilon-0.3.jpg"><img style="width:640px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-epsilon-0.3.jpg"/></a></figure><p id="63025e0d-fb26-4ec0-b26c-128a8ef778e4" class="">The Epsilon Greedy Exploration policy</p><p id="39a4a6db-58f6-430a-933d-727a85d506cb" class="">[3 3 1 1 0 0 3 1 2 3 3 1 3 1 0 2 0]</p><p id="28c4bc2c-1f03-4425-930b-f0808a5e1b27" class="">[3 3 1 1 3 0 1 1 2 3 3 1 3 1 3 2 0]</p><p id="eb2e7f7a-ae0f-4fa3-8b9e-eceff3355a22" class="">[1 3 1 1 1 0 1 1 2 1 3 1 3 1 0 2 0]</p><p id="4fbb165b-8cb8-46ca-9623-5d9f9f860629" class="">
+</p></div></div><p id="97fdd7af-c700-44de-b117-ef488e033c5b" class="">
+</p><div id="fe848452-5e4d-4858-ac71-d0218a8de5f9" class="column-list"><div id="96d40fa4-d2a3-4014-94ed-3c497b7d203d" style="width:50%" class="column"><figure id="92d3d6ce-fb47-4432-96fb-5a0ed2138954" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-no-explore.jpg"><img style="width:384px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-no-explore.jpg"/></a></figure><figure id="e7f748e1-f38a-45fe-940e-982aace57c9b" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-temp-20.jpg"><img style="width:288px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-temp-20.jpg"/></a></figure></div><div id="f5aab701-4916-4407-9372-5a07c851c4f4" style="width:50%" class="column"><figure id="07feb382-b2bf-41fb-88e8-3b6c215b64ab" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-temp-10.jpg"><img style="width:336px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/grid-temp-10.jpg"/></a></figure><p id="244213bf-b303-4336-890c-a63e131eb612" class="">The Boltzmann exploration policy</p><p id="c49c535e-8ff5-41c1-85bd-38dd7e25d7f3" class="">[3 3 1 1 1 0 3 1 2 1 3 1 3 1 0 2 0]</p><p id="044e091c-8448-4094-85a9-46f12bac4328" class="">[3 3 1 1 0 0 1 1 2 3 3 1 3 1 1 2 0]</p><p id="7509cad5-ea83-4790-be64-2c343a3ac41a" class="">[3 3 1 1 1 0 1 1 2 3 3 1 3 1 3 2 0]</p><p id="677e8d1f-9f21-49a5-aef2-3e96407018ca" class="">
+</p></div></div><p id="fd17a9fa-ff46-4b91-9140-74866194fdcc" class="">
+</p><ol type="1" id="d4477948-983e-426e-81fe-29c7fb57d34e" class="numbered-list" start="1"><li>Graph 1: Produce a first graph where the x-axis indicates the episode (from 0 to 200) and the y-axis indicates the average (based on 100 trials) of the cumulative discounted rewards per episode (100 steps). The graph should contain 3 curves corresponding to the exploration probability epsilon=0.1, 0.3, and 0.5 (<strong>set temperature=0</strong>). The initial state is 0 and the initial Q-function is 0 for all state-action pairs.<figure id="9e1a6bf0-330f-4f79-9695-209f8d254028" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/epsilon-cumulated-discounted-reward.jpg"><img style="width:640px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/epsilon-cumulated-discounted-reward.jpg"/></a></figure></li></ol><p id="77d6eea0-00f1-4e7f-b648-293037c99ae5" class="">
+</p><ol type="1" id="b33b2a80-d503-4be8-ba8f-15083fa7a60d" class="numbered-list" start="1"><li>Graph 2: Produce a second graph where the x-axis indicates the episode (from 0 to 200) and the y-axis indicates the average (based on 100 trials) of the cumulative discounted rewards per episode (100 steps). The graph should contain 3 curves corresponding to the Boltzmann exploration temperature=0, 10, and 20 (<strong>set epsilon=0</strong>). The initial state is 0 and the initial Q-function is 0 for all state-action pairs.
+
+<figure id="5fad6206-ae1c-4996-9b74-58344751877c" class="image"><a href="Homework2%209236d0ca39fc414ea8eaff537ca83422/boltz-cumulated-discounted-reward.jpg"><img style="width:640px" src="Homework2%209236d0ca39fc414ea8eaff537ca83422/boltz-cumulated-discounted-reward.jpg"/></a></figure></li></ol><ol type="1" id="a92f4526-d3f0-468e-9a3b-a75b915b2446" class="numbered-list" start="2"><li>Discussion: Explain the impact of the exploration probability epsilon and the Boltzmann temperature on the cumulative discounted rewards per episode earned during training as well as the resulting Q-values and policy<p id="ca2b3ec8-38f7-4ae1-8e77-85e1b0fb24fc" class=""><strong><strong><strong>Answer: </strong></strong></strong></p><ol type="1" id="981d3e3a-fe6f-4702-af10-0048bdf92ad7" class="numbered-list" start="1"><li><strong>Smaller Epsilon Leads to Higher Cumulated Discounted Reward:</strong><ul id="0bec34b8-6b80-4811-9a14-295f582272a8" class="bulleted-list"><li style="list-style-type:disc">When epsilon is small, it means that the agent tends to exploit its current knowledge more than explore new actions.</li></ul><ul id="1a4d6925-5c6a-46ee-89cf-47c444fcaea6" class="bulleted-list"><li style="list-style-type:disc">This exploitation-centric strategy can lead to higher cumulative discounted rewards because the agent is making more informed decisions based on its learned knowledge. However, it may risk getting stuck in local optima and not exploring the maze thoroughly.</li></ul></li></ol><ol type="1" id="5b8cbc88-a0ff-4a68-b6ec-356253b31e88" class="numbered-list" start="2"><li><strong>Epsilon Greedy Has Higher Variance for Cumulated Discounted Rewards:</strong><ul id="e0070390-91d2-49ff-85a8-e45c8957ccb4" class="bulleted-list"><li style="list-style-type:disc">When epsilon is moderate (neither too small nor too large), it introduces a balance between exploration and exploitation. This balance can lead to higher variance in the cumulative discounted rewards because the agent explores various actions, which can result in different outcomes in different episodes.</li></ul></li></ol><ol type="1" id="35782888-781f-464f-8b65-30a696f8a500" class="numbered-list" start="3"><li><strong>Boltzmann Exploration with Small Temperature Has Higher Cumulated Discounted Reward:</strong><ul id="2e3929d1-4ffb-4629-8f3c-a17a5c76f380" class="bulleted-list"><li style="list-style-type:disc">A smaller temperature makes the distribution over actions more peaked towards the action with the highest Q-value.</li></ul><ul id="27a80863-36fd-44db-9099-b1247a3c5343" class="bulleted-list"><li style="list-style-type:disc">When using Boltzmann exploration with a small temperature, the agent is more likely to choose the action with the highest Q-value, similar to exploitation in epsilon-greedy. This can lead to higher cumulative discounted rewards as the agent tends to make more confident and informed choices.</li></ul></li></ol><ol type="1" id="b10bcc9d-555d-4e9a-a682-8b9e767915d4" class="numbered-list" start="4"><li><strong>Boltzmann Exploration with Larger Temperature Can Cause Larger Variance:</strong><ul id="66838414-077d-4128-9786-10f63f95bea9" class="bulleted-list"><li style="list-style-type:disc">Increasing the temperature in Boltzmann exploration makes the distribution over actions more uniform and less sensitive to Q-value differences. This can cause larger variance in the agent&#x27;s actions and, consequently, in the cumulative discounted rewards. The agent is more likely to explore a wider range of actions, leading to diverse outcomes.</li></ul></li></ol><ol type="1" id="e4cd13c7-cd6b-484b-a38c-3bd634c53451" class="numbered-list" start="5"><li><strong>Big Temperature Can Make the Cumulated Reward Worse When Episode Gets Larger:</strong><ul id="4302b069-e714-439b-b983-c5e3b7e1ba0c" class="bulleted-list"><li style="list-style-type:disc">When using Boltzmann exploration with a large temperature, the agent becomes more exploratory and less focused on exploiting its current knowledge. As the episode count increases, this increased exploration can lead to worse cumulative rewards. The agent may keep exploring new actions and not settle on a reliable strategy, which can hinder its long-term performance.</li></ul></li></ol><p id="fa1396c0-d8b3-40c4-a047-dcc97bda496b" class="">
+</p></li></ol></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
