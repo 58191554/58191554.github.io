@@ -1,0 +1,764 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Note 7 File Organization </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+.container {
+            background-color: #f2f2f2; /* 容器的背景颜色 */
+            padding: 20px; /* 可根据需要调整内边距 */
+            border-radius: 10px; /* 容器的圆角半径 */
+            text-align: center; /* 居中文本 */
+}
+.rounded-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d8d8d8;
+    color: #fff;
+    border-radius: 5px; /* 圆角半径可以根据需要进行调整 */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.rounded-button:hover {
+    background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+
+
+
+</style><title>Note 7 File Organization</title>
+</head>
+
+<div class="container">
+    <a class="rounded-button" href="https://58191554.github.io/csc3170_23fall/dashboard.html">Back to Dashboard</a>
+</div>
+
+
+<body><article id="da6a1121-4521-477b-8980-00a09a35c398" class="page sans"><header><h1 class="page-title">Note 7 File Organization </h1><p class="page-description"></p></header><div class="page-body"><blockquote id="0a79d972-83e5-4f92-b416-d33c50526863" class="">Author: Zhen Tong
+Lecturer: Jane YOU</blockquote><p id="53cd5447-3bc1-49cb-8a23-f6f9121c66b6" class="">In this note, we will introduce how the database is built physically, which is a more engineering question than before. This is the essence part in this subject. Let’s get started!</p><h2 id="e95061fc-0df4-4dc0-9d5d-c589e897ef02" class="">file organization</h2><p id="81213ad8-8da3-4837-8868-7465b0a65ef7" class="">How is the database stored in your computer?</p><ol type="1" id="5d59a3c5-ed34-4f57-a2c0-809cdccaa7d7" class="numbered-list" start="1"><li><strong>One Database → Multiple Files:</strong><ul id="6cd04e09-21b8-42e9-b06c-014397b21172" class="bulleted-list"><li style="list-style-type:disc">This suggests that a database is not confined to a single file but can be distributed across multiple files. This approach can be useful for managing large amounts of data or for organizing data based on different criteria.</li></ul></li></ol><ol type="1" id="046ff28c-0916-46aa-ae84-fff3a68b0dc1" class="numbered-list" start="2"><li><strong>One File → Sequence of Records:</strong><ul id="bfc73a69-a840-48ae-8fe8-7d9f486b480e" class="bulleted-list"><li style="list-style-type:disc">Each file in the database contains a sequence of records. In the context of databases, a record typically represents a collection of related data items.</li></ul></li></ol><ol type="1" id="2b5ef8d3-cf2a-49da-b4b9-d8303545a3f5" class="numbered-list" start="3"><li><strong>A Record → Sequence of Fields:</strong><ul id="13005526-9d28-4f3d-9aaf-92ec5914fe38" class="bulleted-list"><li style="list-style-type:disc">A record is further broken down into a sequence of fields. Each field represents a specific attribute or piece of information about the entity described by the record.</li></ul></li></ol><ol type="1" id="8c51d03e-5066-402f-908a-6893dc4833c8" class="numbered-list" start="4"><li><strong>File → Fixed-Length Storage Units (Blocks):</strong><ul id="574d0551-a8ff-4c51-8649-197ab35d1281" class="bulleted-list"><li style="list-style-type:disc">The file is composed of <strong>fixed-length storage</strong> units called blocks. These blocks are used to store records and provide a convenient way to manage and access data efficiently.</li></ul></li></ol><p id="a8e623ff-ef6c-427f-b092-b8561091a037" class="">
+</p><h2 id="bcd58dfa-fdc6-4e9d-a3a2-c5f4f258f801" class="">Fixed-Length record</h2><p id="71cb681e-9336-42d3-a1f2-3c0b96976743" class="">Have you ever concerned about why the SQL code needs to define the length of your data domain space? For example:</p><p id="dc87dcf5-799b-4abf-abd1-e978bdb53b32" class="">Creating a file with instructor records:</p><pre id="42445aa1-afa3-4888-85df-8435e5a8366c" class="code code-wrap"><code>type instructor = record
+    ID varchar(5);
+    name varchar(20);
+    dept_name varchar(20);
+    salary numeric(8,2);
+end</code></pre><p id="c07187e9-dc0c-4356-ae87-e769700f36dd" class="">One record corresponds to one tuple.</p><p id="a5d3c75d-b0e1-4d62-b975-27006c6295e8" class="">The size of one instructor record is (5 + 20 + 20 + 8 = 53) bytes.</p><p id="16faf3cd-a216-4c3c-9c06-44c997041b11" class="">In a block, we allocate the maximum number of records it can contain.</p><p id="8665361d-fdb5-4982-911a-ae4fd2b069a0" class="">Since insertions are more frequent than deletions, space occupied by deleted records is kept empty until later insert operations reuse this space.</p><p id="ff54969c-298c-4ddc-a55f-eba3c23b9368" class="">At the beginning of the file, specific bytes are allocated as the file header, forming a <strong>free list (a linked-list data structure)</strong>.</p><figure id="87be1310-cb6d-44ae-8313-dd8876cddadf" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled.png"><img src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled.png"/></a></figure><ul id="7535003a-562b-4666-af2c-3ffcb8312a36" class="bulleted-list"><li style="list-style-type:disc">When inserting, <code><strong>list.pop()</strong></code> is used.</li></ul><ul id="64fd64df-fde9-415e-a7d1-b3427b7804a2" class="bulleted-list"><li style="list-style-type:disc">When deleting, <code><strong>list.add()</strong></code> is used.</li></ul><ul id="3deaac3a-f773-41a1-a8c0-740cc4c52eae" class="bulleted-list"><li style="list-style-type:disc">When <code><strong>list.is_empty == true</strong></code>, insertion occurs at the end of the file.</li></ul><p id="69cc90b5-205d-4449-b115-ec7e229b3700" class="">
+</p><h2 id="661d5be2-3203-4514-ae13-e3d1e491ca87" class="">Variable-Length Records</h2><p id="fddc8f98-b533-49c0-b865-74802c08ce4f" class="">There are 2 questions we need to solve:</p><ol type="1" id="d7b8f865-a739-4f5b-bfed-7cd4b07c3f85" class="numbered-list" start="1"><li>How to design the protocol (or structure) of a single record so that it can have variable length.</li></ol><ol type="1" id="14635901-d92e-4908-abe7-46918e624c3e" class="numbered-list" start="2"><li>How to store variable-length records in a block so that the records in a block can be easily extracted.</li></ol><p id="0af91240-07e8-4bf1-bdec-ca1adba4325d" class="">Records with variable-length attributes consist of two parts:</p><ol type="1" id="686d5bf4-3929-4cd5-a311-35f40ff2abd9" class="numbered-list" start="1"><li>An initial part with fixed-length information.</li></ol><ol type="1" id="584e5d61-2331-424e-9e5a-0b4499cbf7e3" class="numbered-list" start="2"><li>Immediately following is the content of variable-length attributes, represented in the initial part as an array of (offset, length).</li></ol><p id="12e74579-7556-487e-87a7-7a7b56605138" class="">Assuming an instructor&#x27;s record where the first three attributes<strong> (ID, name, and dept_name) </strong>are variable-length strings, and the fourth attribute <strong>(salary) </strong>is a fixed-size numeric:</p><p id="78a0e21c-151d-49db-831b-e28315036858" class="">Offset and length are stored in 2 bytes each, and the initial part for each variable-length attribute occupies 4 bytes.</p><p id="0f0e4a58-e268-4cde-a11e-c825f83376c3" class="">0-3, 4-7, 8-11, 12-19</p><p id="c1572832-0539-4be7-b797-164400b3142b" class="">The salary attribute occupies 8 bytes.</p><figure id="29ca2505-07c5-4ffb-8c11-a26c436b1bc7" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%201.png"><img src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%201.png"/></a></figure><p id="651b2a49-58ec-4ab7-a918-6f5985c88787" class="">A four-bit <strong>NULL bitmap</strong> is used to <strong>indicate</strong> which positions are empty. Since there are 4 attributes, there are 4 null bits.</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Organization of Records in Files</summary><div class="indented"><p id="f34802c7-f9ab-4a56-b292-8c2f10680ac9" class="">After we know how to represent a record, our next question is how to organize them. Using what kinds of data structure?</p><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Heap file</summary><div class="indented"><p id="bfd39efb-2656-4f51-8d19-ed0ad29c0821" class="">When a record is created, it stays in a certain space on the disk. We seldom change its location, because changing the physical location for it is time-consuming (If you learned Operating System, the Disk is the lowest layer of your memory, which means it costs you a lot to lift it from the bottom)</p><p id="0256df74-4ffc-4a95-aa23-6066cf299ff6" class=""><strong>Free-space map: A data structure (array) used to save space</strong></p><p id="157b9d51-f528-4969-8a02-e17a4e406f74" class="">Every block is assigned a value that shows the free space remaining in one block. Free space is space not occupied by data, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mtext>block occupancy </mtext></mrow><annotation encoding="application/x-tex">1-\text{block occupancy }</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">block occupancy </span></span></span></span></span></span><span>﻿</span></span></p><figure id="78551021-b038-4a07-bcb6-20563c9d8290" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%202.png"><img style="width:502px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%202.png"/></a></figure><p id="374dbf2a-91e5-4ad8-99e0-5fadef5df3e4" class="">2 means 2/8 of the space is free.</p><p id="ca3c625c-7c39-46c6-a8dc-a6a6174585da" class="">To store a new record, go to the array and find a suitable space. If it doesn&#x27;t exist, assign it a new block. This approach is faster than a direct traversal lookup, but still not fast enough</p><p id="4708361c-cbc8-4fd6-8ae3-2787327115d8" class="">
+</p><p id="52c4d717-ec21-4788-91cf-f0df3652f037" class=""><strong>Establishing a Two-Level Free Map:</strong> For example, where each element represents the maximum free space within 100 entries of the first-level free-space map.</p><figure id="a14310da-21ac-4f97-8063-345e891f00bb" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%203.png"><img style="width:132px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%203.png"/></a></figure><p id="507bc051-78f8-487c-9422-100fdf75414e" class="">In an exceptionally large relational graph, the first search time is reduced to <strong>1/100</strong>, and the second search range is 100.</p><p id="af998f73-fafd-4c6e-bde6-e730c9c33f52" class="">The cost of reducing search expenses is an increased <strong>cost of establishing the two-level free map.</strong> As a result, the establishment of the two-level free map is periodically written (rather than immediately updated), leading to potential outdated errors in the two-level free map.</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Sequential File Organization</strong></summary><div class="indented"><p id="524335f4-6de6-4bb1-941f-0a415ccba190" class="">Efficient handling of <strong>search keys (which can be any attribute or set of attributes)</strong> is achieved by organizing them in a <strong>linked list in sequential order (to minimize the number of block accesses in sequential file processing).</strong></p><figure id="4d14a451-4eb0-486a-a8a2-48714e133b47" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%204.png"><img src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%204.png"/></a></figure><p id="b07cafe8-59fa-47c2-a947-161a7577b123" class="">The benefit of sequential ordering is the ability to perform <strong>binary search (O(log N)).</strong></p><p id="e052ce32-cd58-4352-8612-28fbc6343e04" class=""><strong>Insert Operation:</strong></p><ol type="1" id="adf5c9f0-6176-4ccb-8ff2-d22105ebd5f1" class="numbered-list" start="1"><li>Locate the record before the point of insertion.</li></ol><ol type="1" id="549ff8f1-2b0b-482b-a5b9-d14bcbd129f5" class="numbered-list" start="2"><li>Placement:<ol type="a" id="705f87dd-99c9-4d3a-ac9d-bef430292925" class="numbered-list" start="1"><li>If the block containing this record has space for at least one <strong>free record</strong>, insert this new record.</li></ol><ol type="a" id="0ff0456e-09cf-4f3a-b439-4669d01175d3" class="numbered-list" start="2"><li>Otherwise, insert the new record into an <strong>overflow block.</strong></li></ol><figure id="444d4e73-a88d-4a86-9cb8-9921ccda1001" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%205.png"><img src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%205.png"/></a></figure></li></ol><ol type="1" id="7d865a1f-fe8e-4518-914b-2fa7cecb0d4f" class="numbered-list" start="3"><li>Adjust the connections of pointers.</li></ol><p id="6e985082-04c8-4d62-af8a-712ce45d44a5" class="">Drawback: While initially fast due to physically adjacent blocks and sequentially ordered records, the efficiency of sequential processing decreases as the number of overflow blocks increases. The similarity between search keys and physical blocks diminishes, necessitating a file <strong>reorganization based on the existing order,</strong> which comes with a high cost.</p><p id="e560eab9-892c-446a-b6f7-2b12636511b7" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Multitable Clustering File Organization</strong></summary><div class="indented"><p id="3e922a59-7df7-460d-8c18-2d734afd2607" class="">In a single block, more than one relation&#x27;s records are stored.</p><p id="8f8e8744-b577-4c10-92ea-5f3edf19d79e" class="">Calculating the relationship between the &quot;department&quot; and &quot;instructor&quot; relations:</p><pre id="aabfc0a4-4100-4b20-a253-d4430e99ddf7" class="code code-wrap"><code>sqlCopy code
+SELECT dept_name, building, budget, ID, name, salary
+FROM department NATURAL JOIN instructor
+
+</code></pre><p id="5be5d53a-2e5c-4014-91ea-05a123355f5f" class="">For each tuple in the &quot;department&quot; relation, the system must find instructor tuples with the same <code><strong>dept_name</strong></code> value.</p><p id="7e92da0f-a702-4a42-b1bd-b844d1cb0cec" class="">In the worst case, each instructor record is stored in a different block → every time a required record is sought, a block read operation must be executed.</p><figure id="cf13cc6d-ef39-4707-bb23-281e1782a921" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%206.png"><img src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%206.png"/></a></figure><p id="e972a77b-b230-4c9c-ba4f-599b1f54e950" class=""><strong>Multitable Clustering Definition:</strong></p><p id="473c2c19-dce8-4347-8fdf-ee3951b4e12c" class="">All relation tuples <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> pertaining to a specific A_B cluster are output near the <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">b_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> corresponding to A_B. We say that relations A and B are clustered on the A_B key.</p><p id="e912d174-bf3e-47d0-af00-701361734f84" class=""><strong>Cluster Key:</strong></p><p id="626370fa-f0c5-49c1-9952-8b7ad2b5af97" class="">An attribute that defines which records are stored together, such as <em><strong>dept_name</strong></em> in the example.</p><p id="39f201f4-c3cc-477a-9118-aec7d4287c19" class="">Advantages: Accelerates specific join queries.</p><p id="46336716-84ff-4d5c-a277-a6c69451d3da" class="">Disadvantages: Other operations may become slower.</p><p id="0d9b3677-1c3b-4d62-847f-f6931d779a18" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Partitioning</strong></summary><div class="indented"><p id="e7c30ec8-6af5-4d49-80ae-51e3277dd634" class="">In a table (relation), records (tuples) can be divided into smaller relations. This kind of <strong>table partitioning</strong> is often based on the values of an attribute.</p><p id="bf6808cf-b200-40b2-82ef-eb3544bea9ae" class="">For example, partitioning the &quot;transaction&quot; relation by year:</p><pre id="675a7070-6d9e-4638-bf73-af250de351c0" class="code code-wrap"><code>sqlCopy code
+SELECT *
+FROM transaction
+WHERE year = 2019
+
+</code></pre><p id="87dc5eed-4086-4340-8e44-da8fb539d4be" class="">After partitioning, only the <em><strong>transaction_2019</strong></em> relation will be accessed.</p><p id="5bc183ee-2787-48bb-81ef-2d586e2b820b" class="">Advantages:</p><ol type="1" id="c949b0b7-2b2c-4572-847a-0f48e17b44e8" class="numbered-list" start="1"><li>Reducing the size of the table (relation) can decrease the time cost of operations, such as finding free space.</li></ol><ol type="1" id="36fb842f-e7fb-4588-bfcd-e559111714b6" class="numbered-list" start="2"><li>Different partitioned relations can be stored on different disks, based on access frequency.</li></ol></div></details></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0"><strong>Data Dictionary Storage</strong></summary><div class="indented"><p id="607059c0-5eb5-4426-92a5-34a4eb252848" class=""><strong>Metadata:</strong> Data about data. <em>For example, data about relations (tables): the schemas of relations.</em></p><p id="dc0de963-6319-4552-95b4-378e804b1931" class="">Metadata is stored in the <strong>Data Dictionary (system catalog).</strong></p><p id="e6fce39d-1f89-4909-8ea6-fbcc458a3689" class="">Information that needs to be stored includes:</p><p id="f366387d-89fa-41b7-bf7d-767a03430e7d" class="">Relation-related:</p><ul id="c78b6b9c-9a39-4759-a4df-b0f98b1b2a90" class="bulleted-list"><li style="list-style-type:disc">Names of relations</li></ul><ul id="fe365b70-b8b7-41f7-8484-025c2655b935" class="bulleted-list"><li style="list-style-type:disc">Names of attributes for each relation</li></ul><ul id="70d0e908-0d4f-4cf8-be39-9a4cc04eb2b4" class="bulleted-list"><li style="list-style-type:disc">Domain and length of attributes</li></ul><ul id="4a0cc3c3-18a4-44d4-a8d8-264d2afb139e" class="bulleted-list"><li style="list-style-type:disc">Names and definitions of views</li></ul><ul id="0597fa56-90aa-44ee-9f76-6c45eb66fe97" class="bulleted-list"><li style="list-style-type:disc">Integrity constraints</li></ul><p id="0d19880b-b52c-4d65-9fcd-d7716a3f9817" class="">User-related:</p><ul id="437b2b06-2405-4f9d-b0b4-6b7f119be85b" class="bulleted-list"><li style="list-style-type:disc">User names, passwords, permissions</li></ul><p id="a27275a1-1090-497f-9050-efb858be1783" class="">Physical-related:</p><ul id="44bbeb7a-e858-4f0d-8744-f8b3f44f2dc7" class="bulleted-list"><li style="list-style-type:disc">Storage organization (heap, sequential, hash...)</li></ul><ul id="035a1315-daa1-4f4d-a418-0dfde91ccab1" class="bulleted-list"><li style="list-style-type:disc">Physical location of relations</li></ul><figure id="fb572ef4-3456-4ec8-a904-58dcdbf29641" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%207.png"><img style="width:336px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%207.png"/></a></figure><p id="115e0f94-5947-4f99-925d-b96881a2bf2f" class="">Metadata is used to maintain data about relational data.</p></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">6. Data Buffering </summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Buffer Concept</strong></summary><div class="indented"><p id="a10519da-4326-4470-a7aa-57920c6c1a2d" class="">The data in a database primarily resides on disks.</p><p id="f8e1ebd7-e00d-4375-bdf0-0a5d42eca3d0" class="">→ Accessing data on disks is slower than accessing data in memory.</p><p id="5574d4e5-966e-4020-badf-db0280933a61" class="">→ Aim to minimize the number of blocks transferred between disk and memory.</p><p id="a31eee1a-eb98-421c-b54b-cff1b208a6b7" class="">→ Reduce the number of disk access times.</p><p id="c8e52bcc-4a4d-4f4d-9d6e-74161dc0e339" class="">→ Keep as many blocks as possible in main memory.</p><p id="c69c4fa4-f0b0-4257-8b61-5379ae4b0a29" class="">→ Maximize the probability that the required blocks are already in main memory ← Keeping all blocks in main memory is impossible.</p><p id="df7c75d6-c57e-420f-89bd-7c3e9a231521" class=""><strong>Buffer:</strong> An area in main memory used to store copies of disk blocks. The <strong>Buffer Manager</strong> is the system that allocates buffer space.</p><p id="a7bb9d86-2884-4f74-b705-768560a7215e" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Double buffering</summary><div class="indented"><p id="2aaaa75c-a006-413c-961d-65a2150010d4" class="">Double buffering can be used to read continuous stream of blocks
+Use of two buffers, A and B, for reading from disk
+(More than 2 buffers can be used)</p><figure id="5f0b8665-5e51-4664-9b81-a2a7ea3c8a38" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%208.png"><img style="width:721px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%208.png"/></a></figure></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Buffer </summary><div class="indented"><h3 id="85dcd2d4-4493-4592-9836-ae76e99f063e" class="">Buffer Manager</h3><p id="45c0a625-d7a8-4e0f-83c0-14bc2d87380c" class="">When a disk block needs to be accessed (pseudocode):</p><pre id="d0c87bbb-bf37-4d1a-a130-dca823f6c831" class="code code-wrap"><code>if (block in buffer){
+    return block address to caller
+}
+else{
+    select a buffer that has been changed and write it back to the disk
+    then replace its position with the target block
+    return block address to caller
+}</code></pre><p id="e080bb67-c6c0-4025-897d-d5955c628595" class=""><strong>Buffer Replacement Strategies (Evicted):</strong></p><ol type="1" id="c0799468-571e-40fb-b928-f9a4da8ea0c8" class="numbered-list" start="1"><li>Least Recently Used (LRU)</li></ol><ol type="1" id="57fd06b4-9166-4224-8941-beb49f64149e" class="numbered-list" start="2"><li>First in First Out (FIFO)</li></ol><ol type="1" id="d174cdbf-284a-4c50-9585-720b58488cbd" class="numbered-list" start="3"><li>Most Recently Used (MRU)</li></ol><ul id="86934b8b-c6f6-4cad-b257-0d45b19226c1" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Pinned Block被钉住的块</strong></mark></summary><p id="c8f3853c-088c-4040-a865-2812fda6905f" class="">When a block is read from the buffer, if it is moved out by another process or is being written out while being removed from the buffer, problems may arise.</p><p id="bbee2788-1890-413b-a40f-9f33d1d43014" class=""><strong>Pin:</strong> A pinned block will not be moved out under any circumstances.</p><p id="9323379c-6e18-4623-9c0a-666c1b208aab" class=""><strong>Unpin:</strong> Used to release the pin after the read operation is completed.</p></details></li></ul><ul id="e98500de-0eaf-429d-8e27-8be4562f39b6" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Shared and exclusive locks on buffer 共享排他锁</strong></mark></summary><p id="31f29880-f02e-4231-a3d5-a8606dbbc31f" class="">When adding or removing tuples, no other processes should perform read operations.</p><ul id="e7f8b7b1-50dc-481d-a495-796a67724096" class="bulleted-list"><li style="list-style-type:disc">Only one process can obtain an exclusive lock at a time.<ul id="b7131274-c802-4766-906c-3e2e7af73d18" class="bulleted-list"><li style="list-style-type:circle">When a process holds an exclusive lock, other processes cannot execute shared locks on the same block.</li></ul><ul id="7053613c-6f62-40f5-9215-2992c5e33d45" class="bulleted-list"><li style="list-style-type:circle">Exclusive locks can only be granted to processes one at a time.</li></ul></li></ul><ul id="d8ae0cc3-1549-443a-98cd-e01b770e88d4" class="bulleted-list"><li style="list-style-type:disc">A block with a shared lock cannot be held simultaneously with an exclusive lock.<ul id="a094e84c-01c1-4c02-a5a8-4d4b8cd18b54" class="bulleted-list"><li style="list-style-type:circle">If a process applies for an exclusive lock while holding a shared lock, it will not be immediately granted but will be in a waiting state.</li></ul></li></ul><ul id="f3250713-23c3-422e-ad2d-ec939b994e17" class="bulleted-list"><li style="list-style-type:disc">Multiple processes can be concurrently given shared locks.<ul id="ab2d0cec-1d26-4b2a-8fd7-4f1fa30883ee" class="bulleted-list"><li style="list-style-type:circle">If a process applies for a shared lock on a block, and no other processes hold an exclusive lock on that block, then the shared lock can be granted.</li></ul><ul id="4a7d4368-a08e-42f6-afbb-1f2c4f15e6ea" class="bulleted-list"><li style="list-style-type:circle">Otherwise, the shared lock can be granted only after the exclusive lock is released.</li></ul></li></ul></details></li></ul><ul id="7b30877c-2446-40a7-9412-d2eb89c64be5" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Buffer-Replacement Policies 替换策略</strong></mark></summary><p id="2769997e-c08c-4e32-9432-61ff7888cd64" class="">A database system can predict future access patterns more accurately than an operating system.</p><p id="06da6af9-4237-4ca4-a03d-b4028a979214" class="">By examining each step required to perform user-requested operations, the database system can anticipate in advance which blocks will be needed.</p></details></li></ul><ul id="e07663ca-1ebf-4fb0-9d52-ec49f5ddb530" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Toss-immediate strategy 立即丢弃策略</strong></mark></summary><p id="419e62ae-ee9e-4578-a5f7-fa99a3d2c71c" class=""><strong>Once the last tuple in a block of a relation file has been processed, the buffer manager should be instructed to free up the space occupied by this block.</strong></p><p id="6f9a315c-ba78-4298-99b9-40d881fab000" class="">Perform a natural join operation and output all attributes.</p><pre id="29578f8c-c753-44f9-96bb-f05d65a95d98" class="code code-wrap"><code>SELECT * FROM instructor NATURAL JOIN department;
+</code></pre><p id="947f04a1-a15a-485f-b7cb-dba2faa51717" class="">Pseudocode:</p><pre id="697196d1-5272-4cab-982c-3c5631b701cd" class="code code-wrap"><code>for each tuple i of instructor do
+		for each tuple d of department do
+				if i[dept name]= d[dept name]
+				then begin
+						let x be a tuple defined as follows:
+						x[ID]:= i[ID]
+						x[dept name]:= i[dept name]
+						x[name]:= i[name]
+						x[salary]:= i[salary]
+						x[building]:= d[building]
+						x[budget]:= d[budget]
+						include tuple x as part of result of instructor ⋈ department
+				end
+		end
+end
+</code></pre><p id="1ce8b8eb-dd9d-465f-a8c3-3db7bc59d030" class="">Once a block consisting of several elements in the instructor is processed, this block no longer needs to be stored in the main memory.</p></details></li></ul><ul id="a5443ec3-ad29-44fb-915d-37737d8bdfb5" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Most recently used (MRU) 最近最经常使用策略</strong></mark></summary><p id="03a711f3-6a38-46cd-818c-e4175a0fac22" class="">Consider the department in the example above. When the for loop is processing a <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>e</mi><mi>p</mi><mi>a</mi><mi>r</mi><mi>t</mi><mi>m</mi><mi>e</mi><mi>n</mi><msub><mi>t</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">department_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal">p</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">t</span><span class="mord mathnormal">m</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, it is <strong>pinned.</strong></p><p id="02c69176-9b8d-42b5-8a62-c1952f0a23ee" class="">Once the for loop completes processing a $department_i$, this tuple will not appear in the subsequent for loops, so it is marked as Most Recently Used (MRU). It can be removed after <strong>unpinning.</strong></p></details></li></ul><ul id="2fc7242b-7b6c-47bc-aca9-93fdd9a4c460" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Column-Oriented Storage列式存储</strong></mark></summary><ul id="8e53d38b-7d18-4fcc-8be9-d20aa5427fe1" class="bulleted-list"><li style="list-style-type:disc"><strong>Column-Oriented Storage</strong><p id="d8ca6a1c-9e60-4773-a0f4-dfa96b3dca8b" class="">Store each attribute of the relation separately.</p><figure id="8453f253-a8e9-49c3-8f92-a106b631d82e" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%209.png"><img src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%209.png"/></a></figure><p id="b60166b6-a18f-41ee-bcae-95ccd33ab686" class="">Advantages:</p><ul id="d877512c-15bc-4099-9d2e-ba83841224ec" class="bulleted-list"><li style="list-style-type:circle">Reduces I/O if only a few attributes are accessed.</li></ul><ul id="f9d17f00-52e3-4ea0-89d1-477d73bad6a2" class="bulleted-list"><li style="list-style-type:circle">Improves CPU cache performance.</li></ul><ul id="0a4e3234-0ea0-4d51-970a-2f7aa321153f" class="bulleted-list"><li style="list-style-type:circle">Enhances compression performance.</li></ul><ul id="9d25bd9b-69e3-406b-b38b-f25f94cdddc6" class="bulleted-list"><li style="list-style-type:circle">Modern CPU architectures with vector processing allow CPU operations to be applied in parallel to multiple elements of an array (e.g., comparing an attribute to a constant).</li></ul><p id="8d335e06-88a1-431f-abda-d0b848b2a795" class="">Disadvantages:</p><ul id="eb6cd0b9-392e-4d94-b638-3012529ae4c0" class="bulleted-list"><li style="list-style-type:circle">Cost of reconstructing tuples from columnar representation.</li></ul><ul id="9d420a88-b2f3-4391-a6f8-7d86d4fe0643" class="bulleted-list"><li style="list-style-type:circle">Cost of tuple deletion and updates.</li></ul><ul id="54a7daad-f7ca-4bff-8abd-4753755811ba" class="bulleted-list"><li style="list-style-type:circle">Cost of decompression.</li></ul><p id="3868ac61-7aa1-4b02-8d26-c8d11d8e5568" class="">Columnar representation is often more effective in decision support than row-oriented representation.</p><p id="eb4dfda1-dd3e-4fb8-b36a-3562d2e173dc" class="">Some databases support both representations, known as row/column mixed storage.</p></li></ul></details></li></ul></div></details></div></details><p id="b978082a-c812-414d-886f-c464713e9e2b" class="">
+</p><p id="addc0112-d53b-4a4c-a996-5c8d88e44d3a" class="">
+</p><h1 id="da842a94-b378-4e09-b357-7a1d1a1b0f82" class="">Chapter 11.b Indexing</h1><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Conception</summary><div class="indented"><p id="2935c985-28d9-4bc8-81e6-360fef8ea515" class=""><strong><mark class="highlight-blue">motivation: </mark></strong>If you want to search for a single data (or a part of data), then searching a whole table is not cost-efficient.</p><p id="adc73a32-2437-45a9-a8e2-2fbcb46c01b8" class="">For example, if you want to search a record for a student given an ID, the process is:</p><ol type="1" id="19109a0c-09bc-4007-be9e-f1720a7afc10" class="numbered-list" start="1"><li>The database system parses the instruction into searching execution.</li></ol><ol type="1" id="2b76cba2-2081-4f60-bf5e-76772196abb4" class="numbered-list" start="2"><li>Search for the index</li></ol><ol type="1" id="06412238-04f8-4c3e-b442-25307a3ecaea" class="numbered-list" start="3"><li>Find the block, and read data from it.</li></ol><p id="7e8c5fa4-8069-41a7-9550-ca1f0cccee17" class="">
+</p><p id="dab012d9-ad11-454f-8bbe-7a30b72e82c4" class="">Drawbacks of a large database index:</p><ol type="1" id="dd564ea1-52b8-476d-a062-b8c7fec7d901" class="numbered-list" start="1"><li>Enormous Index Size</li></ol><ol type="1" id="efd60a59-2c39-4edb-867c-9bf373716032" class="numbered-list" start="2"><li>Search times still remain long</li></ol><ol type="1" id="2ae42a4b-e06b-476f-9054-153baf3bbe0d" class="numbered-list" start="3"><li>Index changes due to data additions or deletions</li></ol><p id="f2416783-51b5-4d0c-8c87-cd61cedb5a97" class="">
+</p><p id="7ee3c44e-3c8c-4f3c-84da-23fa058f76df" class=""><strong><mark class="highlight-blue">Search Key: </mark></strong>A set of attributes designated for locating records in a file. The search key points to the target record.</p><figure id="45305138-25c3-440b-93b6-9a8778ce8519" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2010.png"><img style="width:240px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2010.png"/></a></figure><p id="39fac538-46a5-4c2b-8f4c-c23218923f3c" class=""><strong>Index:</strong> A <strong>file</strong> consisting of records (called <strong>index entries</strong>) derived from a table.</p><ul id="9196e8ad-093f-4bdf-b47d-0f5db8c79c58" class="bulleted-list"><li style="list-style-type:disc"><strong>Order Index:</strong><p id="cfb15504-1b3e-4a55-8329-04d3742b915f" class="">Ordered based on the values.</p></li></ul><ul id="7ffb2464-189c-4182-9409-5d3432be52d9" class="bulleted-list"><li style="list-style-type:disc"><strong>Hash Index</strong></li></ul><p id="58483ec5-1410-4bdb-826c-065e9d59ae57" class=""><strong><mark class="highlight-blue">Index Evaluation Metrics</mark></strong></p><p id="bf3b503e-175a-4c6c-a755-cd4caffaea5c" class=""><strong><mark class="highlight-blue">access type</mark></strong>：Includes records where specific attribute values can be found</p><p id="1a397209-22e3-4ecc-8d21-99a67bbfb4f6" class=""><strong><mark class="highlight-blue">access time</mark></strong>：The time when the access operation was performed</p><p id="add1e965-ead5-4a31-bbfc-ed3c98e63ef6" class=""><strong><mark class="highlight-blue">insertion / deletion time:</mark></strong> Time to insert (delete) data. Including the time to find data and update the lead</p><p id="6963e6e3-772e-4ed8-8255-62002d33fcb0" class=""><strong><mark class="highlight-blue">space overhead:</mark></strong> Space overhead, the extra space taken up by the cable.</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">顺序引索 ordered indexing</summary><div class="indented"><p id="6fefe764-6070-451d-986b-828fafe898a7" class="">Storing the values of the search key <strong><mark class="highlight-blue">in the order of the sorted search codes.</mark></strong></p><p id="24fe14be-ced7-4a1f-bdf1-9c1aaf76e5e1" class=""><mark class="highlight-blue"><strong>Primary Index:</strong></mark><mark class="highlight-blue"> </mark>The order specified by the search code is the same as the order of the file (the search key does not necessarily have to be the search code).</p><figure id="95c72fbe-d25f-4984-bc3c-c4835318ea44" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2011.png"><img style="width:432px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2011.png"/></a></figure><p id="428fc9d7-64af-45f7-bbd9-d8d1e1cb7e9f" class=""><mark class="highlight-blue"><strong>Secondary Index:</strong></mark> An index where the order specified by the search code is different from the order of the file. The key values may be unique or not unique.</p><figure id="1cb03879-c822-451b-b1cd-9d93e439315b" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2012.png"><img style="width:480px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2012.png"/></a></figure><p id="65ed5bc1-001e-4066-bd18-44a3f25d989f" class="">I<strong><mark class="highlight-blue">ndexed-sequential file：</mark></strong>Assume that all files are stored according to a search code</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">稠密、稀疏索引Dense/Sparse Index Files</summary><div class="indented"><ul id="84ea4fd9-b421-4bc8-8577-0be8816796c7" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Dense index</mark></strong></summary><p id="4b317f5f-83c4-4461-9022-ff66bccc131d" class=""><strong><mark class="highlight-blue">Dense index:</mark></strong>  Every search key corresponds to a pointer index entry. Records with the same search code value are <strong>sequentially </strong>pointed to after the first record.</p><figure id="b9fc04ea-8e15-43cc-960d-4e83b8801eb9" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2013.png"><img style="width:624px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2013.png"/></a></figure><p id="996ea4be-e001-4dee-8b3a-211600d96dc7" class="">Here is an example where the search key is not the primary key (dept_name).</p><p id="dbdefae1-1f2a-4eb3-a2af-be932f230161" class="">Note that the file must be sorted in the order of the search key, or else it will not be a cluster index.</p><figure id="79689ff5-ddc0-43fe-94ac-55dfea59fb48" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2014.png"><img style="width:576px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2014.png"/></a></figure><figure id="58dacfbb-b45b-4f56-a083-bf27c80f5fec" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2015.png"><img style="width:132px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2015.png"/></a></figure></details></li></ul><ul id="1f0adfed-5575-4593-80bf-fdff0a8bf1d6" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Sparse Index</mark></strong></summary><p id="662c7da6-f7de-4e99-b14e-090b5d88f3a2" class="">Sparse index is established only for certain search keys, but the first record pointed to will sequentially link the remaining records.</p><p id="d068e2ef-5d7c-4058-9527-484e488c7aeb" class="">In other words, sparse index is only used when creating a cluster index.</p><figure id="95ae1121-10f4-45f5-9e5d-605479981b1f" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2016.png"><img style="width:576px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2016.png"/></a></figure><figure id="58c0c66e-7bfc-4778-b571-c4f89072329c" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2017.png"><img style="width:144px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2017.png"/></a></figure><p id="f17995d9-02f0-4ea2-b5bd-afb0bbc8245d" class="">
+</p><p id="a1f9999b-9be2-4ab6-bcfc-828f80404524" class="">
+</p></details></li></ul><ul id="3a9db892-6d37-4626-8a3d-8b4aba0a8680" class="toggle"><li><details open=""><summary>Pros and Cons</summary><p id="3c64ba45-9884-4dc7-a5df-e42a303cebcf" class="">dense index: Shorter Searching time</p><p id="1a39170c-5d66-4e53-befd-9d5810c7ef66" class="">sparse index: Smaller space costing， space overhead small</p></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">辅助索引Secondary Index</summary><div class="indented"><p id="6374f00f-c4de-48aa-b04b-e92cfcfd350f" class="">A Secondary Index must be <strong>dense</strong>.</p><p id="20eb96d5-4e08-4381-ac56-748929fd0eca" class="">For every value of a search key, there is an index entry, and there is a pointer for any record in the file.</p><p id="3aed911e-d684-43d0-847c-8383967ec304" class="">
+</p><figure id="9bfe1a08-ca20-4dc9-ada4-dce69df9e05f" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2018.png"><img style="width:576px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2018.png"/></a></figure><p id="0f4681a9-f9a8-47bb-beb0-b2205ad5d3ad" class="">In contrast, a cluster index can be sparse. Even if only a portion of the search key values is stored, we can sequentially access records of this category and find the target records due to the rigor of the structure.</p><p id="e2a0e699-954d-4ee8-a5ed-c37a6a28a155" class="">The similarity between Secondary Index and dense index is that each value of the search key has a record as a search object, but the records in the index are in disorder.</p><p id="3a57972c-3a87-4335-bfe3-56b7b38c86ce" class="">If the secondary index does not point to a candidate key, it is not feasible to point to only the first search record like a cluster index (fundamental difference). This is because records with other search codes may exist throughout the file.</p><p id="a57282ac-ae9b-4294-8c1a-463912db0b6a" class="">Therefore, a secondary index must include pointers for all search records.</p><blockquote id="8769c641-695f-4185-af97-744c783d21e9" class="">与之相对的是cluster index可以是稀疏的。即使只存储部分的搜索码的值但是通过结构的严谨性我们可以顺序访问这个类目标的记录找到目标的记录。
+Secondary Index 的样子与稠密引索的相同点就是每一个搜索键的值都有一个记录作为搜索对象但是引索中的记录是乱序排列的。
+如果secondary index指向的不是候选码，那么像cluster index 一样只指向第一个搜索记录s1不可行的（本质区别）。这是因为拥有其他搜索码的记录会存在在整个文件的各个地方。
+因此辅助引索必须包括所有的搜索记录的指针。</blockquote></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">多级索引</summary><div class="indented"><p id="0e5b134e-7c91-44f5-ba43-a109ebab7f19" class="">When the index grows beyond the capacity of the main memory, arrange the original index in order and build a sparse outer index on top of the original index. Because the inner index is ordered, the outer index can be sparse.</p><p id="2dfa6fff-aaf4-451f-88a9-1fd39d735148" class="">Binary search on the outer index → Binary search on the inner index pointer → Scan and traverse the specified linked list (block).</p><blockquote id="8bb36778-1aa9-47e8-b0d2-ec141f593c23" class="">当引索达到不能放进主存的时候，将原始引索顺序排列并在原始引索之上构建一个稀疏的外层索引。因为内层引索是顺序排列的所以外层索引是稀疏可以成立。
+二分查找外层索引→内层二分查找指针→扫描遍历指定的链表（块）</blockquote><figure id="7824df42-63b3-4be6-b524-aad81fbb7d26" class="image"><a href="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2019.png"><img style="width:432px" src="Note%207%20File%20Organization%20da6a11214521477b898000a09a35c398/Untitled%2019.png"/></a></figure></div></details><p id="2e16b8c3-c126-427e-9f1e-39fbf7080f4d" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
