@@ -1,0 +1,687 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Note 9: Hashing</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b709c472-c4e9-49d0-9a7c-aa9a4c33de4e" class="page sans"><header><h1 class="page-title">Note 9: Hashing</h1><p class="page-description"></p></header><div class="page-body"><blockquote id="80ab9c94-183c-4a5b-91f0-37feaa91c518" class="">Author: Zhen Tong 120090694@link.cuhk.edu.cn
+Lecturer: Jane YOU</blockquote><figure id="cd6bab04-d057-4a6b-b6d3-e0c9da88533b"><a href="https://58191554.github.io/csc3170_23fall/dashboard.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">CSC 3170</div><div class="bookmark-description">CSC 3170 - Database System at CUHKSZ. This is an introductory course in database systems.</div></div><div class="bookmark-href"><img src="https://58191554.github.io/favicon.ico" class="icon bookmark-icon"/>https://58191554.github.io/csc3170_23fall/dashboard.html</div></div></a><figcaption>Back to DashBorard</figcaption></figure><h3 id="8efe24a2-296f-4e28-a87f-7087a02150ec" class="">Hash</h3><ul id="ccddad96-30c8-40b7-9229-ee603ffc1b4a" class="toggle"><li><details open=""><summary>Hash</summary><p id="b142e9ee-37d0-4cfe-a551-af6e3e62ac57" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Motivation: </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>Using Hash to decrease searching complexity to <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><p id="daff2558-47d7-44cc-8b93-e7bb0817d007" class=""><strong><mark class="highlight-blue">bucket:</mark></strong> contains one or more entries</p><p id="ac609ca4-611d-4b20-8b1c-d79aeab55278" class="">We use the hash function to get the bucket of a search key</p><p id="1d855d36-ad4e-4134-8480-2902517ee5f7" class="">Because different search keys should be mapped to the same bucket, we need to do searching in one bucket.</p><p id="3e9efc5e-1d54-422c-8b37-535585ce0584" class=""><strong><mark class="highlight-blue">hash index:</mark></strong> bucket contains entries with pointer linked to record</p><figure id="49af0b39-73c9-431c-b9cd-7c9b20512f5b" class="image"><a href="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled.png"><img style="width:576px" src="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled.png"/></a></figure><p id="4cfd5002-b9d5-4246-8a95-fabca5fb7fb5" class=""><strong><mark class="highlight-blue">hash file-organization:</mark></strong> hash file-organization</p><figure id="6e976b30-8ee9-4f0f-aa4e-8d6222636dc2" class="image"><a href="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%201.png"><img style="width:576px" src="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%201.png"/></a></figure><p id="56cb4ec4-e2ac-40ea-b0e9-fde974bc9265" class=""><strong><mark class="highlight-blue">uniform is good</mark></strong></p><p id="b29a369f-d69a-4690-b5a7-bbe471929bdd" class="">We try to avoid collision. Each bucket assigns the same number of search key values to the entries in the target storage. An ideal hash function is random. Therefore, what ever the distribution of the search key follows, the bucket can have same numbers of record</p><ul id="a970f992-ed07-493e-908a-a603f09ca1ee" class="bulleted-list"><li style="list-style-type:disc">For example, for a string search key, you can add the binary representation of all characters in the string and return a sum modulo to the number of buckets</li></ul></details></li></ul><ul id="b3b58c5f-aef1-41c3-baed-de92169c9edb" class="toggle"><li><details open=""><summary>Hash Bucket Overflow</summary><p id="79e6e461-3d6b-4b04-8599-4e579792e0dc" class="">Bucket overflow:</p><ol type="1" id="e67bf9e1-b497-47c7-9359-2f089568d251" class="numbered-list" start="1"><li>There is limited space in one bucket</li></ol><ol type="1" id="e3390e39-e33d-499d-b13a-826fddecc759" class="numbered-list" start="2"><li>The record buckets is skew can be caused by:<ol type="a" id="b3069f5d-39d3-4df8-8536-7e760fad566f" class="numbered-list" start="1"><li>Multiple records have the same search key value</li></ol><ol type="a" id="1e023c5a-6684-4a18-b204-4f71758fb460" class="numbered-list" start="2"><li>The selected hash function produces a non-uniform distribution of key values</li></ol></li></ol><p id="58a60f59-e975-4042-a34a-c577b324791a" class="">If we have <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></span><span>﻿</span></span> records and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span></span></span></span></span><span>﻿</span></span> numbers of buckets with a capacity of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></span><span>﻿</span></span>, then the probability for each record throw to each bucket is <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo>=</mo><mn>1</mn><mi mathvariant="normal">/</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">P[i] = 1/r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span></span></span></span></span><span>﻿</span></span>. Assum the number of records in one bucket is a random variable called <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span><span>﻿</span></span>. Then for one specific bucket, the probability of overflow is </p><p id="df249a57-de75-4e5a-8504-236e667166f7" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>X</mi><mo>&gt;</mo><mi>C</mi><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><msubsup><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>C</mi></msubsup><mi>P</mi><mo stretchy="false">(</mo><mi>X</mi><mo>=</mo><mi>k</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(X&gt;C) = 1-\sum_{k = 1}^{C}P(X = k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.2809em;vertical-align:-0.2997em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9812em;"><span style="top:-2.4003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">C</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><figure id="2d493aab-b2d8-49fb-852a-1566dc46e428" class="image"><a href="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%202.png"><img style="width:336px" src="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%202.png"/></a></figure><p id="e4ff02bb-cf11-40e7-8eb1-963040a64699" class="">Overflow Policy<div class="indented"><p id="5cdb350d-9554-4a47-963b-a59f3a15bb5e" class=""><strong><mark class="highlight-blue">Collision:</mark></strong> Insert the hash field value of the record hash to an address that is already occupied</p><p id="3947f43e-eed9-482a-8d85-1aa88b7eab61" class=""><strong><mark class="highlight-blue">Collision Resolution</mark></strong><div class="indented"><p id="c480e113-1189-42ea-b438-33460c73c249" class=""><strong><mark class="highlight-blue">Open Addressing: </mark></strong>Start with the occupied location, find the next unused location, and place the record there</p><p id="c59f7d27-681c-4e5a-a758-daef9bb26056" class=""><strong><mark class="highlight-blue">Overflow Chain:</mark></strong> The overflow buckets of a given bucket are linked in a linked list</p><figure id="03187151-e09c-455f-a735-ca2dd4c7d99d" class="image"><a href="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%203.png"><img style="width:528px" src="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%203.png"/></a><figcaption>Overflow Chain</figcaption></figure><p id="e26d04f9-cef4-4a31-91ed-3de03f794ab5" class="">Disadvantages of static hashing:<div class="indented"><p id="a98b761f-c051-4fdf-b8ef-1745806660b5" class="">In a static hash, the function <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mo>⋅</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> maps the search key value to a fixed set of bucket addresses, but the database grows or shrinks over time</p><ol type="1" id="0d0b9bf6-ae25-4124-9dff-a030db5b23a8" class="numbered-list" start="1"><li>If the initial number of buckets is too small, excessive overflows can cause performance degradation when files grow</li></ol><ol type="1" id="7008b5dc-e1c4-4f73-9a13-0111e1c3b180" class="numbered-list" start="2"><li>If you allocate space for expected growth, a lot of space will be wasted (the bucket will be filled) in the beginning.</li></ol><ol type="1" id="ca3f9c41-d2a2-4d19-b7c2-cb03f1f1f8d3" class="numbered-list" start="3"><li>If the database shrinks, the space is wasted again</li></ol></div></p></div></p></div></p></details></li></ul><ul id="7fa71258-a87c-4388-90e4-dd61a154a969" class="toggle"><li><details open=""><summary>Hashing with Dynamic File Expansion</summary><p id="c3c47a8c-6ad8-4076-b31c-0b8c744d27c5" class="">The result of a hash function is a non-negative integer, so it can be expressed as a binary number</p><p id="001d8f00-ad65-49d3-bb10-b3a1ffbb92d5" class=""><strong><mark class="highlight-blue">hash value of the record</mark></strong></p><p id="87eebc3e-c002-4394-a3e4-ce92b593229e" class="">The rule of visiting one bucket is built on the binary representation of the result of the hash function, which is a string of bits called a record hash</p><p id="c34ba5b4-c3bc-4953-9c4b-0eda050a4211" class="">records is assigned to certain buckets by the fist few bits of the hash value </p><ul id="eb5953a9-02e2-4190-805f-4f11f311b78d" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">extendible hashing</mark></strong></summary><ul id="14c6da8c-5068-45c1-aeba-92943180050d" class="toggle"><li><details open=""><summary>Introduction</summary><p id="40a76820-f70a-49de-8225-577adb3ee6a0" class=""><strong><mark class="highlight-blue">Motivation： </mark></strong>Construct a bucket array of length <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>d</mi></msup></mrow><annotation encoding="application/x-tex">2^d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="20fb08d2-e077-4d3b-a997-c0591443ae8d" class="">The first <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></span><span>﻿</span></span> bit of the hash value is used as the index of the array to determine the directory entry, and the address in the entry determines which bucket the corresponding record is stored in</p><p id="dcdfb63f-30d8-46d2-b143-725e5d824f22" class="">extendible hashing is a dynamic hashing method where directory and bucket are used to hash data. This is a very flexible approach, in which the hash function also undergoes dynamic changes</p><p id="4f0736d6-30ef-4aff-ae92-4c0a4c1d3734" class="">The main features of extensible hashing are:</p><ol type="1" id="adb38dda-c716-405e-88a5-fb860879ba77" class="numbered-list" start="1"><li>directory :directory stores the address of the bucket in the pointer. Assign an id to each directory, which may change when directory expansion occurs</li></ol><ol type="1" id="628d2de4-e91d-4d33-938a-80e8ee542476" class="numbered-list" start="2"><li>buckets:buckets are used to hash actual data.<figure id="37506433-6cb2-4b08-90e4-279b160fc48d" class="image"><a href="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%204.png"><img style="width:559px" src="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%204.png"/></a></figure></li></ol><ol type="1" id="6cbd254d-4f1c-451d-a3ef-8a062ef407fd" class="numbered-list" start="3"><li>Global Depth = Number of bits in directory id. Global Depth = Number of bits in directory id. They represent the number of bits used by the hash function to classify the key.
+Global Depth:与Directories相关联.  Global Depth = Number of bits in directory id. 它们表示哈希函数用于对键进行分类的bit数。</li></ol><ol type="1" id="14d2d56a-6fb3-4fb5-b62a-3725a5aef2a8" class="numbered-list" start="4"><li>Local Depth: Associated with buckets, the local depth is always less than or equal to the global depth. The local depth determines the action to be performed in the event of an overflow based on the global depth
+Local Depth: 与buckets相关联，局部深度总是小于或等于全局深度。局部深度根据全局深度来决定在发生溢流时要执行的动作</li></ol><ol type="1" id="d23ab4cc-a51e-45a5-8996-eef4890ed17d" class="numbered-list" start="5"><li>Bucket Splitting: When the number of elements in a Bucket exceeds a specific size, the Bucket is split into two parts.
+Bucket Splitting: 当Bucket中的元素数量超过特定的大小时，则将Bucket分成两部分。</li></ol><ol type="1" id="17c057ea-e024-4751-8628-007404da3106" class="numbered-list" start="6"><li>Directory Expansion: Directory expansion when buckets overflow. When the local depth of the overflow bucket is equal to the global depth, expand the directory
+Directory Expansion: 当桶溢出时进行目录扩展。当已溢出桶的局部深度等于全局深度时，执行目录扩展</li></ol><figure id="08c7a341-2cc3-439f-80d2-c0571d9e42b3" class="image"><a href="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%205.png"><img style="width:336px" src="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%205.png"/></a></figure></details></li></ul><ul id="e6f65109-3bbf-4e9c-b8a7-c74c445a5267" class="toggle"><li><details open=""><summary><strong>Basic Working of Extendible Hashing:</strong>
+</summary><ol type="1" id="a2977f1b-7159-4cea-aa2d-2d741fa78021" class="numbered-list" start="1"><li>Step 1, analyze the data elements:
+Data elements may exist in various forms. Integer, string, floating point number, etc. For now, let&#x27;s consider data elements of type integer. For example :49.</li></ol><ol type="1" id="e7d840a4-553b-4bcd-a7f6-9377f2f9aab2" class="numbered-list" start="2"><li>Step 2, convert to binary format:<p id="01a78224-661c-4b89-abcd-f55dd4fb6259" class="">Converts data elements to binary format. For string elements, consider the ASCII equivalent integer of the starting character, and then convert that integer to binary form. Since we have 49 as the data element, its binary form is 110001.</p></li></ol><ol type="1" id="43ed9676-736f-4916-934d-4ad7a339653b" class="numbered-list" start="3"><li>Step 3 - View the Global Depth of the directory. Assume that the global depth of the hash directory is 3.</li></ol><ol type="1" id="076c5c7e-b0d6-48d5-8908-53df097f44cd" class="numbered-list" start="4"><li>Step 4 - Identify the directory:
+Consider the number of &quot;global depths&quot; of the LSB in the binary and match it to the directory id. For example. The resulting binary number is 110001 and the global-depth is 3. Therefore, the hash function will return (110001, which is 001).</li></ol><ol type="1" id="701e9f49-b2cc-48aa-9039-ed97a58b8527" class="numbered-list" start="5"><li>Step 5 - Navigation: Now navigate to the bucket pointed to by directory 001.</li></ol><ol type="1" id="955a693d-f8f5-4ac0-af0f-cd279020c174" class="numbered-list" start="6"><li>Step 6 - Insert and Overflow check: Insert components and check whether the bucket overflows. If yes, go to Step 7; otherwise, go to Step 9.</li></ol><ol type="1" id="c208e047-13a2-4b64-a51f-76dc0852425f" class="numbered-list" start="7"><li>Step 7 - Handle Over Flow Condition during Data <strong>insert</strong> : a Bucket overflow can occur when inserting a Bucket. In such cases, we need to follow proper procedures to avoid incorrect handling of the data. 
+First, check whether the local depth is less than or equal to the global depth. Then choose one of the following examples.<p id="6771dbde-9b0c-428f-a96c-5338184f1c6d" class=""><strong><mark class="highlight-blue">Case1:</mark></strong>If the local depth of the overflow bucket is equal to the global depth, run directory expand and bucket split. The global depth and local depth values are then increased by 1 each. Then, assign the appropriate pointer. The directory extension doubles the number of directories in the hash structure.</p><p id="c3511b0c-7a51-4d5b-99a4-bfa18ac7e9e0" class=""><strong><mark class="highlight-blue">Case2:</mark></strong>If the local depth is less than the global depth, only Bucket Split is performed. Then only increase the local depth value by 1. Then, assign the appropriate pointer.</p><figure id="2a45e0e5-d8f9-44cc-9066-4796f4e17839" class="image"><a href="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%206.png"><img style="width:384px" src="Note%209%20Hashing%20b709c472c4e949d09a7caa9a4c33de4e/Untitled%206.png"/></a></figure></li></ol><ol type="1" id="8b6cf27e-b210-4e1a-a94b-5711822a5045" class="numbered-list" start="8"><li>Re-hashing of split bucket elements: The elements present in the split overflow bucket will be re-hashed at the new global depth of the directory.</li></ol><ol type="1" id="e28297c0-98bc-464e-bc4f-aade1a8e03e9" class="numbered-list" start="9"><li>Done</li></ol></details></li></ul><ul id="c5b02e4d-2632-430f-9451-301b7af23fd8" class="toggle"><li><details open=""><summary><strong>Example</strong></summary><p id="e45289d8-f7d8-40cd-b0ef-9a7077a68e36" class="">Hash these elements:16、4、6、22、24、10、31、7、9、20、26。</p><p id="a2a10f9e-d93d-4bc4-8894-b7669f673692" class=""><strong>Bucket Size:</strong>3 (Assume)</p><p id="8592deff-6d5b-4eed-8cda-0b03ee54b897" class=""><strong>Hash Function:</strong></p><p id="7a341338-5425-4fca-a7b6-c36026cff0eb" class="">Suppose the global depth is X. Then the Hash Function returns X LSBs.</p><p id="9ac08182-6261-4bce-98c3-16e343601d14" class="">binary forms</p><p id="a345a85b-fe0e-4d45-add0-77aa343af2b7" class="">16- 10000</p><p id="9b117058-e073-4561-b2ad-a93defb00839" class="">4- 00100</p><p id="6bc532ea-6a75-4e8e-b016-226b6cc68a4b" class="">6- 00110</p><p id="8e904b7b-c225-4abd-923c-005cff0d034e" class="">22- 10110</p><p id="1822f787-a6f3-4c20-94af-f323bbd5508c" class="">24- 11000</p><p id="123e0e2f-c699-43e1-9a1b-62f48829c95c" class="">10- 01010</p><p id="37e5b320-5560-4c92-b2d4-ec5dd0bf2782" class="">31- 11111</p><p id="19c09f91-dec8-40e9-bce5-e955c77cdd6c" class="">7- 00111</p><p id="d9bd1a30-d454-44b3-9238-8d1cfdea0cfe" class="">9- 01001</p><p id="8fd23c5a-ed02-4741-bc4d-5d74ba35100e" class="">20- 10100</p><p id="87df18c3-50ba-4c5e-be3b-dc8bff51d236" class="">26- 11010</p><p id="2c627164-92e5-4628-9b6d-977e6d7964b1" class="">
+</p></details></li></ul><figure id="6885a787-99b5-4f6d-8f17-6a5fb5ade7ef"><a href="https://www.geeksforgeeks.org/extendible-hashing-dynamic-approach-to-dbms/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Extendible Hashing (Dynamic approach to DBMS) - GeeksforGeeks</div><div class="bookmark-description">Extendible Hashing is a dynamic hashing method wherein directories, and buckets are used to hash data. It is an aggressively flexible method in which the hash function also experiences dynamic changes. Main features of Extendible Hashing: The main features in this hashing technique are: Directories: The directories store addresses of the buckets in pointers.</div></div><div class="bookmark-href"><img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_favicon.png" class="icon bookmark-icon"/>https://www.geeksforgeeks.org/extendible-hashing-dynamic-approach-to-dbms/</div></div><img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png" class="bookmark-image"/></a></figure></details></li></ul></details></li></ul><p id="dc6a7f30-e76b-4723-9048-ebbd9201759b" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
