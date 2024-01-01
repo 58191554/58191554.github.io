@@ -1,0 +1,683 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Hakuba</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="153794ce-af47-463f-8555-a0c05191b7c7" class="page sans"><header><img class="page-cover-image" src="Hakuba%20153794ceaf47463f8555a0c05191b7c7/top.jpg" style="object-position:center 50%"/><h1 class="page-title">Hakuba</h1><p class="page-description"></p></header><div class="page-body"><p id="a6e94cbb-d25d-49b1-997c-c077569b9033" class="">Hakuba在日本的长野县（Nagano Prefecture）是一个滑雪的好去处。我在2023年12月27号到1月2号在这里滑雪。非常好的滑雪地点。好处有：</p><ul id="69800270-bd98-45e0-926a-c70b5447c98f" class="bulleted-list"><li style="list-style-type:disc">日本的物价相对北美和欧洲较为便宜。</li></ul><ul id="557b785a-6572-4434-8540-8f0721a21b1f" class="bulleted-list"><li style="list-style-type:disc">对于中国的滑雪者友好，因为比较近不用倒时差</li></ul><ul id="8c2c9283-601e-4908-a10e-d4212dbc9dd8" class="bulleted-list"><li style="list-style-type:disc">住宿相对可以比较便宜，而且Hakuba的旅社很卫生</li></ul><p id="6f2da43d-6e43-4dde-9e91-26f9a5023c60" class="">但是如果您会日语，会更加方便，因为很多Hakuba日本人英语说的不好</p><h2 id="3e6a4260-b86e-4605-9fb3-7c17b4f6d8a7" class="">飞机票：</h2><p id="2fdcf7d1-525d-401e-a6b7-5456fecf0ba4" class="">我是从深圳出发到日本成田机场，<strong>提前一个月</strong>买机票可以把往返价格控制在4000rmb，但是如果在12月中旬买机票就会很贵。</p><figure id="93f9faeb-d3ad-4f1f-be47-b6abf6898457" class="image"><a href="Hakuba%20153794ceaf47463f8555a0c05191b7c7/village.jpg"><img style="width:480px" src="Hakuba%20153794ceaf47463f8555a0c05191b7c7/village.jpg"/></a><figcaption>第一天凌晨抵达之后的日出村庄。</figcaption></figure><h2 id="c6e25920-5287-44c8-991b-a80e062a7d43" class="">巴士：</h2><p id="b53dc09c-d3e7-47d1-a315-d27c8d954b03" class="">抵达日本成田机场之后，坐巴士抵达Hakuba。需要提前在snow liner网站买巴士票。我是坐的连夜大巴SL131，晚上出发，第二天五六点抵达。虽说是冬天凌晨很冷，但是日本的公交车站是有小木屋的，里面有暖气和凳子，可以先补个觉等天亮了到旁边就是公交站会有的士司机早上等着可以去打车。我们是7点天亮了去的士站打车的。的士车上面都有放雪板的地方很方便。</p><figure id="b591d99e-3c75-4398-8549-ea41ee9fc328"><a href="https://spur.jamjamliner.jp/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">SPICE FRONT</div></div><div class="bookmark-href"><img src="https://spur.jamjamliner.jp/favicon.ico" class="icon bookmark-icon"/>https://spur.jamjamliner.jp/</div></div></a></figure><h2 id="de412d2f-174e-444a-91fd-846667fd0c95" class="">住店：</h2><p id="a2785c0c-7eb3-4d97-af28-ec0c05bda4d4" class="">我是住了roku hotel。3300rmb6晚，也是提前了一个月定的双人间。我和我爸属于是对住宿要求不高，所以还是很满意的。我见识短浅，看到他家有能泡汤池感到非常好（后来和一起住的滑雪朋友聊天发现是标配😅）。当然也有人抱怨说他家特别小，但是我还是觉得不错毕竟便宜而且特别干净。店家是一对老头老太太，挺可爱的。好处还有：</p><ul id="414f63a1-9ce6-4ea6-9ffa-780e8e479245" class="bulleted-list"><li style="list-style-type:disc">离shuttle bus 站非常近出门就是HV线的Cultured Hotel站</li></ul><ul id="c27a8e9f-93c5-4a9c-b578-475f05878fdd" class="bulleted-list"><li style="list-style-type:disc">离711便利店非常近，解决了我和我爸的每天吃饭。</li></ul><figure id="38fe6614-dd06-42ab-a2d7-885dd25835b4"><a href="https://www.booking.com/hotel/jp/pension-roku.zh-cn.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">洛库旅馆, 白马村, 日本</div><div class="bookmark-description">Pension Roku旅馆距离受欢迎的Happo-One Ski Resort滑雪场有5分钟车程，是一间家庭经营的旅馆，提供滑雪储存设施。旅馆距离JR白马火车站（Hakuba Train Staion）有7分钟的车程，距离白马五龙滑雪胜地（Hakuba Goryu Ski Resort）有13分钟的车程。...</div></div><div class="bookmark-href"><img src="https://ac-a.static.booking.cn/static/img/favicon/4a3b40c4059be39cbf1ebaa5f97dbb7d150926b9.png" class="icon bookmark-icon"/>https://www.booking.com/hotel/jp/pension-roku.zh-cn.html</div></div><img src="https://ac-a.static.booking.cn/xdata/images/hotel/max1024x768/14737573.jpg?k=a90daae3affc27d412f687598fdaacad90e7730f688d573419fe4053274c1241&amp;o=&amp;hp=1" class="bookmark-image"/></a></figure><p id="5f096144-3cbd-4d0a-83b5-490ca67401f3" class="">另一个推荐的旅店是（雪友推荐）：</p><figure id="b02dc3e1-c015-4b23-bad5-b5106fa428b9"><a href="https://www.booking.com/hotel/jp/garelly-and-lodge-noichigo.zh-cn.html?aid=898224&amp;label=room_list-fGxSge@1699885254&amp;sid=ed1cc2666ecbaa6b981d0466cca42a02&amp;checkin=2023-12-29&amp;checkout=2024-01-05&amp;dist=0&amp;from_sn=ios&amp;group_adults=1&amp;group_children=0&amp;keep_landing=1&amp;no_rooms=1&amp;req_adults=1&amp;req_children=0&amp;room1=A,&amp;sb_price_type=total&amp;type=total" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">诺奇格画廊旅舍, 白马村, 日本</div><div class="bookmark-description">白马村的诺奇格画廊旅舍—保证以最优惠价格预订！6条评语和 33张照片正等您探索。</div></div><div class="bookmark-href"><img src="https://ac-a.static.booking.cn/static/img/favicon/4a3b40c4059be39cbf1ebaa5f97dbb7d150926b9.png" class="icon bookmark-icon"/>https://www.booking.com/hotel/jp/garelly-and-lodge-noichigo.zh-cn.html?aid=898224&amp;label=room_list-fGxSge@1699885254&amp;sid=ed1cc2666ecbaa6b981d0466cca42a02&amp;checkin=2023-12-29&amp;checkout=2024-01-05&amp;dist=0&amp;from_sn=ios&amp;group_adults=1&amp;group_children=0&amp;keep_landing=1&amp;no_rooms=1&amp;req_adults=1&amp;req_children=0&amp;room1=A,&amp;sb_price_type=total&amp;type=total</div></div><img src="https://ac-a.static.booking.cn/xdata/images/hotel/max1024x768/54003895.jpg?k=e84e9148c299464084ab1d330ce9b2a590550e5693d0cafbddd56e900ceebf9b&amp;o=&amp;hp=1" class="bookmark-image"/></a></figure><h2 id="d96842e1-eb99-4696-8ada-83f158c3f5b0" class="">滑雪：</h2><p id="effdbdad-7624-4a23-a868-b8841b7a07ea" class="">因为我总共只滑了5天，并没有把10个雪场都滑完，只滑了3个：Happo-one, Tsugaike, Hakuba47+Goryu.</p><h3 id="8c67522d-577e-4208-91d8-cc466d290116" class="">Happo-one:</h3><p id="85da2365-9e03-4768-91fd-54161f748081" class="">是最有名的滑雪场，雪道很长，但是我是单板滑雪者，所以并不是很舒服，因为有很多“猫跳”道路，双板爱好者喜欢玩猫跳的可以去。唯一只有一段山顶的红道(intermedian中级道)雪道是平顺的适合各种人练习使用。</p><h3 id="9562ad7e-72b6-44a8-9675-a7807cc6be1e" class="">Tsugaike:</h3><p id="d0b1cf3f-58fe-4100-8401-46ad9698ed9c" class="">是我最喜欢的雪场。开始要坐一个白色轿厢缆车，非常长，要排队，而且要坐挺长时间的。但是好处就是你可以认识很多不同的人，一起在轿厢聊天。我们在轿厢上认识了澳大利亚的朋友（圣诞节澳大利亚人超级爱来日本滑雪，显而易见他们圣诞节没有雪😋），还碰到了深圳的朋友，和他们聊天很开心，一起滑了一天。</p><p id="f9aff96e-fa41-4261-838f-6e3de51b92e9" class="">tsugaike我最喜欢的一个雪道是TsugaPOW DBD（marked in red star）</p><figure id="1b703977-5639-4167-b3a1-74c950db61bd" class="image"><a href="Hakuba%20153794ceaf47463f8555a0c05191b7c7/TsugaikeKogen_pistemap.jpg"><img style="width:960px" src="Hakuba%20153794ceaf47463f8555a0c05191b7c7/TsugaikeKogen_pistemap.jpg"/></a></figure><p id="28d7a08b-0add-4e1c-9abf-5712da8e681d" class="">这一段是林间小道，有弧形的地形，坡度上下起伏，如果你也喜欢复杂的地形，从小坡上俯冲而下的感觉非常爽。红道都非常适合中级爱好者练习，当然绿道全速滑行也很爽。山顶的小餐馆也很好吃。</p><h3 id="b546ce11-f07e-4f39-8873-ef889996e71d" class="">Hakuba 47+Goryu:</h3><p id="66f49d54-5613-4972-b30f-de0b71749f7b" class="">在元旦大雪过后，最后一天我在47和五龙滑雪。这是我去的三个雪场里面最大的一个。地形很丰富，有一个滑板公园，但是我技术有限只能蹭蹭U形池。上面的雪道很长，而且是雪质最好的一个滑雪场。</p><p id="f36f9d47-e9e6-4506-8754-4ac9be2a2985" class="">票价如下：</p><figure id="09693719-5ee8-4811-a9cb-d3f3d3f54d7b" class="image"><a href="Hakuba%20153794ceaf47463f8555a0c05191b7c7/tickets.jpg"><img style="width:480px" src="Hakuba%20153794ceaf47463f8555a0c05191b7c7/tickets.jpg"/></a></figure><figure id="a17a8a1b-460b-459b-8e38-1b0ea1cd02b4"><a href="https://www.hakubavalley.com/en/ticket_en/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Lift Ticket Info | Hakuba Valley</div><div class="bookmark-description">Lift Ticket Info | Hakuba Valley | 白馬エリアのスキー場情報サイト</div></div><div class="bookmark-href"><img src="https://www.hakubavalley.com/cms/wp-content/themes/hv_themes/common/img/favicon/apple-touch-icon.png" class="icon bookmark-icon"/>https://www.hakubavalley.com/en/ticket_en/</div></div></a></figure><p id="ec92df95-0f9f-4597-95f2-2532b4f60b54" class="">滑雪5天折合rmb大约2000rmb，400rmb一天，中国国内都没有这个价格。pass意味着10个雪场可以任意滑雪一共5次。值得说的是其实happo-one和tsugaike是最长的，可以按需直接购买这俩，但是巴士可能就得另外付钱，pass tickets是可以包所有shuttle bus。</p><h3 id="db4fcc6f-6015-406a-b0a6-ee37bc40aa97" class="">Shuttle Bus</h3><p id="5d4f9590-b4e6-4eb7-80dd-e524c9deb05e" class="">在2023年，中国的驾照还是不被日本认可的，所以中国人（澳洲人也很多没租车，可能是想省钱？）建议使用shuttle bus。HV(Hakuba Valley) Bus有三条线路，</p><figure id="da7f29d0-54b9-4c30-b3fd-79f247fffc91" class="image"><a href="Hakuba%20153794ceaf47463f8555a0c05191b7c7/hvbus.jpg"><img style="width:1672px" src="Hakuba%20153794ceaf47463f8555a0c05191b7c7/hvbus.jpg"/></a></figure><figure id="6d0edeb5-7367-4b05-b8a7-282d20548ef5" class="image"><a href="Hakuba%20153794ceaf47463f8555a0c05191b7c7/bustime.jpg"><img style="width:1684px" src="Hakuba%20153794ceaf47463f8555a0c05191b7c7/bustime.jpg"/></a></figure><p id="d84b41eb-db6c-4b5e-bffb-6e06ff825801" class="">比方说蓝线中For Goryu 就是去往五龙滑雪场方向（向左），For Tsugaike 就是去往Tsugaike 滑雪场（向右）的。掌握了bus到站的时刻表，就可以精准把控滑雪时间，不用傻等bus。因为大多数外国人看不懂日文，所以当你掌握了时间表，就可以帮助外国朋友，之后成为representation for your 华人朋友。</p><h2 id="87013a9f-9f84-40f5-9453-910e9486fdf0" class="">吃饭</h2><p id="70394045-e259-4589-bd42-0d7724d43b4f" class="">本人不是很看重吃饭，所以为了省钱省时间一直是在吃711，日本的711对我来说真得很好吃了。一个20-25rmb的微波食品就已经很好吃了，而且还能买到日本特色的小零食（铜锣烧和鲷鱼烧），还有梅子酒30rmb也挺好喝的。</p><p id="b0d8f416-909e-4fae-8002-e54d239f1550" class="">如果要出去吃饭，请务必先致电饭店reservation。日本料理和居酒屋真得都很小很需要预定。酒店认识的朋友说外面有好吃的，但是也有很贵的一般的，总之见仁见智。</p><h2 id="c40ef150-7496-4c4a-b72a-f594b6ec89c2" class="">自然灾害</h2><p id="cc96f943-7be7-422b-a8be-29e714ac8daa" class="">日本地处地震带，我在最后一天遇到了地震，整个房子都在摇晃。大家要注意安全。</p><p id="6f1fdfd5-3d42-45f5-bf56-f852821ee1f2" class="">
+</p><p id="483c1dd6-7ecd-49b0-bf46-23c399a5bb7f" class="">
+</p><p id="2f9696c0-1ca9-4a9e-96bb-f5a1f14e1138" class="">
+</p><p id="90a8bc17-a21e-4a14-8c5e-83f2a0525634" class="">
+</p><p id="6cf858ea-0c06-40e9-8068-37d077ad648a" class="">
+</p><p id="650a0ad8-d576-4d35-ba61-330a489e8f3f" class="">
+</p><p id="c1d288da-20ad-4dd0-8207-82acdffa5265" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
