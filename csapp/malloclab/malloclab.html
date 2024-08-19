@@ -1,0 +1,887 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Malloc Lab</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3862319e-7d11-475d-b720-3480f11ac4a1" class="page sans"><header><h1 class="page-title">Malloc Lab</h1><p class="page-description"></p></header><div class="page-body"><p id="3a012b99-c0fe-42dc-bb40-2536c0eca9b1" class="">在这个lab中，要求一步步实现对heap分配内存的管理实现。在第一部分中，checkpoint只要求实现速度够快的malloc，第二部分的final version中，通过删除footer，实现对internal fragment的减少。</p><h2 id="8a52c7fb-51de-4929-8cde-e172d152c1c8" class="">First Part</h2><p id="859b0282-9039-402e-ba44-57511ae4bd78" class="">在第一部分中，我们将实现：</p><ul id="27f4a198-2de8-4139-a9b9-1516b6c262b6" class="bulleted-list"><li style="list-style-type:disc">free block的linked list</li></ul><ul id="94e29901-58a2-477e-9759-46ae8da5ef07" class="bulleted-list"><li style="list-style-type:disc">回收内存free的coalesce</li></ul><ul id="02547eb8-21a9-43a0-a2a6-3fbc256af229" class="bulleted-list"><li style="list-style-type:disc">不同大小区间的多个链表链接的free block</li></ul><p id="0a358967-69c0-4f02-9ab1-9d5d4fddb34d" class="">首先，先需要来认识一些基本的常量的意义。</p><p id="7ec064e1-cf94-45b4-a573-4997be067a5f" class=""><code>static const size_t wsize = sizeof(word_t);</code></p><p id="3fae905a-fe89-4651-966b-9cf12e512bc4" class="">wsize = 8 bytes 的数据大小单位是malloc lab中数据的最小单位。</p><p id="2144be9d-3730-409a-ba64-03e10bdbf8e2" class=""><code>static const size_t dsize = 2 * wsize;</code></p><p id="ca6555f7-73d9-4b6a-b646-3fab8525d194" class="">dsize = 16 bytes 是两倍的wsize。可以被看作是一个header，一个footer。</p><p id="78f65a3e-9857-441b-87b0-461411185e9f" class=""><code>static const size_t chunksize = (1 &lt;&lt; 12);</code></p><p id="99d52be8-747b-4523-96c6-a530b42af1cd" class="">chunksize是当剩余最大free block大小小于需要分配的block asize的大小时，extend的heap内存大小。</p><p id="b5ce570b-9367-488f-8734-4de2d353db82" class=""><code>static const word_t alloc_mask = 0x1;</code></p><p id="2403f9d7-b6e2-44ec-a27e-a2cf738013b8" class="">alloc_mask被用来识别一个block是不是被分配了，分配alloc置为1，free = 0</p><p id="ca264927-b7d7-45ed-8bcf-acebe10cc2ff" class=""><code>static const word_t size_mask = ~(word_t)0xF;</code></p><p id="bcab9418-5911-4086-8516-1dbd8e1eb97b" class=""><code>size_mask</code> 被用来获取一个block的大小。</p><p id="184faef1-7b49-4c0f-88d8-dce0e6f06126" class="">在认识了基本的常量之后，我们开始设计两种最基本的数据结构，block和free block</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="62b90760-c2f0-4934-b394-8d8ba2944099" class="code"><code class="language-C">typedef struct block {
+    /** @brief Header contains size + allocation flag */
+    word_t header;
+    /**
+     * @brief A pointer to the block payload.*
+     */
+    char payload[0];
+} block_t;</code></pre><p id="256f1189-5c8e-4efc-8dd9-eac8a08c19cb" class="">block存在两个field， header和payload。在sturct中并没有显式的标明footer，footer实际上是payload的最后一个word_t。通过这个函数我们能够更清楚的理解：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30525087-647f-4c20-abc6-cdf143344f57" class="code"><code class="language-C">static word_t *header_to_footer(block_t *block) {
+    dbg_requires(get_size(block) != 0 &amp;&amp;
+                 &quot;Called header_to_footer on the epilogue block&quot;);
+    return (word_t *)(((char *)block-&gt;payload) + get_size(block) - dsize);
+}</code></pre><p id="684de422-1ba5-4402-83aa-5219c10464f2" class="">char是一个byte所以通过将payload地址向后寻找存储数据payload大小的位移后，向前移动一个dsize</p><figure id="1182805c-f6b2-464b-921b-9c574129f8ff" class="image"><a href="Malloc%20Lab%203862319e7d11475db7203480f11ac4a1/image.png"><img style="width:1692px" src="Malloc%20Lab%203862319e7d11475db7203480f11ac4a1/image.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e7eacf12-3a72-4074-8463-28efa6d02c42" class="code"><code class="language-C">/** @brief Represents free block to be allocated */
+typedef struct free_block {
+    /** @brief Header contains size + allocation flag */
+    word_t header;
+    /** @brief point to the previous block*/
+    word_t ptr_prev;
+    /** @brief point to the next block*/
+    word_t ptr_next;
+} free_block_t;</code></pre><p id="7eea6d5c-2ac3-4599-8897-0ca3290f7cbb" class="">free_block是一个链表节点的结构。向前指向前一个free_block，向后指向后面一个free_block。header中存放了size，是否alloc的信息。free_block中同样需要footer，同样也没有显式的说明。因为在coalesce阶段需要获得物理上连续的block是不是free_block。于是在向前寻找block的时候需要能够通过前一个block的footer获得前一个block的header位置。</p><p id="8766e318-8dfb-428f-8dba-5cba3b7b5ac8" class="">接下来，我们开始实现malloc第一部分的核心函数：</p><ul id="fd810cbe-7f2a-4d52-b265-805d2f96bb49" class="bulleted-list"><li style="list-style-type:disc">mm_init：初始化heap</li></ul><ul id="0be0df78-5977-40be-ab1a-45064263efe1" class="bulleted-list"><li style="list-style-type:disc">malloc：分配block</li></ul><ul id="ecd18a90-7749-4568-98bc-e601fb55aec9" class="bulleted-list"><li style="list-style-type:disc">free：回收blcok</li></ul><ul id="8ebf6a4e-7b9d-466e-bdb2-fde00ddf6e63" class="bulleted-list"><li style="list-style-type:disc">coalesce_block：在split， free操作后，将相邻free_block合并，减少external fragment</li></ul><ul id="ed1a041f-d10e-409e-aa2a-6ecdb9f58908" class="bulleted-list"><li style="list-style-type:disc">extend_heap：无合适大小free_block时extend新的chunk of heap.</li></ul><ul id="e3e01f4d-a31f-44b5-92ab-062204124e50" class="bulleted-list"><li style="list-style-type:disc">split_block_seg_list：分配block的时候，按需分配大小，将剩余的free_block分离开存放在相应的seg_list中。</li></ul><ul id="b7275646-488c-4cd7-b492-f5105c4d7231" class="bulleted-list"><li style="list-style-type:disc">find_first_fit：寻找链表中第一个合适的free_block。</li></ul><h3 id="5bab268b-1711-4afe-a1c9-935aaf3c30fc" class=""><strong>mm_init()</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bc523f2-b7fb-4b4c-89fb-0fa9cb565a55" class="code"><code class="language-C">bool mm_init(void) {
+    // initialize the seg list
+    seg_list.list_num = 8;
+    seg_list.threshlds[0] = min_block_size;
+    seg_list.threshlds[1] = 64;
+    seg_list.threshlds[2] = 128;
+    seg_list.threshlds[3] = 256;
+    seg_list.threshlds[4] = 512;
+    seg_list.threshlds[5] = 2048;
+    seg_list.threshlds[6] = 4096;
+    seg_list.threshlds[7] = 8192;
+    for(int i = 0; i &lt; seg_list.list_num; ++i){
+        seg_list.heads[i] = NULL;
+    }
+    // Create the initial empty heap
+    word_t *start = (word_t *)(mem_sbrk(2 * wsize));
+
+    if (start == (void *)-1) {
+        return false;
+    }
+    start[0] = pack(0, true); // Heap prologue (block footer)
+    start[1] = pack(0, true); // Heap epilogue (block header)
+
+    // Heap starts with first &quot;block header&quot;, currently the epilogue
+    heap_start = (block_t *)&amp;(start[1]);
+
+    // Extend the empty heap with a free block of chunksize bytes
+    if (extend_heap(chunksize) == NULL) {
+        return false;
+    }
+    if(vbs)printf(&quot;mm_init success...\n&quot;);
+    dbg_requires(mm_checkheap(__LINE__));
+    return true;
+}</code></pre><p id="e43300e0-a5e7-4d29-8bc3-4b74580a659c" class="">在初始化中，干了一系列事情。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7059e361-2389-4c60-9bfb-a28b7dca54f0" class="code"><code class="language-C">typedef struct {
+    block_t* heads[32];
+    size_t threshlds[32];
+    int list_num;
+} segmentation_list_t;</code></pre><p id="8d563170-690e-4305-b97d-89cebc938f02" class=""><code>static segmentation_list_t seg_list;</code> </p><p id="32db1db1-deb1-4332-a740-d3b54e528135" class="">seg_list是一个static指针数组，包含一系列不同大小free_block的链表表头。在mm_init中我们首次规定他们存储free_block的区间大小。</p><p id="5b28d786-a407-4794-9eca-d7ff98c0da33" class="">之后，初始化内存如图。当前只有一个free_block，size = 4096。</p><figure id="e4939d23-daa4-47c4-bfbc-4ea83714fc5c" class="image"><a href="Malloc%20Lab%203862319e7d11475db7203480f11ac4a1/image%201.png"><img style="width:2240px" src="Malloc%20Lab%203862319e7d11475db7203480f11ac4a1/image%201.png"/></a></figure><h3 id="cde882f9-509d-4789-857d-f01ac9d2a766" class=""><strong>malloc()</strong></h3><p id="77864632-a3ae-488d-be54-12fb204d8c83" class=""><code>asize = round_up(size + 2*dsize, dsize);</code></p><p id="f72abfe6-7cb6-4620-a66c-b636fcc4661c" class="">输入存放数据需要的size，但是我们需要手动帮他加上header，footer的空间。</p><p id="7c192ba3-fd79-453d-9582-02967f67a00e" class=""><code>block = find_first_fit(asize);</code></p><p id="d8f14130-c54b-497e-9b3e-4076b78368b8" class="">找到合适的free_blcok，如果找不到，就extend</p><p id="17c4da6b-cd66-4616-9b25-d69e06681058" class=""><code>split_block_seg_list(block, asize);</code></p><p id="97a4ba9e-2b8c-47d7-addc-7b7d9dbc8aa8" class="">管理好剩下的free_block加入seg_list。</p><p id="92e56256-3a10-4167-aedd-982dc7631250" class="">完成malloc</p><h3 id="15a4a5cf-c15a-4874-9cf7-8168fe9b1f51" class="">free()</h3><p id="321b660b-a924-43e9-9c0c-c0595917f31f" class=""><code>write_block(block, size, false);</code></p><p id="d2875275-516f-4c22-9fdf-5c21334cb9d4" class="">将block标记成free_block</p><p id="c40fb3c6-5adc-4153-9d9e-6505e828eef9" class=""><code>coalesce_block(block);</code></p><p id="8637512f-39d3-415c-bb97-21fd300808c0" class="">合并回收free_block</p><h3 id="db4dbcac-f43d-4f23-a36a-dec3254b4333" class="">coalesce_block()</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f9df2fb0-a2ef-42b5-911a-35643c9051d2" class="code"><code class="language-C">static block_t *coalesce_block(block_t *block) {
+    block_t *pys_prev_block = find_prev(block);
+    block_t *pys_next_block = find_next(block);
+    size_t size = get_size(block);
+    bool pys_prev_alloc = get_alloc(pys_prev_block);
+    bool pys_next_alloc = get_alloc(pys_next_block);
+    
+    if(pys_prev_alloc &amp;&amp; pys_next_alloc){
+        if(vbs)printf(&quot;A\n&quot;);
+        insert_some_seg_list(block);
+        return block;
+    }else if (pys_prev_alloc &amp;&amp; !pys_next_alloc)
+    {
+        if(vbs)printf(&quot;B\n&quot;);
+        size += get_size(pys_next_block);
+        remove_some_seg_list(pys_next_block);
+        write_block(block, size, false);
+        insert_some_seg_list(block);
+    }else if (!pys_prev_alloc &amp;&amp; pys_next_alloc)
+    {
+        if(vbs)printf(&quot;C\n&quot;);
+        size += get_size(pys_prev_block);
+        remove_some_seg_list(pys_prev_block);
+        block = pys_prev_block;
+        write_block(block, size, false);
+        insert_some_seg_list(block);
+    }else{
+        if(vbs)printf(&quot;D\n&quot;);
+        size += get_size(pys_prev_block) + get_size(pys_next_block);
+        remove_some_seg_list(pys_prev_block);
+        remove_some_seg_list(pys_next_block);
+        block = pys_prev_block;
+        write_block(block, size, false);
+        insert_some_seg_list(block);
+    }
+    return block;
+}</code></pre><p id="0d6d336b-f8ac-432b-b5a3-7b3429e78237" class="">合并前，先需要判断前后的block是不是可以合并的free_block。之后进行链表的移除，加入操作。</p><h3 id="1d871883-0546-48de-8865-bee265e8daa2" class="">extend_heap()</h3><p id="df73d674-6b24-4e4d-8d9f-521c95469d5f" class=""><code>size = round_up(size, dsize);</code></p><p id="8637fcc6-be03-4bea-afc8-b9d047981bbf" class="">对需要扩展的大小对齐取整。</p><p id="c0aac105-7f05-47dc-a5fb-8bda62577226" class=""><code>write_block(block, size, false);</code></p><p id="40e02885-4993-4994-b2a9-66d71bf513cb" class="">标记新block为free_block</p><p id="55628e25-07b4-4852-8fab-730860b4ef15" class=""><code>block_t *block_next = find_next(block);</code></p><p id="6dfe28f8-20d3-4664-a17f-a4b8105e6ebc" class=""><code>write_epilogue(block_next);</code></p><p id="122b2cc9-9b70-4ca9-b0b6-10605681d7b7" class="">添加下一个header作为epilogue.</p><p id="cb355771-4048-4067-948d-5b46366fcd64" class=""><code>block = coalesce_block(block);</code></p><p id="73ebe367-508e-45bb-a796-1732870a5745" class="">合并新的free_block，添加到合适的seg_list中。</p><h3 id="53633d36-0815-4136-b4ed-2d61d52f533c" class="">split_block_seg_list()</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a7276e35-799f-4c52-bc9c-e3d4fb15f8de" class="code"><code class="language-C">static void split_block_seg_list(block_t *block, size_t asize){
+    size_t size = get_size(block);
+    size_t remainder_size = size-asize;
+    if(remainder_size&gt;=min_block_size){
+        remove_some_seg_list(block);
+        write_block(block, asize, true);
+        block_t *remainder_block = find_next(block);
+        write_block(remainder_block, remainder_size, false);
+        insert_some_seg_list(remainder_block);
+    }else{
+        remove_some_seg_list(block);
+        write_block(block, size, true);
+    }
+}</code></pre><p id="7097e24d-094f-41b6-bbf6-80f399854fe7" class="">注意，分配block标记header为占用alloc状态写在了split_block_seg_list()函数的最后</p><h3 id="12b87ae9-925f-4a0e-a5f5-080ad95b3f00" class="">find_first_fit</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="248f07f5-086c-4e59-bd9f-92a0f91d6031" class="code"><code class="language-C">static block_t *find_first_fit(size_t asize) {
+    block_t *block;
+    int seg_idx = fit_which_seg(asize);
+    block_t *seg_head = seg_list.heads[seg_idx];
+    if(seg_head == NULL){       // The seg list of good size is empty
+        for(int i = seg_idx+1; i &lt; seg_list.list_num; i++){
+            if(seg_list.heads[i] != NULL){  // Search from small to big
+                seg_head = seg_list.heads[i];
+                if(vdbg)printf(&quot;Fund another head at seg_idx[%d](size=%d):%llx&quot;, i, (int)get_threshld(i), (unsigned long long)&amp;(seg_head-&gt;header));
+                break;
+            }
+        }
+    }
+    for(block = seg_head; block != NULL; block = get_list_next(block)){
+        if(!(get_alloc(block)) &amp;&amp; (get_size(block)&gt;=asize)){
+            return block;
+        }
+    }
+    return NULL; // no fit found
+}</code></pre><p id="d8c6cb94-7be1-4473-9a57-e5a4d7cde33d" class="">此处注意，如果在size所在的seg_list区间内没有找到合适大小的block，需要在其他的seg_list中寻找，而不是直接返回NULL；</p><h2 id="96ae3a77-b446-4f53-a5b7-047289272d66" class="">Second Part</h2><p id="dcd9af4b-6d92-4f65-8b73-62c6e4c3c65b" class="">在第二部分，我们将通过删除footer来减少internal fragment。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="74595d6e-b0c1-412a-880d-3d9fe6dcc179" class="code"><code class="language-C">typedef struct block {
+    /** @brief Header contains size + allocation flag 
+     * normal block:
+     * | size         |  x       | mini   | prev_alloc | alloc  |
+     * | 63-4th:60bits| 3th:1bit |2th:1bit|  1th:1bit  |0th:1bit|
+     * |              |          | 0      |            |        |
+     * mini block:
+     * | prev_address |  x       | mini   | prev_alloc | alloc  |
+     * | 63-4th:60bits| 3th:1bit |2th:1bit|  1th:1bit  |0th:1bit|
+     * |              |          | 1      |            |        |
+    */
+    word_t header;
+    /**
+     * @brief A pointer to the block payload.*
+     */
+    char payload[0];
+} block_t;
+/** @brief Represents free block to be allocated */
+typedef struct free_block {
+    /** @brief Header contains size + allocation flag 
+     * normal block:
+     * | size         |  x       | mini   | prev_alloc | alloc  |
+     * | 63-4th:60bits| 3th:1bit |2th:1bit|  1th:1bit  |0th:1bit|
+     * |              |          |        |            |        |
+     * mini block:
+     * | prev_address |  x       | mini   | prev_alloc | alloc  |
+     * | 63-4th:60bits| 3th:1bit |2th:1bit|  1th:1bit  |0th:1bit|
+     * |              |          |        |            |        |
+    */
+    word_t header;
+    /** @brief point to the previous block*/
+    block_t *ptr_prev;
+    /** @brief point to the next block*/
+    block_t *ptr_next;
+} free_block_t;</code></pre><p id="d64c9f35-c4ce-419a-bef3-096bb0483894" class="">在第一部分中，并没有直接显式的标出footer，因为这样可以便于删除footer的结构延续到第二部分。去除了footer之后，通过在header中标记上一个block是不是free_block就可以实现coalesce。同时为了进一步减少internal fragment，在header中标记mini，来区分普通block和mini block。注意，这里的mini指的是，内存连续的前一个block是否是mini的。引入如下常量</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d4e94d77-d8ba-47ea-a1b9-d4029fc78944" class="code"><code class="language-C">/** @brief Minimum block size (bytes) 16 bytes */
+static const size_t min_block_size = dsize;
+
+/** prev_alloc_mask is to find out the second last bit of the value to see whether prev alloc*/
+static const word_t prev_alloc_mask = 0x1&lt;&lt;1;
+
+/** prev_alloc_mask is to find out the second last bit of the value to see whether prev alloc*/
+static const word_t mini_block_mask = 0x1&lt;&lt;2;</code></pre><p id="f59b6f15-c31a-4b19-8612-6452bdc3742f" class="">同时，mini_block的free_block也做如下区别</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="05fc8ce1-fc66-4439-9bcc-fce038e5c084" class="code"><code class="language-C">typedef struct mini_free_block {
+    word_t header;
+    block_t *ptr_next;
+} mini_free_block_t;</code></pre><p id="e1cdb247-5778-4973-9cc1-0336b467c9eb" class="">所以一个mini_free_block是一个单向链表，因为没有空间给他一个ptr_prev指向前一个节点了。</p><p id="5693f4d1-7915-468c-abf3-30a225136c03" class="">对block结构的改动首先改变了标记站用block的实现逻辑。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d26c3ad7-6ff2-4a41-82d9-412cbd7203aa" class="code"><code class="language-C">static void write_block(block_t *block, size_t size, bool alloc) {
+    dbg_requires(block != NULL);
+    dbg_requires(size &gt; 0);
+    bool prev_alloc = get_prev_alloc(block); // get the status of prev alloc
+    bool prev_mini = get_prev_mini(block);   // get the status of prev mini
+    block-&gt;header = pack(size, alloc);       // update the header
+    write_block_prev_alloc(block,
+                           prev_alloc); // remain the prev allocation status
+    write_block_prev_mini(block, prev_mini); // remain the prev miniblock status
+    if (alloc == false &amp;&amp;
+        (size &gt; min_block_size)) { // write footer if block free
+        word_t *footerp = header_to_footer(block);
+        *footerp = pack(size, alloc);
+    }
+}</code></pre><p id="e43a8691-2c35-4a51-abcf-34daf9c5343e" class="">其他的函数也要相应的改变标记的逻辑，在coalese中</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b637a042-df14-46e2-ae39-2f227e5d7934" class="code"><code class="language-C">    // update the header&#x27;s  previous alloc to true
+    write_block_prev_alloc(block, true);
+    // update the next block&#x27;s mini status
+    write_block_prev_mini(find_next(block), size == min_block_size);
+    // mark the next block&#x27;s previous alloc status as false
+    write_block_prev_alloc(find_next(block), false);</code></pre><p id="1f218700-aca2-4d99-b7df-7fcae1d32e53" class="">同时，如果前一个是mini，那么直接向前16bytes。如果前一个不是mini，且前一个没有被alloc，那么找到前一个block的footer，之后得到前一个的size，最后向前找到block的header。</p><p id="a6a4b97b-f68a-4a9f-b81c-dfaeb3a3a07b" class="">因为mini_free_block是单向链表，所以在删除一个mini_free_block节点的时候，不可避免的会引入O(N)。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1faa5da1-2d50-425d-a734-ebe79931c2f7" class="code"><code class="language-C">    if (seg_idx == 0) {
+        dbg_requires(get_size(block) == min_block_size &amp;&amp;
+                     &quot;insert first seg list should be size 16&quot;);
+        // O(N) search
+        block_t *prev_block;
+        for (prev_block = seg_list.heads[0]; prev_block != NULL;
+             prev_block = get_list_next(prev_block)) {
+            if (&amp;prev_block-&gt;header == &amp;block-&gt;header) { // block found at head
+                seg_list.heads[0] = NULL;
+                break;
+            } else if (&amp;(get_list_next(prev_block)-&gt;header) == &amp;block-&gt;header) {
+                set_list_next(prev_block, NULL);
+                b2mf(block)-&gt;ptr_next = NULL;
+                break;
+            }
+        }
+    }</code></pre><p id="8061477c-7706-48e4-b472-511122693f6a" class="">至此，Malloc Lab完成。</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
