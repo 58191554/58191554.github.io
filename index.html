@@ -64,11 +64,17 @@
       <div class="col-md-6">
         <h2 class="h3 mb-3">About Me</h2>
         <p>
-          I'm Zhen Tong, a fourth-year Computer Science undergraduate at the Chinese University of Hong Kong, Shenzhen.
-          I'm passionate about Reinforcement Learning and Deep Learning, currently diving into ML for generative model and combinatorial optimization problems with 
-          <a href="https://mypage.cuhk.edu.cn/academics/yutianshu/">Prof. Tianshu Yu</a>.
-          I was a software engineer intern for ML at Siemens in 2022. And now I work as a research assistant at <a href="https://mypage.cuhk.edu.cn/academics/yutianshu/LOGO.html">LOGO Lab</a>
-          When I'm not coding, catch me shredding on a snowboard. Cheers!
+          I'm Zhen Tong, a first-year graduate student at <a href="https://www.cmu.edu/ini/academics/msin/curriculum_ms36.html">the Carnegie Mellon University, MSIN</a>.
+          <!-- I'm passionate about Reinforcement Learning and Deep Learning, currently diving into ML for generative model and combinatorial optimization problems with  -->
+          <!-- <a href="https://mypage.cuhk.edu.cn/academics/yutianshu/">Prof. Tianshu Yu</a>. -->
+          <!-- I was a software engineer intern for ML at Siemens in 2022. And now I work as a research assistant at <a href="https://mypage.cuhk.edu.cn/academics/yutianshu/LOGO.html">LOGO Lab</a> -->
+          <!-- When I'm not coding, catch me shredding on a snowboard. Cheers! -->
+          My passion for machine learning has driven me to gain substantial experience in diverse areas such as game AI, image generative models, 
+          and various hands-on projects. 
+          Throughout my career, I have had the opportunity to work with a wide range of machine learning models and techniques, 
+          which has allowed me to build a solid foundation in Python and PyTorch. 
+          I have experience in implementing and optimizing algorithms for tasks including reinforcement learning for game AI agents, 
+          developing image generative models, and designing backend services for AI applications.       
         </p>
       </div>
       <div class="col-md-5 offset-md-1">
@@ -107,21 +113,51 @@
 
       <div class="timeline-card timeline-card-primary card shadow-sm">
         <div class="card-body">
+          <div class="h5 mb-1">Game AI Algorithm Intern <span class="text-muted h6">at NETEASE, Digital Intelligence Department</span></div>
+          <div class="text-muted text-small mb-2">Hangzhou, China | May 2024 - August 2024</div>
+          <div>Tech Stack: Python-PyTorch, Ray, Lightning, ETL, Flask</div>
+          <div>Reinforcement Learning and Imitation Learning Direction</div>
+          <ul>
+            <li>Designed efficient game state and action representations for a series of poker games, enabling effective reinforcement learning.</li>
+            <li>Developed a distributed ETL (Extract, Transform, Load) pipeline using Ray to prepare large-scale game data in parquet format for model training.</li>
+            <li>Implemented a deep imitation learning algorithm that achieved an 80% win rate against human experts.</li>
+            <li>Deployed the trained agent and conducted extensive client-side concurrency performance tests.</li>
+          </ul>
+        </div>
+      </div>
+      
+
+
+      <div class="timeline-card timeline-card-primary card shadow-sm">
+        <div class="card-body">
           <div class="h5 mb-1">Research Assistant <span class="text-muted h6">at <a href="https://mypage.cuhk.edu.cn/academics/yutianshu/LOGO.html">LOGO Lab</a></span></div>
-          <div class="text-muted text-small mb-2">2024 Feb - Present</div>
-          <div> Research for Generative Model.
-          </div>
+          <div class="text-muted text-small mb-2">Shenzhen, China | January 2024 - May 2024</div>
+          <div>Proposed a novel benchmark and baseline model with Double-Stage Fusion.</div>
+          <ul>
+            <li>Proposed a dataset spanning 3-4 kilometers of road segments with incomplete lane lines to address challenges in cost-effective, real-world lane-level HD map generation.</li>
+            <li>Designed a Double-Stage Fusion model that first uses a VQGAN to reconstruct input images, then trains a Transformer to learn the latent conditional distribution for generation.</li>
+            <li>Evaluated the model’s performance on our EcoMap dataset, demonstrating significant improvements in lane-level HD map generation compared to existing approaches.</li>
+            <li>Presented the novel benchmark and baseline model at NeurIPS 2024, contributing to the advancement of the field.</li>
+          </ul>
+          <div>NeurIPS 2024 <a href="https://openreview.net/forum?id=exKBnCuR6o#discussion">EcoMap: A Real-World Dataset for Lane-Level HD Map Generation from Low-Cost Cameras</a></div>
         </div>
       </div>
 
       <div class="timeline-card timeline-card-primary card shadow-sm">
         <div class="card-body">
-          <div class="h5 mb-1">ML Software Engineer <span class="text-muted h6">at Siemens FoShan</span></div>
-          <div class="text-muted text-small mb-2">2022 July - September</div>
-          <div>Use machine learning to predict vehicle performance, and implement it in a big data system way.
-          </div>
+          <div class="h5 mb-1">Software Engineer Intern <span class="text-muted h6">at Siemens Mobility Technologies</span></div>
+          <div class="text-muted text-small mb-2">Guangzhou, China | July 2022 – Sep 2022</div>
+          <div>Tech Stack: Java, Hadoop, Python (PyTorch), MySQL</div>
+          <div>Trained a deep learning model to diagnose anomalies in the big data system for metro control, embedded the model into the big data system, and achieved visualization.</div>
+          <ul>
+            <li>Selected useful data in the big data system using MySQL, organized all relevant data pertaining to the problem, and successfully aligned the useful data into a new real-time dataset.</li>
+            <li>Trained the LSTM-RNN model using PyTorch, predicting future system states based on the collected data. The model demonstrated a performance accuracy of 92%.</li>
+            <li>Devised and deployed the infrastructure in the big data system through Hadoop, then created efficient algorithms to run the prediction model, enabling scalability to handle large amounts of data.</li>
+            <li>Set up a WebSocket back-end using Java with Maven and handled visualization requests from the front-end, resulting in the rendering of data in the user interface.</li>
+          </ul>
         </div>
       </div>
+      
     </div>
   </div>
   <hr class="d-print-none"/>
@@ -129,15 +165,26 @@
   <div class="education-section px-3 px-lg-4 pb-4">
     <h2 class="h3 mb-4">Education</h2>
     <div class="timeline">
+
       <div class="timeline-card timeline-card-success card shadow-sm">
         <div class="card-body">
-          <div class="h5 mb-1">Bachelor of Computer Science from Chinese University of Hong Kong ShenZhen <span class="text-muted h6"></span></div>
-          <div class="text-muted text-small mb-2">2020 - present</div>
+          <div class="h5 mb-1">Master of Science in Information Networking @ Carnegie Mellon University<span class="text-muted h6"></span></div>
+          <div class="text-muted text-small mb-2">2024 - present</div>
+          <!-- <div>CGPA = 3.8 (rank 9) </div> -->
+          <div>2024 Graduate Admission Scholarship</div>     
+        </div>
+      </div>
+
+      <div class="timeline-card timeline-card-success card shadow-sm">
+        <div class="card-body">
+          <div class="h5 mb-1">Bachelor of Computer Science @ Chinese University of Hong Kong ShenZhen <span class="text-muted h6"></span></div>
+          <div class="text-muted text-small mb-2">2020 - 2024</div>
           <div>CGPA = 3.8 (rank 9) </div>
           <div>2020 CUHKSZ School of Data Science Annual Scholarship</div>     
           <div>2020, 2021, 2022 CUHKSZ School of Data Science Dean List</div>                    
         </div>
       </div>
+
       <div class="timeline-card timeline-card-success card shadow-sm">
         <div class="card-body">
           <div class="h5 mb-1">UC Berkeley Global Access <span class="text-muted h6"></span></div>
