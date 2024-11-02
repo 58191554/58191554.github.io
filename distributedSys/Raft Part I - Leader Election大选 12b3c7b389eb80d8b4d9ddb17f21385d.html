@@ -1,0 +1,700 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Raft Part I - Leader Election大选</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="12b3c7b3-89eb-80d8-b4d9-ddb17f21385d" class="page sans"><header><h1 class="page-title">Raft Part I - Leader Election大选</h1><p class="page-description"></p></header><div class="page-body"><p id="12b3c7b3-89eb-8017-98ff-d2a46071f672" class="">Resource:</p><ul id="12b3c7b3-89eb-80a2-9406-ddc0cb12f0a4" class="bulleted-list"><li style="list-style-type:disc">Paper:<figure id="12b3c7b3-89eb-80a3-bb96-ead72e9042df"><a href="https://raft.github.io/raft.pdf" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">raft.github.io</div></div><div class="bookmark-href">https://raft.github.io/raft.pdf</div></div></a></figure></li></ul><ul id="1323c7b3-89eb-807a-b100-eeea4359af2e" class="bulleted-list"><li style="list-style-type:disc">Useful UI<figure id="5d7e8019-1573-4641-85e5-17d5dfd09c6c"><a href="https://thesecretlivesofdata.com/raft/#election" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Raft</div></div><div class="bookmark-href">https://thesecretlivesofdata.com/raft/#election</div></div></a></figure></li></ul><p id="1323c7b3-89eb-8028-90a7-d129e405a92d" class="">刚刚花了4天时间结束了Raft共识算法的第一个checkpoint，这里做一个总结。Raft 将会分为两个部分，在第一个部分中，我会通过go实现leader election并讲解核心测试设计。在美国2024大选之际，正好写一个民主选举的项目哈哈</p><h2 id="1323c7b3-89eb-8021-b045-f88f8a1523f6" class="">核心思路</h2><p id="1323c7b3-89eb-800a-a036-f7b57ef4c15e" class="">首先我们需要服务器的的3个状态: leader, follower, and candidate，在文章中：</p><figure id="1323c7b3-89eb-80df-a22c-f7b5a425b40a" class="image"><a href="Raft%20Part%20I%20-%20Leader%20Election%E5%A4%A7%E9%80%89%2012b3c7b389eb80d8b4d9ddb17f21385d/image.png"><img style="width:384px" src="Raft%20Part%20I%20-%20Leader%20Election%E5%A4%A7%E9%80%89%2012b3c7b389eb80d8b4d9ddb17f21385d/image.png"/></a></figure><p id="1323c7b3-89eb-8034-baba-f4211fbd74e8" class="">作为程序设计，我将这个部分更具体的表示成 run() 函数的几个通道接受信号后的表示：</p><figure id="1323c7b3-89eb-8017-8c80-ee2b84163cdb" class="image"><a href="Raft%20Part%20I%20-%20Leader%20Election%E5%A4%A7%E9%80%89%2012b3c7b389eb80d8b4d9ddb17f21385d/image%201.png"><img style="width:384px" src="Raft%20Part%20I%20-%20Leader%20Election%E5%A4%A7%E9%80%89%2012b3c7b389eb80d8b4d9ddb17f21385d/image%201.png"/></a></figure><h2 id="1323c7b3-89eb-80ce-8b88-d0321cb84289" class="">实现细节</h2><h3 id="1323c7b3-89eb-80ba-b2ad-c770c19354d8" class="">run() 函数</h3><p id="1323c7b3-89eb-8081-8c1f-dbd50878094c" class="">run函数在初始化一个服务器的时候就会被go routine运行，此后，他一直作为一个中心接受各种输入。</p><ul id="1323c7b3-89eb-807f-9149-e90ce2e9a60c" class="bulleted-list"><li style="list-style-type:disc">如果接收到了<code>←rf.endRunCh</code>的输入那么代表要结束这个go routine了，结束这个函数</li></ul><ul id="1323c7b3-89eb-8045-b9bb-d1484ca37694" class="bulleted-list"><li style="list-style-type:disc">如果接收到了<code>←rf.startLeaderCh</code>的输入那么说明这个server从election中脱引而出，成为了新的leader，这时进行两个操作<ul id="1323c7b3-89eb-8092-b638-fbf4bf35c406" class="bulleted-list"><li style="list-style-type:circle">加锁后改变身份为leader，之后unlock</li></ul><ul id="1323c7b3-89eb-8082-84f3-d61b9d640ad9" class="bulleted-list"><li style="list-style-type:circle">启动<code>go heartbeat()</code>函数</li></ul></li></ul><ul id="1323c7b3-89eb-8089-8e6a-c882dd62638c" class="bulleted-list"><li style="list-style-type:disc">如果接收到了leader server的心跳，也就是<code>←rf.heartbeatIn</code>，需要分类讨论<ul id="1323c7b3-89eb-8083-8d31-d2718c635f95" class="bulleted-list"><li style="list-style-type:circle">如果此时我是follower， <code>rf.resetFollowerClock &lt;- struct{}{}</code>使得follower clock重置random续命</li></ul><ul id="1323c7b3-89eb-8099-b5c1-e578f4e79c03" class="bulleted-list"><li style="list-style-type:circle">如果我是Candidate，且我的Term小于等于heartbeat传入的Term，说明当前的这轮Term leader已经被选出，或者说我已经落后了几个Term版本了：<ul id="1323c7b3-89eb-8047-a898-eed2877cba8b" class="bulleted-list"><li style="list-style-type:square">首先需要关闭election</li></ul><ul id="1323c7b3-89eb-8059-8915-e710497b6930" class="bulleted-list"><li style="list-style-type:square">之后降格成follower</li></ul><ul id="1323c7b3-89eb-8074-bbbe-f10d75904a1f" class="bulleted-list"><li style="list-style-type:square">跟上版本Term</li></ul></li></ul><ul id="1323c7b3-89eb-80b1-8d77-d62919c0b10c" class="bulleted-list"><li style="list-style-type:circle">如果我是Leader，且heartbeat 的Term大于我的Term，说明我是旧时代的leader，会被新时代淘汰，于是：<ul id="1323c7b3-89eb-80bf-bd46-fb837806d999" class="bulleted-list"><li style="list-style-type:square">首先关闭heartbeat函数</li></ul><ul id="1323c7b3-89eb-8057-a65a-c3543594ca26" class="bulleted-list"><li style="list-style-type:square">之后降格成follower</li></ul><ul id="1323c7b3-89eb-80b3-98bf-d3c9855b20c3" class="bulleted-list"><li style="list-style-type:square">跟上版本Term</li></ul></li></ul></li></ul><h3 id="1323c7b3-89eb-80d5-9673-c233566f3407" class="">followerClock()函数</h3><p id="1323c7b3-89eb-809d-8b9b-dedab72e3c9c" class="">它负责管理 Raft 节点在追随者（follower）状态下的计时器，用于检测leader的heartbeat。如果在指定的超时时间内没有收到heartbeat，节点将变异成Candidate，启动新的选举过程。</p><ul id="1323c7b3-89eb-809e-82af-dfad0c775bc2" class="bulleted-list"><li style="list-style-type:disc"><strong>计时器初始化</strong>：函数开始时初始化一个计时器 timer，并确保在函数退出时停止计时器以释放资源。</li></ul><ul id="1323c7b3-89eb-800a-bd4c-da1ebbb77d1a" class="bulleted-list"><li style="list-style-type:disc"><strong>超时设置</strong>：在每次循环中，计时器会被重置为一个随机的超时时间（1000到1500毫秒之间）。这种随机性有助于减少多个节点同时发起选举的可能性。</li></ul><ul id="1323c7b3-89eb-80d4-8ee3-dc950ea926cf" class="bulleted-list"><li style="list-style-type:disc"><strong>closeFollowerClock</strong>：如果从该通道接收到信号，函数将退出。</li></ul><ul id="1323c7b3-89eb-8088-9a59-f7b319363be8" class="bulleted-list"><li style="list-style-type:disc"><strong>计时器超时</strong>：如果计时器超时，意味着在指定时间内没有收到leader的heartbeat，节点将通过 startNewElectionCh 通道发起新的选举。</li></ul><ul id="1323c7b3-89eb-8006-bbce-fdfa2d29baf8" class="bulleted-list"><li style="list-style-type:disc"><strong>resetFollowerClock</strong>：如果从该通道接收到信号，计时器将被重置。这通常表示节点收到了领导者的心跳信号，继续保持follower状态。</li></ul><h3 id="1323c7b3-89eb-80b2-8a35-ed8865daf75e" class="">election()函数</h3><p id="1323c7b3-89eb-804d-9e75-d21384adee25" class="">启动election函数之后：</p><ol type="1" id="1323c7b3-89eb-80c6-9d2a-f40337a29033" class="numbered-list" start="1"><li>identity变成Candidate</li></ol><ol type="1" id="1323c7b3-89eb-801c-b568-ef779a530fd4" class="numbered-list" start="2"><li>currentTerm++， 版本更新</li></ol><ol type="1" id="1323c7b3-89eb-807c-be29-e8530697c746" class="numbered-list" start="3"><li>voteFor = me，为自己投票</li></ol><p id="1323c7b3-89eb-80d9-ad06-dbff23d7bf38" class="">启动三个函数</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-80d3-880c-e728bd5b06eb" class="code"><code class="language-Go">go rf.electionClock(stopElectionClockCh)
+go rf.elecParallelSend(stopElecParallelSend)
+go rf.electionRecv(stopElectionRecv)</code></pre><p id="1323c7b3-89eb-8018-8959-e9ac3c68ce8f" class="">之后接受信号：</p><ul id="1323c7b3-89eb-809d-ad58-f7297e0351af" class="bulleted-list"><li style="list-style-type:disc">如果&lt;-rf.electionTimeoutCh，说明我在选举中没有得到大多数的票，此时我也不知道有没有选出真的leader，所以我要重新开始新一轮的选举<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-8054-9e16-f5e7da1334c1" class="code"><code class="language-Go">rf.startNewElectionCh &lt;- struct{}{}</code></pre></li></ul><ul id="1323c7b3-89eb-80bf-80d2-feb5baa88ed7" class="bulleted-list"><li style="list-style-type:disc">如果&lt;-rf.closeElectionCh，说明通过run()函数中转信号，我已经知道新的leader已经选出了，我可以不用在竞选了，需要关闭这个election<ul id="1323c7b3-89eb-8017-836a-d9759aa2a15d" class="bulleted-list"><li style="list-style-type:circle">我通过defer来回收<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-800b-a012-fa11203d0d9c" class="code"><code class="language-Go">	defer func() {
+		close(stopElectionClockCh)
+		close(stopElecParallelSend)
+		close(stopElectionRecv)
+		// drain the voteIn channel
+		for len(rf.voteIn) &gt; 0 {
+			&lt;-rf.voteIn
+		}
+		// fmt.Printf(&quot;\033[33m[Term:%d](%d) election done\033[0m\n&quot;, rf.state.currentTerm, rf.me)
+	}()</code></pre></li></ul></li></ul><ul id="1323c7b3-89eb-8088-89ee-f4d2170f3c16" class="bulleted-list"><li style="list-style-type:disc">如果我收取到了election结果electionResult := &lt;-rf.voteCollectCh：<ul id="1323c7b3-89eb-800a-afb3-e2502f489780" class="bulleted-list"><li style="list-style-type:circle">如果获胜：<code>rf.startLeaderCh &lt;- struct{}{}</code> 开启leader模式</li></ul><ul id="1323c7b3-89eb-805c-9e30-dc538437bde5" class="bulleted-list"><li style="list-style-type:circle">如果<code>electionResult == splitVote</code> ，开启新的election <code>rf.startNewElectionCh &lt;- struct{}{}</code></li></ul></li></ul><h3 id="1323c7b3-89eb-8033-8636-fd86eb8c372f" class="">elecParallelSend() electionRecv()函数</h3><p id="1323c7b3-89eb-801b-a273-e98bcda43b0a" class="">在文章中提到发送voteRequest的时候需要parallel，这里我们保证concurrent的，逻辑上来说就是对的，所以使用</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-8029-b50a-c3f2b4ba1845" class="code"><code class="language-Go">go rf.sendRequestVote(i, &amp;RequestVoteArgs{
+	Term:         curTerm,
+	CandidateId:  rf.me,
+	LastLogIndex: logLen - 1,
+	LastLogTerm:  curTerm,
+}, reply)</code></pre><p id="1323c7b3-89eb-803a-8b5f-d52e712539fe" class="">发送RPC就可以，记得在访问state变量的时候加锁，不然可以会panic其他正在对state改变的操作</p><p id="1323c7b3-89eb-80e7-b059-eb87538e813e" class="">在RPC返回的时候我们就会需要立刻返回这个，所以我们构造一个buffer chan来回收每个选民的vote结果</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-80ac-a34b-c229489931c1" class="code"><code class="language-Go">if ok &amp;&amp; reply.VoteGranted {rf.voteIn &lt;- true}</code></pre><p id="1323c7b3-89eb-8019-b461-c0587777bb1e" class="">随后我们在electionRecv()函数中回收<code>vote := &lt;-rf.voteIn</code></p><h3 id="1323c7b3-89eb-805a-90b6-f8736d052aad" class="">electionClock()函数</h3><p id="1323c7b3-89eb-8019-90ee-d58ded855f0c" class="">electionClock比起follower clock更加简单，只需要检测是倒计时先结束还是外部把这个go routine先结束就行</p><h3 id="1323c7b3-89eb-807c-b2a9-c9b6bd3bcced" class="">RequestVote()</h3><p id="1323c7b3-89eb-802e-8f82-eb2b03df89ea" class="">非常重要！！！这个是RPC的handler函数，所以他的正确实现关乎到了整个选举是否可以顺利。首先在整个函数的首尾整个加锁解锁保证在函数投票的时候前后的状态一致。总共有三种情况：</p><ol type="1" id="1323c7b3-89eb-802f-8689-fd7417297aee" class="numbered-list" start="1"><li><code>args.Term &gt; rf.state.currentTerm</code><ul id="1323c7b3-89eb-8087-ada0-d25d1e204cc2" class="bulleted-list"><li style="list-style-type:disc">投票<code>reply.VoteGranted = true</code></li></ul><ul id="1323c7b3-89eb-8099-903d-c9d30a60fa79" class="bulleted-list"><li style="list-style-type:disc">更新Term： <code>rf.state.currentTerm = args.Term</code></li></ul><ul id="1323c7b3-89eb-8040-94a0-da49d3d3b8a2" class="bulleted-list"><li style="list-style-type:disc">记录这轮把票投给了<code>rf.state.votedFor = args.CandidateId</code></li></ul><ul id="1323c7b3-89eb-801f-919b-c68939745b8f" class="bulleted-list"><li style="list-style-type:disc">此时还需分类讨论：<ul id="1323c7b3-89eb-80f5-a384-fe8f5249ed0e" class="bulleted-list"><li style="list-style-type:circle">如果我是Candidate<ul id="1323c7b3-89eb-8081-be3a-f9944ef69f70" class="bulleted-list"><li style="list-style-type:square">变成 Follower，开始倒计时<code>rf.followerClock()</code></li></ul><ul id="1323c7b3-89eb-800c-8aff-c5b3bcdd13df" class="bulleted-list"><li style="list-style-type:square">停止选举 <code>rf.closeElectionCh &lt;- struct{}{}</code></li></ul></li></ul><ul id="1323c7b3-89eb-801d-a4c8-cc3fffab439d" class="bulleted-list"><li style="list-style-type:circle">如果我是Leader<ul id="1323c7b3-89eb-80d4-970d-d483f6b2cea5" class="bulleted-list"><li style="list-style-type:square">变成Follower，开始倒计时<code>rf.followerClock()</code></li></ul><ul id="1323c7b3-89eb-80f5-9966-e0a3015bc602" class="bulleted-list"><li style="list-style-type:square">停止heartbeat行为<code>rf.closeHeartbeatClock &lt;- struct{}{}</code></li></ul></li></ul><ul id="1323c7b3-89eb-80ba-b8a7-ee2ca7e78de7" class="bulleted-list"><li style="list-style-type:circle">如果我是Follower<ul id="1323c7b3-89eb-80ef-aaf6-dce6fac2c19f" class="bulleted-list"><li style="list-style-type:square">重置倒计时<code>rf.resetFollowerClock &lt;- struct{}{}</code></li></ul></li></ul></li></ul></li></ol><ol type="1" id="1323c7b3-89eb-805e-9400-dd3ea98b6c29" class="numbered-list" start="2"><li><code>args.Term == rf.state.currentTerm</code><ul id="1323c7b3-89eb-80cb-b2a2-f661d55130fa" class="bulleted-list"><li style="list-style-type:disc">直接不投票就得了，为什么？如果我是follwer也不投票吗？是的，因为如果他是这一轮的leader那么他就应该发你heartbeat而不是发你vote request。他和你一个Term却在选举？他要是合理的选举必须比你大一个term至少！</li></ul></li></ol><ol type="1" id="1323c7b3-89eb-801a-8e0d-db37fa334cf5" class="numbered-list" start="3"><li><code>args.Term &lt; rf.state.currentTerm</code><ul id="1323c7b3-89eb-8065-a474-ceb979adf3d6" class="bulleted-list"><li style="list-style-type:disc">不给他投票且告知他<code>reply.Term = rf.state.currentTerm</code>他已经落后一个term了</li></ul></li></ol><h3 id="1323c7b3-89eb-80b7-a995-fad23cbc0a3c" class="">heartbeat(), sendHeartbeat()函数</h3><p id="1323c7b3-89eb-8086-84c9-da1ad53874ac" class="">很简单，倒计时到了就重新倒计时并使用一个go routine来<code>go sendHeartbeat()</code></p><p id="1323c7b3-89eb-8052-a417-e39158179a70" class=""><code>sendHeartbeat()</code> 很简单对所有server RCP<code>go sendAppendEntries()</code></p><h3 id="1323c7b3-89eb-800f-a8db-d95c8333e9bc" class="">AppendEntries()函数</h3><p id="1323c7b3-89eb-8033-bb3f-dd1565cdb932" class="">很重要！！！和RequestVote类似可以分三类</p><p id="1323c7b3-89eb-80ae-b4d5-e189ee0eea17" class="">在开始前加锁，在结束前解锁</p><ul id="1323c7b3-89eb-8058-895c-f3431bbfb270" class="bulleted-list"><li style="list-style-type:disc"><code>args.Term &lt; rf.state.currentTerm</code><ul id="1323c7b3-89eb-8035-bda0-f54cb3506eb0" class="bulleted-list"><li style="list-style-type:circle">失败的heartbeat <code>reply.Success = false</code></li></ul></li></ul><ul id="1323c7b3-89eb-80a6-9b5f-ce4a3d24c12b" class="bulleted-list"><li style="list-style-type:disc"><code>args.Term == rf.state.currentTerm</code><ul id="1323c7b3-89eb-80cc-a08f-f2f743aab1ee" class="bulleted-list"><li style="list-style-type:circle">如果是follwer：<code>reply.Success = true</code></li></ul><ul id="1323c7b3-89eb-8048-8caa-cbbcf78ea850" class="bulleted-list"><li style="list-style-type:circle">如果不是：<code>reply.Success = false</code></li></ul></li></ul><ul id="1323c7b3-89eb-80f5-927a-de5b1c683e1e" class="bulleted-list"><li style="list-style-type:disc"><code>args.Term &gt; rf.state.currentTerm</code><ul id="1323c7b3-89eb-80b7-9d11-efe87f1e9909" class="bulleted-list"><li style="list-style-type:circle"><code>reply.Success = true</code></li></ul></li></ul><p id="1323c7b3-89eb-80c7-82f1-f4ea176c8185" class="">将heartbeatTerm发送到 run 中，进一步处理。 <code>rf.heartbeatIn &lt;- args.Term</code></p><h2 id="1323c7b3-89eb-80e1-8c17-e82968e9247d" class="">测试设计</h2><p id="1323c7b3-89eb-803d-8945-cddd6903c57e" class=""><strong>TestInitialElection2A</strong></p><ul id="1323c7b3-89eb-8033-b66b-dcf376959aa2" class="bulleted-list"><li style="list-style-type:disc"><strong>目的</strong>：验证在初始情况下，系统能否正确选举出一个领导者。</li></ul><ul id="1323c7b3-89eb-80ac-bd98-e791b76bbc67" class="bulleted-list"><li style="list-style-type:disc"><strong>过程</strong>：创建3个服务器的集群，检查是否有一个领导者被选举出来。</li></ul><h3 id="1323c7b3-89eb-8067-be5f-f77554f9dc8f" class=""><strong>TestReElection2A</strong></h3><ul id="1323c7b3-89eb-8079-a073-ce330c33b81a" class="bulleted-list"><li style="list-style-type:disc"><strong>目的</strong>：验证当现有领导者断开连接时，系统能否选举出新的领导者。</li></ul><ul id="1323c7b3-89eb-8013-8c35-c268ac989d21" class="bulleted-list"><li style="list-style-type:disc"><strong>过程</strong>：在3个服务器的集群中，断开当前领导者的连接，然后检查是否选举出新的领导者。</li></ul><h3 id="1323c7b3-89eb-809d-8284-ec22466d5bff" class=""><strong>TestReElectionHidden2A</strong></h3><ul id="1323c7b3-89eb-807d-8800-d487fd8c4e52" class="bulleted-list"><li style="list-style-type:disc"><strong>目的</strong>：测试在网络故障后，系统能否正确进行重新选举。</li></ul><ul id="1323c7b3-89eb-80b4-a538-deb7fc5eec8e" class="bulleted-list"><li style="list-style-type:disc"><strong>过程</strong>：在5个服务器的集群中，断开当前领导者并选举新的领导者，然后模拟网络分区，断开多个节点，检查没有领导者的情况，最后恢复连接并检查是否选举出新的领导者。</li></ul><h3 id="1323c7b3-89eb-8068-83e6-c95222b272ab" class=""><strong>TestSmallPartitionConsensusHidden2A</strong></h3><ul id="1323c7b3-89eb-80a3-952e-e4b30f78d3d2" class="bulleted-list"><li style="list-style-type:disc"><strong>目的</strong>：测试在网络分区情况下，系统能否在大多数分区中选举出新的领导者，并保持小分区的旧领导者。</li></ul><ul id="1323c7b3-89eb-8080-bc69-cbfc7783d250" class="bulleted-list"><li style="list-style-type:disc"><strong>过程</strong>：在5个服务器的集群中，创建一个包含领导者和一个追随者的小分区，以及一个包含大多数追随者的大分区，检查大分区中是否选举出新的领导者，并验证小分区中旧领导者是否仍然是领导者。</li></ul><h3 id="1323c7b3-89eb-80fb-a423-d95630f8ad3f" class=""><strong>TestLeaderConsistencyHidden2A</strong></h3><ul id="1323c7b3-89eb-80e6-ae57-d11c586c407b" class="bulleted-list"><li style="list-style-type:disc"><strong>目的</strong>：验证在重新选举后，系统能否保持领导者的一致性。</li></ul><ul id="1323c7b3-89eb-8096-ac0a-f67321b7f2cc" class="bulleted-list"><li style="list-style-type:disc"><strong>过程</strong>：在3个服务器的集群中，断开当前领导者并选举新的领导者，重新连接旧领导者，断开新的领导者和另一个节点，检查是否能选举出新的领导者。</li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

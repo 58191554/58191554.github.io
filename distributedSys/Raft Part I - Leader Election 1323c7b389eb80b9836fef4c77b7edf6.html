@@ -1,0 +1,705 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Raft Part I - Leader Election</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1323c7b3-89eb-80b9-836f-ef4c77b7edf6" class="page sans"><header><h1 class="page-title">Raft Part I - Leader Election</h1><p class="page-description"></p></header><div class="page-body"><p id="1323c7b3-89eb-80bf-b402-eb5fb1a5f1ec" class="">Resource:</p><ul id="1323c7b3-89eb-80ac-af42-dc944acf5ca2" class="bulleted-list"><li style="list-style-type:disc">Paper:<figure id="01a236da-e4ce-40bc-a743-0d2d9c2e3868"><a href="https://raft.github.io/raft.pdf" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">raft.github.io</div></div><div class="bookmark-href">https://raft.github.io/raft.pdf</div></div></a></figure></li></ul><ul id="1323c7b3-89eb-8087-b15f-c4db2e4ad4c0" class="bulleted-list"><li style="list-style-type:disc">Useful UI<figure id="1323c7b3-89eb-80d7-a6be-f01c9177dca7"><a href="https://thesecretlivesofdata.com/raft/#election" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Raft</div></div><div class="bookmark-href">https://thesecretlivesofdata.com/raft/#election</div></div></a></figure></li></ul><p id="1323c7b3-89eb-8072-8d8d-d60ab75bfac5" class="">I just spent four days completing the first checkpoint for the Raft consensus algorithm, so here’s a summary. Raft will be divided into two parts. In the first part, I&#x27;ll implement leader election in Go and explain the core test design. It’s quite fitting to work on a democratic election project right as the U.S. 2024 election approaches, haha.</p><h2 id="1323c7b3-89eb-80d1-9d1b-f15ce086e80c" class="">Core Ideas</h2><p id="1323c7b3-89eb-805b-b515-c9714f413c84" class="">First, we need three states for the server: leader, follower, and candidate. In the article:</p><figure id="1323c7b3-89eb-8097-992a-d7b0f0176e42" class="image"><a href="Raft%20Part%20I%20-%20Leader%20Election%201323c7b389eb80b9836fef4c77b7edf6/image.png"><img style="width:384px" src="Raft%20Part%20I%20-%20Leader%20Election%201323c7b389eb80b9836fef4c77b7edf6/image.png"/></a></figure><p id="1323c7b3-89eb-8044-a9c8-dc14680cf600" class="">As part of program design, I’ve made this section more concrete by defining it in terms of several channels within the <code>run()</code> function, which handle signals as follows:</p><figure id="1323c7b3-89eb-80d0-9548-c2b1f319a2bd" class="image"><a href="Raft%20Part%20I%20-%20Leader%20Election%201323c7b389eb80b9836fef4c77b7edf6/image%201.png"><img style="width:384px" src="Raft%20Part%20I%20-%20Leader%20Election%201323c7b389eb80b9836fef4c77b7edf6/image%201.png"/></a></figure><h2 id="1323c7b3-89eb-809b-bcaf-ceb55f87fdbb" class="">Implementation Details</h2><h3 id="1323c7b3-89eb-8009-940c-d81405989e13" class=""><code>run()</code> function</h3><p id="1323c7b3-89eb-80aa-ae3d-ee40f21a4fad" class="">The <code>run()</code> function is launched by a goroutine when initializing a server, and it acts as the central handler for various inputs.</p><ul id="1323c7b3-89eb-80dd-903d-edd02a4b7a32" class="bulleted-list"><li style="list-style-type:disc">If it receives input from <code>←rf.endRunCh</code>, this indicates that the goroutine should end, so it terminates this function.</li></ul><ul id="1323c7b3-89eb-807c-a8cd-eaad22ef9be8" class="bulleted-list"><li style="list-style-type:disc">If it receives input from <code>←rf.startLeaderCh</code>, it means this server has successfully become the new leader through the election, triggering two actions:<ul id="1323c7b3-89eb-803c-abff-d5a08b2c43bd" class="bulleted-list"><li style="list-style-type:circle">Acquire a lock, change the role to leader, then release the lock.</li></ul><ul id="1323c7b3-89eb-8004-a6fa-ec6b5036ed04" class="bulleted-list"><li style="list-style-type:circle">Start the <code>go heartbeat()</code> function.</li></ul></li></ul><ul id="1323c7b3-89eb-808a-af1f-cdf7ccfb5ab3" class="bulleted-list"><li style="list-style-type:disc">If it receives a heartbeat from the leader server (<code>←rf.heartbeatIn</code>), we handle it as follows:<ul id="1323c7b3-89eb-8055-853a-f2cdfaea7a18" class="bulleted-list"><li style="list-style-type:circle">If this server is a follower, reset the follower clock with <code>rf.resetFollowerClock &lt;- struct{}{}</code> to extend its “lifetime” with a new random timeout.</li></ul><ul id="1323c7b3-89eb-80c1-bd1b-e47091077828" class="bulleted-list"><li style="list-style-type:circle">If this server is a candidate and its <code>Term</code> is less than or equal to the <code>Term</code> in the received heartbeat, it indicates that a leader has already been elected for this <code>Term</code>, or that this server is behind by several <code>Term</code> versions:<ul id="1323c7b3-89eb-80dc-a202-fec066d1b93d" class="bulleted-list"><li style="list-style-type:square">First, stop the election.</li></ul><ul id="1323c7b3-89eb-80d4-91dd-f5235b05869d" class="bulleted-list"><li style="list-style-type:square">Then downgrade to follower status.</li></ul><ul id="1323c7b3-89eb-8011-b526-e3106833d7d7" class="bulleted-list"><li style="list-style-type:square">Update to the current <code>Term</code>.</li></ul></li></ul><ul id="1323c7b3-89eb-80a7-8ee2-eabba7428d08" class="bulleted-list"><li style="list-style-type:circle">If this server is the leader and the heartbeat’s <code>Term</code> is greater than its own <code>Term</code>, this indicates it is an outdated leader and will be replaced:<ul id="1323c7b3-89eb-80bb-841b-f4ffc94717d1" class="bulleted-list"><li style="list-style-type:square">First, stop the heartbeat function.</li></ul><ul id="1323c7b3-89eb-800b-b9fa-d3939a1d99c4" class="bulleted-list"><li style="list-style-type:square">Then downgrade to follower status.</li></ul><ul id="1323c7b3-89eb-809f-9e7d-f3bb560d51c8" class="bulleted-list"><li style="list-style-type:square">Update to the current <code>Term</code>.</li></ul></li></ul></li></ul><h3 id="1323c7b3-89eb-8003-b9c9-eb963135192f" class=""><code>followerClock()</code> function</h3><p id="1323c7b3-89eb-80c7-b0fe-c30ea2eaf513" class="">This function manages the timer for a Raft node in the follower state, detecting the leader’s heartbeats. If no heartbeat is received within a specified timeout, the node transitions to the candidate state and initiates a new election process.</p><ul id="1323c7b3-89eb-8056-8ab8-cf3477335705" class="bulleted-list"><li style="list-style-type:disc"><strong>Timer Initialization</strong>: The function initializes a timer at the beginning and ensures it stops when the function exits to free resources.</li></ul><ul id="1323c7b3-89eb-804a-96bc-eea5d2fb7db2" class="bulleted-list"><li style="list-style-type:disc"><strong>Timeout Setting</strong>: In each loop, the timer is reset to a random timeout (between 1000 and 1500 milliseconds). This randomness helps reduce the chances of multiple nodes initiating an election simultaneously.</li></ul><ul id="1323c7b3-89eb-8096-978c-e3df72a0ecd8" class="bulleted-list"><li style="list-style-type:disc"><strong>closeFollowerClock</strong>: If this channel receives a signal, the function will exit.</li></ul><ul id="1323c7b3-89eb-80f7-b511-e051aa583ebe" class="bulleted-list"><li style="list-style-type:disc"><strong>Timer Timeout</strong>: If the timer times out, meaning no leader heartbeat was received within the specified period, the node initiates a new election through the <code>startNewElectionCh</code> channel.</li></ul><ul id="1323c7b3-89eb-8088-b995-e7cee15fe82e" class="bulleted-list"><li style="list-style-type:disc"><strong>resetFollowerClock</strong>: If this channel receives a signal, the timer resets, typically indicating the node received a leader’s heartbeat, thus continuing as a follower.</li></ul><h3 id="1323c7b3-89eb-80a7-8c16-e1ef6b58f1ea" class=""><code>election()</code> function</h3><p id="1323c7b3-89eb-80e7-bb75-f77f9f47358b" class="">After starting the <code>election()</code> function:</p><ol type="1" id="1323c7b3-89eb-800e-9a01-c6156b3edd88" class="numbered-list" start="1"><li>Set identity to <code>Candidate</code>.</li></ol><ol type="1" id="1323c7b3-89eb-80b5-b26a-e8ea0b716039" class="numbered-list" start="2"><li>Increment <code>currentTerm</code> to update the term.</li></ol><ol type="1" id="1323c7b3-89eb-80f6-9651-e0118b5296f1" class="numbered-list" start="3"><li>Set <code>voteFor = me</code> to vote for itself.</li></ol><p id="1323c7b3-89eb-8049-9130-e9700297df58" class="">Then launch three functions:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-807c-ae0f-c10725e10bcf" class="code"><code class="language-Go" style="white-space:pre-wrap;word-break:break-all">go rf.electionClock(stopElectionClockCh)
+go rf.elecParallelSend(stopElecParallelSend)
+go rf.electionRecv(stopElectionRecv)
+</code></pre><p id="1323c7b3-89eb-8000-ba93-c647d1ad5e4b" class="">Afterward, handle signals:</p><ul id="1323c7b3-89eb-801f-aaa2-dabae092cc79" class="bulleted-list"><li style="list-style-type:disc">If <code>&lt;-rf.electionTimeoutCh</code>, it means the server did not receive the majority of votes during the election, and it is uncertain if a leader was elected, so it starts a new election round:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-8009-9319-fe5211abc9ee" class="code"><code class="language-Go" style="white-space:pre-wrap;word-break:break-all">rf.startNewElectionCh &lt;- struct{}{}
+</code></pre></li></ul><ul id="1323c7b3-89eb-80b7-ac3d-db5cdd08d97d" class="bulleted-list"><li style="list-style-type:disc">If <code>&lt;-rf.closeElectionCh</code>, it indicates, via the <code>run()</code> function’s signal relay, that a new leader has been elected, so this election should end.<ul id="1323c7b3-89eb-8011-b7bc-edc6d2568229" class="bulleted-list"><li style="list-style-type:circle">The function uses <code>defer</code> to close channels and perform cleanup:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-8006-afce-f887b1f9ca0e" class="code"><code class="language-Go" style="white-space:pre-wrap;word-break:break-all">	defer func() {
+		close(stopElectionClockCh)
+		close(stopElecParallelSend)
+		close(stopElectionRecv)
+		// drain the voteIn channel
+		for len(rf.voteIn) &gt; 0 {
+			&lt;-rf.voteIn
+		}
+		// fmt.Printf(&quot;\\033[33m[Term:%d](%d) election done\\033[0m\\n&quot;, rf.state.currentTerm, rf.me)
+	}()
+</code></pre></li></ul></li></ul><ul id="1323c7b3-89eb-8099-b2a7-e016ad16d5ca" class="bulleted-list"><li style="list-style-type:disc">If it receives the election result <code>electionResult := &lt;-rf.voteCollectCh</code>:<ul id="1323c7b3-89eb-80d2-b7e9-c944e68e593c" class="bulleted-list"><li style="list-style-type:circle">If successful: <code>rf.startLeaderCh &lt;- struct{}{}</code> to start leader mode.</li></ul><ul id="1323c7b3-89eb-8034-a823-db24a73d0ac9" class="bulleted-list"><li style="list-style-type:circle">If <code>electionResult == splitVote</code>, start a new election <code>rf.startNewElectionCh &lt;- struct{}{}</code>.</li></ul></li></ul><h3 id="1323c7b3-89eb-803d-9e03-e4ed8f8806fe" class=""><code>elecParallelSend()</code> and <code>electionRecv()</code> functions</h3><p id="1323c7b3-89eb-80a2-a80a-e4e483854b6b" class="">When sending <code>voteRequest</code>, the article mentions it should be sent in parallel. Here we ensure concurrency, so the logic is correct. Use:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-8073-9f17-e3ffb8e2c91e" class="code"><code class="language-Go" style="white-space:pre-wrap;word-break:break-all">go rf.sendRequestVote(i, &amp;RequestVoteArgs{
+	Term:         curTerm,
+	CandidateId:  rf.me,
+	LastLogIndex: logLen - 1,
+	LastLogTerm:  curTerm,
+}, reply)
+</code></pre><p id="1323c7b3-89eb-80e2-8f4f-d5c2c3cc7cb1" class="">Send the RPC, and remember to lock when accessing the <code>state</code> variable; otherwise, it might conflict with other operations modifying <code>state</code>.</p><p id="1323c7b3-89eb-807b-af66-f41422aa2af3" class="">Upon receiving the RPC response, immediately return, so we set up a buffered channel to collect each voter’s result:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1323c7b3-89eb-8008-a232-fba14cdcfbbe" class="code"><code class="language-Go" style="white-space:pre-wrap;word-break:break-all">if ok &amp;&amp; reply.VoteGranted {rf.voteIn &lt;- true}
+</code></pre><p id="1323c7b3-89eb-801c-b3f4-ef6a65e7e5a2" class="">Then, collect the votes in the <code>electionRecv()</code> function with <code>vote := &lt;-rf.voteIn</code>.</p><h3 id="1323c7b3-89eb-806b-b1b8-f4d50b274e54" class=""><code>electionClock()</code> function</h3><p id="1323c7b3-89eb-80c4-b0a8-fff8caeb5741" class="">The <code>electionClock</code> function is simpler than <code>followerClock</code>, needing only to check if the countdown finishes first or if an external signal ends the goroutine first.</p><h3 id="1323c7b3-89eb-808c-a40b-c04eed64d89b" class=""><code>RequestVote()</code></h3><p id="1323c7b3-89eb-80d5-8035-d1451f99c2d7" class="">This is critical!!! As the RPC handler function, its correct implementation determines whether the election proceeds smoothly. Lock and unlock the entire function to ensure state consistency before and after voting. Three scenarios apply:</p><ol type="1" id="1323c7b3-89eb-804b-a1d2-de88449fab21" class="numbered-list" start="1"><li><code>args.Term &gt; rf.state.currentTerm</code><ul id="1323c7b3-89eb-80fc-a377-c1913720623a" class="bulleted-list"><li style="list-style-type:disc">Vote: <code>reply.VoteGranted = true</code></li></ul><ul id="1323c7b3-89eb-809e-a802-d4b8424b0fba" class="bulleted-list"><li style="list-style-type:disc">Update <code>Term</code>: <code>rf.state.currentTerm = args.Term</code></li></ul><ul id="1323c7b3-89eb-80ac-b830-da0a3ed8e1e5" class="bulleted-list"><li style="list-style-type:disc">Record the vote for this candidate: <code>rf.state.votedFor = args.CandidateId</code></li></ul><ul id="1323c7b3-89eb-805f-8d6f-dcdcab01e86a" class="bulleted-list"><li style="list-style-type:disc">Then, consider the following:<ul id="1323c7b3-89eb-80a3-a74c-efcd866276ea" class="bulleted-list"><li style="list-style-type:circle">If this server is a <code>Candidate</code>:<ul id="1323c7b3-89eb-80e4-bb5c-f8638745137d" class="bulleted-list"><li style="list-style-type:square">Change to <code>Follower</code> and start <code>rf.followerClock()</code>.</li></ul><ul id="1323c7b3-89eb-804d-93dc-c7a2baf9fa90" class="bulleted-list"><li style="list-style-type:square">Stop the election <code>rf.closeElectionCh &lt;- struct{}{}</code></li></ul></li></ul><ul id="1323c7b3-89eb-8057-bb27-df73ce9c0dac" class="bulleted-list"><li style="list-style-type:circle">If this server is a <code>Leader</code>:<ul id="1323c7b3-89eb-8012-b8bf-cc408da9202f" class="bulleted-list"><li style="list-style-type:square">Change to <code>Follower</code> and start <code>rf.followerClock()</code>.</li></ul><ul id="1323c7b3-89eb-8025-8a41-f11de43d4601" class="bulleted-list"><li style="list-style-type:square">Stop the heartbeat <code>rf.closeHeartbeatClock &lt;- struct{}{}</code></li></ul></li></ul><ul id="1323c7b3-89eb-80a2-b7cc-c71eaeb441a2" class="bulleted-list"><li style="list-style-type:circle">If this server is a <code>Follower</code>:<ul id="1323c7b3-89eb-807c-94c6-cc2cd26ade1b" class="bulleted-list"><li style="list-style-type:square">Reset the timer <code>rf.resetFollowerClock &lt;- struct{}{}</code></li></ul></li></ul></li></ul></li></ol><ol type="1" id="1323c7b3-89eb-80b2-bb33-fb720d04730b" class="numbered-list" start="2"><li><code>args.Term == rf.state.currentTerm</code><ul id="1323c7b3-89eb-80a4-a46a-d62d4de36a7a" class="bulleted-list"><li style="list-style-type:disc">Do not vote. Why? Even as a follower? Yes, because if they were the leader for this term, they should send a heartbeat rather than a vote request. They’re in the same term as you but still running an election? To be valid, they should be at least one term ahead!</li></ul></li></ol><ol type="1" id="1323c7b3-89eb-80fe-87a0-ea3f2a76781f" class="numbered-list" start="3"><li><code>args.Term &lt; rf.state.currentTerm</code><ul id="1323c7b3-89eb-8047-80b8-cf0cee26da51" class="bulleted-list"><li style="list-style-type:disc">Refuse the vote and inform them of the latest <code>Term</code>: <code>reply.Term = rf.state.currentTerm</code>.</li></ul></li></ol><h3 id="1323c7b3-89eb-80df-a712-d30829eef2a1" class=""><code>heartbeat()</code>, <code>sendHeartbeat()</code> functions</h3><p id="1323c7b3-89eb-80c0-ab74-fe83d55ed808" class="">Straightforward, each countdown resets and initiates a new countdown, starting a goroutine <code>go sendHeartbeat()</code>.</p><p id="1323c7b3-89eb-80b4-9d50-fb8e06db7e37" class=""><code>sendHeartbeat()</code> is simple, issuing <code>RPC</code> to all servers with <code>go sendAppendEntries()</code>.</p><h3 id="1323c7b3-89eb-808a-96b2-f36df255f6e2" class=""><code>AppendEntries()</code> function</h3><p id="1323c7b3-89eb-8035-959c-e91f2c800870" class="">Also crucial!!! Similar to <code>RequestVote</code>, it has three main cases. Lock at the beginning and unlock at the end.</p><ul id="1323c7b3-89eb-800a-80d9-f60b83f5db2d" class="bulleted-list"><li style="list-style-type:disc"><code>args.Term &lt; rf.state.currentTerm</code><ul id="1323c7b3-89eb-8042-a153-ec5ba2b6ba05" class="bulleted-list"><li style="list-style-type:circle">Failed heartbeat: <code>reply.Success = false</code></li></ul></li></ul><ul id="1323c7b3-89eb-8066-a099-de483e7a37d9" class="bulleted-list"><li style="list-style-type:disc"><code>args.Term == rf.state.currentTerm</code><ul id="1323c7b3-89eb-809a-a345-e776c0a5d8e9" class="bulleted-list"><li style="list-style-type:circle">If a follower: <code>reply.Success = true</code></li></ul><ul id="1323c7b3-89eb-807d-b811-d19532a680eb" class="bulleted-list"><li style="list-style-type:circle">Otherwise: <code>reply.Success = false</code></li></ul></li></ul><ul id="1323c7b3-89eb-8053-8fe9-dcd5fd08cc8e" class="bulleted-list"><li style="list-style-type:disc"><code>args.Term &gt; rf.state.currentTerm</code><ul id="1323c7b3-89eb-8034-9946-dc6e725e7bf1" class="bulleted-list"><li style="list-style-type:circle"><code>reply.Success = true</code></li></ul></li></ul><p id="1323c7b3-89eb-804b-a207-d00ddad81cb3" class="">Send the heartbeat <code>Term</code> to <code>run</code> for further processing: <code>rf.heartbeatIn &lt;- args.Term</code>.</p><h2 id="1323c7b3-89eb-80d4-9515-c4069fc05f86" class="">Test Design</h2><p id="1323c7b3-89eb-8082-8553-f2265a697c18" class=""><strong>TestInitialElection2A</strong></p><ul id="1323c7b3-89eb-80de-888e-e4ae94e5bb3d" class="bulleted-list"><li style="list-style-type:disc"><strong>Objective</strong>: Verify if the system can correctly elect a leader at initialization.</li></ul><ul id="1323c7b3-89eb-805c-b3a7-fa9c3f41698f" class="bulleted-list"><li style="list-style-type:disc"><strong>Procedure</strong>: Create a cluster of three servers and check if a leader is elected.</li></ul><h3 id="1323c7b3-89eb-80aa-8cad-d948a687d4a0" class=""><strong>TestReElection2A</strong></h3><ul id="1323c7b3-89eb-8080-abbf-fa8d4911f5fa" class="bulleted-list"><li style="list-style-type:disc"><strong>Objective</strong>: Check if the system can elect a new leader when the current leader disconnects.</li></ul><ul id="1323c7b3-89eb-804f-a6b6-f4b0d716019a" class="bulleted-list"><li style="list-style-type:disc"><strong>Procedure</strong>: Disconnect the current leader in a three-server cluster, then check if a new leader is elected.</li></ul><h3 id="1323c7b3-89eb-80c7-951a-fe834264110a" class=""><strong>TestReElectionHidden2A</strong></h3><ul id="1323c7b3-89eb-802d-a697-c95fdc4f5ae9" class="bulleted-list"><li style="list-style-type:disc"><strong>Objective</strong>: Test if the system can re-elect a leader after a network failure.</li></ul><ul id="1323c7b3-89eb-8099-8d55-e65e2b77ed38" class="bulleted-list"><li style="list-style-type:disc"><strong>Procedure</strong>: In a five-server cluster, disconnect the current leader and elect a new leader, simulate a network partition by disconnecting several nodes, check for no leader condition, then restore connections and check if a new leader is elected.</li></ul><h3 id="1323c7b3-89eb-80f6-8d48-c98b3194eb0c" class=""><strong>TestSmallPartitionConsensusHidden2A</strong></h3><ul id="1323c7b3-89eb-80e2-bafc-f2c7f6f96329" class="bulleted-list"><li style="list-style-type:disc"><strong>Objective</strong>: Test if the system can elect a new leader in the majority partition while maintaining the old leader in the small partition under network partition conditions.</li></ul><ul id="1323c7b3-89eb-809f-9f93-d4091a7505e3" class="bulleted-list"><li style="list-style-type:disc"><strong>Procedure</strong>: In a five-server cluster, create a small partition with the leader and one follower, and a large partition with the majority of followers. Check if a new leader is elected in the large partition and verify the old leader remains leader in the small partition.</li></ul><h3 id="1323c7b3-89eb-8062-87f1-e81677f88e6e" class=""><strong>TestLeaderConsistencyHidden2A</strong></h3><ul id="1323c7b3-89eb-803a-85ef-df09a2107c4c" class="bulleted-list"><li style="list-style-type:disc"><strong>Objective</strong>: Verify if the system maintains leader consistency after a re-election.</li></ul><ul id="1323c7b3-89eb-80e0-9b42-c754d17aab95" class="bulleted-list"><li style="list-style-type:disc"><strong>Procedure</strong>: In a three-server cluster, disconnect the current leader and elect a new leader, reconnect the old leader, disconnect the new leader and another node, and check if a new leader can be elected.</li></ul><hr id="1323c7b3-89eb-8045-ad4d-d4c74f43e1a7"/></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
