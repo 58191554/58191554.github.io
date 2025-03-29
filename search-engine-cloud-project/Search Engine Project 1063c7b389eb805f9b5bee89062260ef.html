@@ -1,0 +1,730 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Search Engine Project</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1063c7b3-89eb-805f-9b5b-ee89062260ef" class="page sans"><header><h1 class="page-title"><strong>Search Engine Project</strong></h1><p class="page-description"></p></header><div class="page-body"><p id="1c53c7b3-89eb-8073-9a84-fd6b78fb98f3" class="">Jerry Zhou, Zhen Tong </p><p id="1c53c7b3-89eb-80c8-a616-e28fc4d47533" class="">Video Link: <a href="https://drive.google.com/file/d/13MdECAUIdQNq1wylJjx80B8CngMurkSy/view?usp=sharing">https://drive.google.com/file/d/13MdECAUIdQNq1wylJjx80B8CngMurkSy/view?usp=sharing</a> </p><p id="1c53c7b3-89eb-80d2-b6a0-f3887379a357" class="">Github link: <a href="https://github.com/58191554/Search-Engine-with-GKE-Kafka-and-Dataproc-Hadoop">https://github.com/58191554/Search-Engine-with-GKE-Kafka-and-Dataproc-Hadoop</a></p><p id="1c53c7b3-89eb-80f8-8240-d2d35fa48f91" class="">In this project, we build a search engine system using Kafka and MapReduce. The system is deployed on Google Cloud Platform, using GKE and Google Dataproc. The deployment is done through terraform.</p><h2 id="1c53c7b3-89eb-80b2-877b-e1e089a4c544" class=""><strong>Search Client</strong></h2><p id="1c53c7b3-89eb-8009-9a3e-f7d8171e7878" class=""><strong>Upload File</strong></p><p id="1c53c7b3-89eb-8005-9936-f48383bf6411" class="">Using the Google Cloud Storage API, the search client can upload files to the GCP bucket.</p><p id="1c53c7b3-89eb-802f-9f33-d1b01c30d576" class=""><strong>Producer</strong></p><p id="1c53c7b3-89eb-809a-8436-c7d65f7f79c1" class="">The producer is a python script that uses the Kafka Python client to produce messages to the Kafka topic. The message format is:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c53c7b3-89eb-808f-aa07-c8e053b028a9" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">key: job_id
+value: search_term, n_value
+</code></pre><p id="1c53c7b3-89eb-80bf-9135-c6fa50e62f20" class="">The producer will maintain a table of jobs. When the consumer completes a job, it will send a message to the producer to update the job status.</p><table id="1c53c7b3-89eb-80ed-976b-dc6fa830ac94" class="simple-table"><tbody><tr id="1c53c7b3-89eb-8073-8f21-e193776fecc9"><td id="C:qH" class="">job_id</td><td id="adqV" class="">search_term</td><td id="GIn?" class="">result</td></tr><tr id="1c53c7b3-89eb-80d2-bbc8-e5be24824da8"><td id="C:qH" class="">1</td><td id="adqV" class="">&quot;bridge&quot;</td><td id="GIn?" class="">None</td></tr><tr id="1c53c7b3-89eb-80d3-97a5-fea4a324346d"><td id="C:qH" class="">2</td><td id="adqV" class="">&quot;house&quot;</td><td id="GIn?" class="">None</td></tr></tbody></table><p id="1c53c7b3-89eb-8029-bd98-ebdbb7abc7b6" class=""><strong>Update Result</strong></p><p id="1c53c7b3-89eb-8098-bb92-e178ab2d9cfe" class="">The consuer can post the result of Hadoop job to the producer. The producer will update the job result in the table.</p><p id="1c53c7b3-89eb-8009-99f0-c218461c1ede" class=""><strong>Frontend Layout</strong></p><p id="1c53c7b3-89eb-803b-a2c5-c32eb12db4ad" class="">Users can upload files to the GCP bucket and submit a search job. The producer will produce a message to the Kafka topic. The consumer will consume the message and submit a Hadoop job. When the Hadoop job is completed, the consumer will post the result to the producer. The producer will update the job result in the table.</p><h2 id="1c53c7b3-89eb-800c-b709-d347ff61c106" class=""><strong>MapReduce Consumer</strong></h2><p id="1c53c7b3-89eb-8050-970b-ea88302fff84" class=""><strong>Consumer</strong></p><p id="1c53c7b3-89eb-8089-a472-db4cfe6d1e4b" class="">The consumer is a python script that consumes messages from the Kafka topic. Each message is packed as a json object. The trigger will submit the json object as a Hadoop job. After the job is completed, the consumer will post the result to the producer. After hadoop result is posted, the consumer will continue consuming the next message from the Kafka topic.</p><p id="1c53c7b3-89eb-80c4-9e9a-c235c3a2000e" class=""><strong>MapReduce Job</strong></p><p id="1c53c7b3-89eb-80fe-a080-c197e29de5f7" class="">The MapReduce job use the inverted index algorithm to count the frequency of each word in the file. Given a search term, the mapper will use the <code>&quot;-cmdenv&quot;, f&quot;SEARCH_WORD={target_term}&quot;</code> and the compacted <code>.gz</code> file as a input for the Hadoop job. The output of mapper is:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c53c7b3-89eb-80e8-a4e5-c583ba854454" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">/path/to/Hugo.gz 1
+/path/to/Hugo.gz 1
+/path/to/Hugo.gz 1
+/path/to/Shakespeare.gz 1
+/path/to/Tolstoy.gz 1
+/path/to/Tolstoy.gz 1
+...
+</code></pre><p id="1c53c7b3-89eb-8002-bb02-c5d3b868d7f0" class="">The reducer will receive the output of mapper and count the frequency of the search term in the file. The output of reducer is:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c53c7b3-89eb-8053-ba53-f0daa31985a5" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">/path/to/Hugo.gz 3
+/path/to/Shakespeare.gz 1
+/path/to/Tolstoy.gz 2
+...
+</code></pre><p id="1c53c7b3-89eb-800c-b386-e09d629ee762" class=""><strong>Trigger</strong></p><p id="1c53c7b3-89eb-80ca-a376-e6d60fdc1412" class="">The trigger will submit the json object as a Hadoop job. It will also get the response Hadoop job id, and iterative consult the Hadoop job status. When the Hadoop job is completed, the trigger download the reducer output from the Google Cloud Storage bucket and post the result to the producer.</p><h2 id="1c53c7b3-89eb-80cb-a1e7-d1352cd4f2f7" class=""><strong>Kafka</strong></h2><p id="1c53c7b3-89eb-8064-a2bd-db8b74b93e49" class="">The terraform code to launch the Kafka cluster is in the <code>terraform-kafka</code> folder. This will automatically launch a Kafka cluster. The advertised listener is dynamically assigned when the kafka broker loadblancer service is created. You can refer to <code>terraform-kafka/kubernetes.tf</code> to see the details.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c53c7b3-89eb-8045-af7a-eff4aeda78b7" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">env {
+  name  = &quot;KAFKA_ADVERTISED_LISTENERS&quot;value = &quot;PLAINTEXT://broker:29092,PLAINTEXT_HOST://${local.kafka_lb_ip}:9092&quot;
+}</code></pre><h2 id="1c53c7b3-89eb-8048-b511-f11abe210151" class=""><strong>Google Dataproc</strong></h2><p id="1c53c7b3-89eb-804f-9884-cf4c5eeabecd" class="">The terraform code to launch the Google Dataproc cluster is in the <code>terraform-dataproc</code> folder. This will automatically launch a Google Dataproc cluster, with Hadoop map reduce framework installed. To triger the MapReduce job, You need to make sure mapper.py and reducer.py are in the GCP bucket. And there should be a <code>/Data/</code> folder in the GCP bucket.</p><p id="1c53c7b3-89eb-805c-9c01-dff763f9cdad" class=""><strong>How to run the project</strong></p><p id="1c53c7b3-89eb-80c7-937b-ede667265afd" class="">Visite the dockerhub page:</p><ul id="1c53c7b3-89eb-80a5-80e7-c452cb646113" class="bulleted-list"><li style="list-style-type:disc">search-client:<a href="https://hub.docker.com/repository/docker/zhentong123/clinfra-search-client/general">https://hub.docker.com/repository/docker/zhentong123/clinfra-search-client/general</a></li></ul><ul id="1c53c7b3-89eb-80dd-b9f6-f216f369471f" class="bulleted-list"><li style="list-style-type:disc">mapreduce-consumer: <a href="https://hub.docker.com/repository/docker/zhentong123/clinfra-mr-consumer/general">https://hub.docker.com/repository/docker/zhentong123/clinfra-mr-consumer/general</a></li></ul><p id="1c53c7b3-89eb-80bb-904c-f5d387689810" class="">The Google Dataproc and GKE is split in two terraform code. You need to deploy both of them.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c53c7b3-89eb-8090-92a5-f2c8869f74a8" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">cd terraform-dataproc
+terraform init
+terraform apply
+
+cd ../terraform-kafka
+terraform init
+terraform apply
+</code></pre><h2 id="1c53c7b3-89eb-8008-9c1f-e753d17bd1e3" class=""><strong>Output Screenshots</strong></h2><p id="1c53c7b3-89eb-8081-9968-ce2dd816e108" class=""><strong>Search Client</strong></p><p id="1c53c7b3-89eb-8022-98dc-d0147168fcea" class="">Upload file or submit search job:</p><figure id="1c53c7b3-89eb-80e4-9880-fa1759f3ad38" class="image"><a href="Search%20Engine%20Project%201063c7b389eb805f9b5bee89062260ef/image.png"><img style="width:672px" src="Search%20Engine%20Project%201063c7b389eb805f9b5bee89062260ef/image.png"/></a></figure><p id="1c53c7b3-89eb-80b3-8e09-cd479b95b6e9" class="">Waiting for search:</p><figure id="1c53c7b3-89eb-80c4-8040-fa9156b6f2f1" class="image"><a href="Search%20Engine%20Project%201063c7b389eb805f9b5bee89062260ef/image%201.png"><img style="width:709.984375px" src="Search%20Engine%20Project%201063c7b389eb805f9b5bee89062260ef/image%201.png"/></a></figure><p id="1c53c7b3-89eb-8047-8b2c-d14e6548d977" class=""><strong>MapReduce Consumer</strong></p><p id="1c53c7b3-89eb-8078-8d78-fc60aa6cef7c" class="">The hadoop job execution:</p><figure id="1c53c7b3-89eb-800b-9b48-dbfa67fda138" class="image"><a href="Search%20Engine%20Project%201063c7b389eb805f9b5bee89062260ef/image%202.png"><img style="width:709.984375px" src="Search%20Engine%20Project%201063c7b389eb805f9b5bee89062260ef/image%202.png"/></a></figure><p id="1c53c7b3-89eb-8013-bba5-defdef4bd56f" class=""><strong>MapReduce Result</strong></p><figure id="1c53c7b3-89eb-8075-8bff-ead6843d82bd" class="image"><a href="Search%20Engine%20Project%201063c7b389eb805f9b5bee89062260ef/image%203.png"><img style="width:3418px" src="Search%20Engine%20Project%201063c7b389eb805f9b5bee89062260ef/image%203.png"/></a></figure><h2 id="1c53c7b3-89eb-8017-a488-d8dc8481e76c" class=""><strong>Common Issues</strong></h2><p id="1c53c7b3-89eb-80eb-b72c-ed3367d58e68" class=""><strong>Set the kafka broker ip</strong></p><p id="1c53c7b3-89eb-80e7-9227-c6d4c4ffe504" class="">If you run on a linux machine, and got this:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c53c7b3-89eb-8097-ae47-ddf1220baa55" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">zhen_tong_0927@cloudshell:~ (hw2-q2-2025)$ docker run --platform linux/amd64 --rm -it --entrypoint /bin/sh zhentong123/clinfra-search-client:1.0.0
+Unable to find image &#x27;zhentong123/clinfra-search-client:1.0.0&#x27; locally
+1.0.0: Pulling from zhentong123/clinfra-search-client
+6e909acdb790: Pull complete
+cec49b84de9d: Pull complete
+da1cbe0d584f: Pull complete
+9a95d1744747: Pull complete
+e51b7e2231a4: Pull complete
+fb4446aa1855: Pull complete
+d65f3004c8e2: Pull complete
+8a1e1ce4450f: Pull complete
+5b532e2af989: Pull complete
+Digest: sha256:f91d90ee24dc5dd7654ffd604b0f614c0b21d2d26e8ec6b265d038f1b9e4f34f
+Status: Downloaded newer image for zhentong123/clinfra-search-client:1.0.0
+# ls -l /app/entrypoint.sh
+-rwxr-xr-x 1 root root 276 Mar 29 18:19 /app/entrypoint.sh
+# file /app/entrypoint.sh
+/bin/sh: 2: file: not found
+# sh -x /app/entrypoint.sh
++ [ -z  ]
++ echo Error: BROKER environment variable is not set.
+Error: BROKER environment variable is not set.
++ exit 1
+#
+</code></pre><p id="1c53c7b3-89eb-8070-8f48-e39556730363" class="">You need to set the BROKER environment variable.</p><p id="1c53c7b3-89eb-80ec-a9d7-d64b9fc3834b" class=""><strong>Reference</strong></p><ul id="1c53c7b3-89eb-8026-bf14-d9b053c436d3" class="bulleted-list"><li style="list-style-type:disc">How to upload file to GCP bucket from local machine: <a href="https://cloud.google.com/storage/docs/uploading-objects">https://cloud.google.com/storage/docs/uploading-objects</a></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
