@@ -1,0 +1,682 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>🚀 Accelerating Speculative Decoding in vLLM with Pipeline Parallelism</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="246afc51-2b04-806d-837a-e38b6a1d7c68" class="page sans"><header><h1 class="page-title">🚀 Accelerating Speculative Decoding in vLLM with Pipeline Parallelism</h1><p class="page-description"></p></header><div class="page-body"><hr id="246afc51-2b04-8082-b8a5-d9a642e08d33"/><figure id="246afc51-2b04-8006-acad-f84954f3f936"><div class="source">https://github.com/MiRaCLeXeoN/vllm</div></figure><ul id="246afc51-2b04-80a5-be65-f97bd4afefc9" class="bulleted-list"><li style="list-style-type:disc">Paper: <a href="https://github.com/58191554/58191554.github.io/blob/master/MlSys/spec-pp-vllm.pdf">PIPELINE PARALLELISM WITH SPECULATIVE DECODING BASED ON VLLM</a></li></ul><p id="246afc51-2b04-8038-a51f-e656d25a80ac" class="">With the growing demand for fast, scalable large language model (LLM) inference, systems like <a href="https://github.com/vllm-project/vllm">vLLM</a> have become essential infrastructure for serving models like LLaMA, Mistral, and Falcon. While vLLM has made impressive strides in efficient KV cache management and throughput, some features—like pipeline parallelism with speculative decoding—remained underdeveloped.</p><p id="246afc51-2b04-80a6-845e-ee4558da0cc6" class="">In our latest project, we tackled this head-on.</p><p id="246afc51-2b04-8066-8267-cf1fc9aabbb5" class="">We extended <strong>vLLM V1</strong> to support <strong>intra-node pipeline parallelism</strong>, <strong>EAGLE-style speculative decoding</strong>, and conducted a thorough exploration of <strong>3D parallelism</strong> (data, tensor, pipeline). Our work brings together cutting-edge system design and empirical performance study to make high-throughput, low-latency LLM inference more accessible—even on a single machine.</p><hr id="246afc51-2b04-8003-99f4-c61910c3a7ff"/><h2 id="246afc51-2b04-8031-be9d-fa8f35f0a739" class="">🔍 Motivation</h2><p id="246afc51-2b04-8070-8c14-c85cfe11997b" class=""><strong>Speculative decoding</strong> accelerates inference by generating candidate tokens with a lightweight <em>drafter model</em>, then verifying them with the full model. Meanwhile, <strong>pipeline parallelism</strong> splits large models across GPUs for concurrent execution of different layers. But until now, no system offered a robust integration of both—especially for Eagle3-style speculative decoding, which introduces additional architectural demands.</p><p id="246afc51-2b04-80cb-bf36-eeca05f26d67" class="">With vLLM V1’s clean, modular codebase and built-in support for multiprocessing, we saw a clear opportunity to bridge the gap and unlock performance wins for both large and small models.</p><hr id="246afc51-2b04-80dd-ac67-e23a23c27e2a"/><h2 id="246afc51-2b04-80c9-9200-e7a9c54cf5f3" class="">🏗️ Our Contributions</h2><p id="246afc51-2b04-806a-b083-ecfb6b136c8e" class="">We focused on a single-node, multi-GPU setup and made the following core contributions:</p><ol type="1" id="246afc51-2b04-80c6-80f1-e1f037e8bfb6" class="numbered-list" start="1"><li><strong>Pipeline-Parallel Engine Executor &amp; Scheduler</strong><p id="246afc51-2b04-8057-8f21-e3163f063a7c" class="">We implemented a new pipeline-compatible executor and scheduler inside vLLM V1. This design supports both centralized and decentralized communication strategies, enabling better overlap between computation and communication.</p></li></ol><ol type="1" id="246afc51-2b04-8014-995a-dae45471753a" class="numbered-list" start="2"><li><strong>Speculative Decoding Integration</strong><p id="246afc51-2b04-80db-a83b-f05c9033f3b9" class="">We integrated <strong>EAGLE3-style</strong> speculative decoding with pipeline execution—supporting inter-stage data transfer of mid-layer hidden states and placement optimizations for the drafter model.</p></li></ol><ol type="1" id="246afc51-2b04-80e7-9e09-fa2c5d205ea7" class="numbered-list" start="3"><li><strong>3D Parallelism Evaluation</strong><p id="246afc51-2b04-8081-985c-e2efed3ca24a" class="">We evaluated combinations of data, pipeline, and tensor parallelism on 8x H100 GPUs, analyzing trade-offs for both small (8B) and large (70B) models.</p></li></ol><hr id="246afc51-2b04-8011-97cd-fb5d17ac63b4"/><h2 id="246afc51-2b04-8047-9e8a-f65b7eb83315" class="">🧠 System Design</h2><p id="246afc51-2b04-803e-99ae-eb483e64aabb" class="">Our pipeline system design includes:</p><ul id="246afc51-2b04-8024-9c45-efabe8aa7166" class="bulleted-list"><li style="list-style-type:disc">A <strong>centralized version</strong> for correctness validation.</li></ul><ul id="246afc51-2b04-80f8-b2ef-c3ff872f5cf5" class="bulleted-list"><li style="list-style-type:disc">A <strong>decentralized version</strong> that reduces hidden state communication overhead and latency.</li></ul><ul id="246afc51-2b04-806a-a1ad-d8e8fc48f4f5" class="bulleted-list"><li style="list-style-type:disc">Asynchronous scheduling to fully saturate the pipeline with multiple batches.</li></ul><p id="246afc51-2b04-8018-87c2-e676edbc1610" class="">To support Eagle3 speculative decoding, we implemented mechanisms for:</p><ul id="246afc51-2b04-8084-8b66-fe200517d2f5" class="bulleted-list"><li style="list-style-type:disc">Propagating middle-layer activations (e.g., from LLaMA-3.1 layer 2, 19, 29).</li></ul><ul id="246afc51-2b04-80b8-9960-e27a1a043352" class="bulleted-list"><li style="list-style-type:disc">Re-embedding token IDs into hidden states across pipeline stages.</li></ul><ul id="246afc51-2b04-8032-98cf-dddc84a3cf5c" class="bulleted-list"><li style="list-style-type:disc">Reducing inter-stage communication by co-locating the drafter and rejection sampler.</li></ul><hr id="246afc51-2b04-805e-966c-fada1ba436f4"/><h2 id="246afc51-2b04-8044-bc5e-ff7b7c82095b" class="">⚙️ Marrying Pipeline Parallelism with Speculative Decoding in vLLM</h2><p id="246afc51-2b04-808a-9861-cbcb5baa32cf" class="">While vLLM V1 offers a clean, modular, and performant inference engine, it lacked support for integrating pipeline parallelism with speculative decoding. Our goal was to bridge that gap—with minimal disruption to the existing architecture and maximum flexibility for researchers and practitioners.</p><p id="246afc51-2b04-8034-b85a-c332058e06bf" class="">We designed and implemented a <strong>pipeline-compatible engine executor and scheduler</strong>, along with support for <strong>EAGLE3-style speculative decoding</strong>, paying special attention to <strong>inter-stage communication</strong>, <strong>draft token placement</strong>, and <strong>activation reuse</strong> across partitions.</p><p id="246afc51-2b04-8006-aae8-febdafcd02c5" class="">Let’s walk through the architecture and the innovations behind our system.</p><hr id="246afc51-2b04-80cc-af95-e99ed4dd6ef2"/><h3 id="246afc51-2b04-80a9-8ce5-eef6c60b55ca" class="">🧩 Modular Enhancements to vLLM V1</h3><p id="246afc51-2b04-8006-9f53-f46f3af58a49" class="">vLLM V1 separates the <strong>frontend (LLMEngine)</strong> and the <strong>backend (EngineCore)</strong>:</p><ul id="246afc51-2b04-8092-bcf9-ebf1b18a7e93" class="bulleted-list"><li style="list-style-type:disc"><strong>Frontend</strong>: Handles request processing, tokenization, packaging outputs, and polling.</li></ul><ul id="246afc51-2b04-8057-8fd6-e178f1740e96" class="bulleted-list"><li style="list-style-type:disc"><strong>Backend (EngineCore)</strong>: Schedules requests, manages KV caches, launches workers, and dispatches batches.</li></ul><p id="246afc51-2b04-80ee-bb88-d58d795a6c40" class="">We <strong>intercepted this flow</strong> to allow users to <strong>dynamically enable pipeline parallelism</strong> by specifying a config flag. When enabled, our custom <strong>pipeline-aware scheduler and executor modules</strong> replace the default ones.</p><p id="246afc51-2b04-8008-8390-f9a43a93c83a" class="">This plug-and-play design ensures:</p><ul id="246afc51-2b04-809c-8bf5-c69db706b6f7" class="bulleted-list"><li style="list-style-type:disc">Seamless integration without code duplication</li></ul><ul id="246afc51-2b04-80d9-9c3f-dbddb7c1716c" class="bulleted-list"><li style="list-style-type:disc">Compatibility with existing APIs</li></ul><ul id="246afc51-2b04-8050-b819-e6bccd273ee9" class="bulleted-list"><li style="list-style-type:disc">Transparent support for both single-stage and multi-stage deployments</li></ul><hr id="246afc51-2b04-80d2-93b5-dd5d3a8332cd"/><h3 id="246afc51-2b04-8022-956f-f319a8305f93" class="">🔄 Centralized vs. Decentralized Pipeline Architectures</h3><p id="246afc51-2b04-80c4-b2b1-fcc44809326b" class="">We implemented <strong>two distinct pipeline designs</strong>:</p><h3 id="246afc51-2b04-80eb-985b-dde6b02b33ee" class="">1. <strong>Centralized Design</strong> (Baseline)</h3><figure id="246afc51-2b04-808e-86ed-dfef9482912a" class="image"><a href="%F0%9F%9A%80%20Accelerating%20Speculative%20Decoding%20in%20vLLM%20with%20P%20246afc512b04806d837ae38b6a1d7c68/pp1.png"><img style="width:709.984375px" src="%F0%9F%9A%80%20Accelerating%20Speculative%20Decoding%20in%20vLLM%20with%20P%20246afc512b04806d837ae38b6a1d7c68/pp1.png"/></a></figure><p id="246afc51-2b04-80c5-9326-edd08a0bf0dd" class="">In this version, the <code>EngineExecutor</code> orchestrates both:</p><ul id="246afc51-2b04-80ad-b439-c435e39a0b02" class="bulleted-list"><li style="list-style-type:disc">Request scheduling</li></ul><ul id="246afc51-2b04-80ff-8a97-e2e6d9f6e5a7" class="bulleted-list"><li style="list-style-type:disc">Inter-stage communication (via explicit send/receive)</li></ul><p id="246afc51-2b04-8068-bc4c-ff6d0d9538a2" class=""><strong>Pros</strong>:</p><ul id="246afc51-2b04-8047-96c2-d559be42d9b3" class="bulleted-list"><li style="list-style-type:disc">Easier to debug</li></ul><ul id="246afc51-2b04-808d-bb41-ec5498a367e0" class="bulleted-list"><li style="list-style-type:disc">Ensures correct routing and backpressure control</li></ul><p id="246afc51-2b04-8023-9433-f5fef808734a" class=""><strong>Cons</strong>:</p><ul id="246afc51-2b04-80e2-b9b2-c0cb97453c2f" class="bulleted-list"><li style="list-style-type:disc">Bottlenecked by centralized coordination</li></ul><ul id="246afc51-2b04-8098-b517-c4c8a0ea5185" class="bulleted-list"><li style="list-style-type:disc">Higher latency due to repeated roundtrips through executor</li></ul><p id="246afc51-2b04-80a2-a655-cacf7aec2fba" class="">This design was critical for validating model partitioning and verifying inter-stage KV cache integrity.</p><h3 id="246afc51-2b04-80bd-ab99-dae9730ed8c3" class="">2. <strong>Decentralized Design</strong> (Optimized)</h3><figure id="246afc51-2b04-8013-adcf-f90906d0a6e6" class="image"><a href="%F0%9F%9A%80%20Accelerating%20Speculative%20Decoding%20in%20vLLM%20with%20P%20246afc512b04806d837ae38b6a1d7c68/pp2.png"><img style="width:709.984375px" src="%F0%9F%9A%80%20Accelerating%20Speculative%20Decoding%20in%20vLLM%20with%20P%20246afc512b04806d837ae38b6a1d7c68/pp2.png"/></a></figure><p id="246afc51-2b04-8018-a1b3-c7a3688ae95d" class="">In this optimized version:</p><ul id="246afc51-2b04-80e0-b2a0-fdbb2a8743b1" class="bulleted-list"><li style="list-style-type:disc">Once a batch is scheduled, it is <strong>broadcast asynchronously</strong> to all pipeline stages</li></ul><ul id="246afc51-2b04-8036-9cbb-efac2973aebd" class="bulleted-list"><li style="list-style-type:disc">Stages <strong>communicate directly</strong> using async collective RPCs (e.g., via NCCL, Gloo)</li></ul><p id="246afc51-2b04-80ba-abd6-edf72e4b12f6" class=""><strong>Benefits</strong>:</p><ul id="246afc51-2b04-8031-bcab-d464a53bcd49" class="bulleted-list"><li style="list-style-type:disc">Removes executor bottleneck</li></ul><ul id="246afc51-2b04-8036-a16e-d9007818b8b7" class="bulleted-list"><li style="list-style-type:disc">Reduces unnecessary communication</li></ul><ul id="246afc51-2b04-80ff-a416-d87004b2101c" class="bulleted-list"><li style="list-style-type:disc">Enables better pipeline saturation</li></ul><p id="246afc51-2b04-8009-9216-f1d3c8d0fcd5" class="">We also implemented:</p><ul id="246afc51-2b04-80a3-b5d2-fa774825409a" class="bulleted-list"><li style="list-style-type:disc"><strong>Asynchronous request tracking</strong> (avoiding duplicate scheduling)</li></ul><ul id="246afc51-2b04-807a-a6f1-d219659927ca" class="bulleted-list"><li style="list-style-type:disc"><strong>Batch memory tracking</strong> for cache reuse and state management</li></ul><p id="246afc51-2b04-8074-88c4-ebaa4e8033cc" class="">This design <strong>significantly lowered inference latency</strong> in our benchmarks and demonstrated scalability to 4+ pipeline stages.</p><hr id="246afc51-2b04-8050-ab4c-d2843599605f"/><h3 id="246afc51-2b04-8040-ba66-f2921dd009f1" class="">🧠 Speculative Decoding with Pipeline Parallelism</h3><p id="246afc51-2b04-8069-8b35-eec35198fd4b" class="">Integrating speculative decoding into a pipelined system was non-trivial. EAGLE3 requires:</p><ul id="246afc51-2b04-80ab-b14b-c397f849061f" class="bulleted-list"><li style="list-style-type:disc">Hidden states from specific <strong>intermediate layers</strong> (e.g., layers 2, 19, 29 in LLaMA3.1-8B)</li></ul><ul id="246afc51-2b04-8069-a3dc-fd347a864fd7" class="bulleted-list"><li style="list-style-type:disc">A <strong>drafter model</strong> that uses embeddings and partial logits to propose draft tokens</li></ul><ul id="246afc51-2b04-80ff-a360-c722544a8b6c" class="bulleted-list"><li style="list-style-type:disc">A <strong>rejection sampler</strong> that rescans the draft tokens with the full model</li></ul><p id="246afc51-2b04-800e-9171-c0b9a6cf40c9" class="">We evaluated <strong>two placement strategies</strong> for the drafter model:</p><h3 id="246afc51-2b04-8097-99df-df1c5dfbb837" class="">Option 1: Drafter at First Stage</h3><ul id="246afc51-2b04-8005-a1b2-c3980d2798b2" class="bulleted-list"><li style="list-style-type:disc">Natural pipeline: drafter → verifier</li></ul><ul id="246afc51-2b04-8062-9019-c531c5824211" class="bulleted-list"><li style="list-style-type:disc">But: vLLM couples drafter with rejection sampler tightly</li></ul><ul id="246afc51-2b04-80c4-8534-e0f533c77e62" class="bulleted-list"><li style="list-style-type:disc">Result: final logits from last stage must be sent back to first stage → <strong>costly feedback loop</strong></li></ul><h3 id="246afc51-2b04-803b-ab97-e3cf8ca5f8e2" class="">✅ Option 2: Drafter at Final Stage</h3><ul id="246afc51-2b04-8060-b156-e6d16accf9af" class="bulleted-list"><li style="list-style-type:disc">Drafter colocated with verifier logits</li></ul><ul id="246afc51-2b04-80a2-9b5d-da44f1adbe54" class="bulleted-list"><li style="list-style-type:disc">Fewer feedback hops → <strong>less communication overhead</strong></li></ul><ul id="246afc51-2b04-8012-98cb-c36a41461c25" class="bulleted-list"><li style="list-style-type:disc">Need a <strong>separate copy of embedding layer</strong>, but it&#x27;s tiny (~1% of model size)</li></ul><p id="246afc51-2b04-80d7-a94b-c16fdd635cb0" class="">Additionally, to support EAGLE3’s need for mid-layer activations, we:</p><ul id="246afc51-2b04-80a0-b6df-e6dbfe2ee640" class="bulleted-list"><li style="list-style-type:disc"><strong>Captured hidden states during forward pass</strong> at layers 2/19/29</li></ul><ul id="246afc51-2b04-8069-8936-f09b01ab2f82" class="bulleted-list"><li style="list-style-type:disc"><strong>Forwarded them to the last stage</strong> via shared memory or async send</li></ul><ul id="246afc51-2b04-8036-abdd-e370665deb41" class="bulleted-list"><li style="list-style-type:disc"><strong>Buffered them for speculative decoding</strong> without affecting verification</li></ul><p id="246afc51-2b04-80b3-ab51-f96e4a010078" class="">This required precise control over:</p><ul id="246afc51-2b04-8087-b128-d9c054d7fd66" class="bulleted-list"><li style="list-style-type:disc">Layer partitioning</li></ul><ul id="246afc51-2b04-80f2-a93f-e46a6f8f91f3" class="bulleted-list"><li style="list-style-type:disc">Memory allocation</li></ul><ul id="246afc51-2b04-8093-a9e0-e91c98d3c8b7" class="bulleted-list"><li style="list-style-type:disc">Inter-stage synchronization (without stalling the pipeline)</li></ul><figure id="246afc51-2b04-80b9-9989-f3c5b164a770" class="image"><a href="%F0%9F%9A%80%20Accelerating%20Speculative%20Decoding%20in%20vLLM%20with%20P%20246afc512b04806d837ae38b6a1d7c68/pp-drafter-design.png"><img style="width:391px" src="%F0%9F%9A%80%20Accelerating%20Speculative%20Decoding%20in%20vLLM%20with%20P%20246afc512b04806d837ae38b6a1d7c68/pp-drafter-design.png"/></a></figure><hr id="246afc51-2b04-80d9-a1a4-fe1a1e31a545"/><h3 id="246afc51-2b04-80c8-b5e0-d39a233c6eca" class="">🔄 Async Pipeline Saturation</h3><p id="246afc51-2b04-8058-9878-f0f0b797404b" class="">To fully utilize all pipeline stages, we extended the executor and scheduler to support <strong>multi-batch execution</strong>:</p><ul id="246afc51-2b04-8014-9413-ef17da9dd56a" class="bulleted-list"><li style="list-style-type:disc">Scheduler: Tracks requests already in-flight; avoids re-scheduling</li></ul><ul id="246afc51-2b04-808f-a0b1-c0b3e10b9217" class="bulleted-list"><li style="list-style-type:disc">Executor: Uses async message passing and futures to avoid blocking</li></ul><ul id="246afc51-2b04-80ae-86c9-c7c45c85568c" class="bulleted-list"><li style="list-style-type:disc">Workers: Ready to process next batch as soon as upstream output is available</li></ul><p id="246afc51-2b04-80f6-addb-d0e77a6b6798" class="">This dramatically improved throughput <strong>once multiple batches were queued</strong>, especially for long sequences or low acceptance rates in speculative decoding.</p><hr id="246afc51-2b04-80a3-a0c1-c6e4e2be6591"/><h3 id="246afc51-2b04-80b6-b06c-c21b36f88232" class="">🧪 Summary of Design Insights</h3><table id="246afc51-2b04-80b7-957a-fb453a2ae557" class="simple-table"><thead class="simple-table-header"><tr id="246afc51-2b04-8085-bae8-f354e68e7bce"><th id="saTc" class="simple-table-header-color simple-table-header">Feature</th><th id="^Q&lt;@" class="simple-table-header-color simple-table-header">Challenge</th><th id="F}Jf" class="simple-table-header-color simple-table-header">Our Solution</th></tr></thead><tbody><tr id="246afc51-2b04-80da-891b-fa2b727f96a3"><td id="saTc" class="">Pipeline parallelism</td><td id="^Q&lt;@" class="">Blocking communication</td><td id="F}Jf" class="">Decentralized, async messaging</td></tr><tr id="246afc51-2b04-80ba-84db-c39be0f7e52d"><td id="saTc" class="">Speculative decoding</td><td id="^Q&lt;@" class="">Feedback loop + activations</td><td id="F}Jf" class="">Drafter at last stage + mid-layer capture</td></tr><tr id="246afc51-2b04-809a-b841-f368f4432f43"><td id="saTc" class="">Drafter placement</td><td id="^Q&lt;@" class="">Embedding reuse</td><td id="F}Jf" class="">Copy lightweight embedding layer</td></tr><tr id="246afc51-2b04-804f-9125-f4622252150d"><td id="saTc" class="">Batch saturation</td><td id="^Q&lt;@" class="">In-flight duplication</td><td id="F}Jf" class="">Asynchronous scheduler + batch memory tracking</td></tr></tbody></table><hr id="246afc51-2b04-80bc-bfe7-f66c6e153abe"/><p id="246afc51-2b04-8040-a9f6-f0fe3afb6bcd" class="">This system design demonstrates not only the feasibility of combining speculative decoding with pipeline parallelism—but also the <strong>engineering effort required</strong> to make it performant, modular, and compatible with evolving LLM architectures like EAGLE3.</p><p id="246afc51-2b04-80ca-b9a2-d0ed03e79a74" class="">Would you like a visual system diagram or architecture flowchart to include alongside this blog section?</p><p id="246afc51-2b04-8064-aba1-f61748ddb935" class="">
+</p><p id="246afc51-2b04-80ad-bf49-d75a7597aefa" class="">
+</p><hr id="246afc51-2b04-8007-bc88-fe6dead1d1e5"/><h2 id="246afc51-2b04-8007-b3c1-c8d1c0799606" class="">📊 Key Results</h2><p id="246afc51-2b04-80d9-9e35-d08584e696ff" class="">We benchmarked our implementation using:</p><ul id="246afc51-2b04-80b1-a067-f3a03f168fa2" class="bulleted-list"><li style="list-style-type:disc"><strong>LLaMA-3.1 8B and 70B models</strong></li></ul><ul id="246afc51-2b04-8049-bb11-f767c194bff8" class="bulleted-list"><li style="list-style-type:disc"><strong>MT-Bench</strong>, <strong>HumanEval</strong>, <strong>GSM8K</strong>, <strong>Alpaca</strong>, and <strong>CNN/DailyMail</strong> datasets</li></ul><ul id="246afc51-2b04-805c-8f6d-d690e0d27cff" class="bulleted-list"><li style="list-style-type:disc"><strong>vLLM 0.8.5</strong>, <strong>Torch 2.6</strong>, <strong>CUDA 12.2</strong>, on 8x H100 GPUs</li></ul><h3 id="246afc51-2b04-80a1-964c-eef803eb3674" class="">🚀 Speculative Decoding + Pipeline Parallelism</h3><table id="246afc51-2b04-8015-8978-cceb058b4b98" class="simple-table"><thead class="simple-table-header"><tr id="246afc51-2b04-801e-a480-d8c66c80dccc"><th id="RmEn" class="simple-table-header-color simple-table-header">Setup</th><th id="NIFm" class="simple-table-header-color simple-table-header">Acceptance Rate</th><th id="]:NL" class="simple-table-header-color simple-table-header">Avg Accepted Length</th><th id="&gt;m`@" class="simple-table-header-color simple-table-header">Throughput</th><th id="&gt;hky" class="simple-table-header-color simple-table-header">Latency</th></tr></thead><tbody><tr id="246afc51-2b04-8000-9745-f73f6e59085c"><td id="RmEn" class="">LLaMA-8B + Eagle3 (1D, 1P, 1T)</td><td id="NIFm" class="">0.51</td><td id="]:NL" class="">3.34</td><td id="&gt;m`@" class="">11.7k tok/s</td><td id="&gt;hky" class="">1.37s</td></tr><tr id="246afc51-2b04-8013-9b9d-df765225c0b5"><td id="RmEn" class="">LLaMA-8B + Eagle3 (1D, 2P, 2T)</td><td id="NIFm" class="">0.51</td><td id="]:NL" class="">3.33</td><td id="&gt;m`@" class="">15.5k tok/s</td><td id="&gt;hky" class="">1.91s</td></tr></tbody></table><ul id="246afc51-2b04-8075-883c-d4cab8531c6f" class="bulleted-list"><li style="list-style-type:disc">EAGLE3 consistently outperforms EAGLE1 in both acceptance rate and length.</li></ul><ul id="246afc51-2b04-80f8-92dc-ef7416958e2b" class="bulleted-list"><li style="list-style-type:disc">Even with increased pipeline stages, speculative decoding retains performance.</li></ul><ul id="246afc51-2b04-80fc-8531-f8ec6cb518c0" class="bulleted-list"><li style="list-style-type:disc">Latency remains lowest at small batch sizes—validating Eagle3’s design.</li></ul><h3 id="246afc51-2b04-8060-a137-d5d926c1736c" class="">🔁 3D Parallelism Insights</h3><table id="246afc51-2b04-80a2-babd-e3378aa7b25b" class="simple-table"><thead class="simple-table-header"><tr id="246afc51-2b04-80e2-9f77-ec9497002039"><th id="i_Dk" class="simple-table-header-color simple-table-header">Model</th><th id="Kec{" class="simple-table-header-color simple-table-header">Data</th><th id="IrIc" class="simple-table-header-color simple-table-header">Pipeline</th><th id="wvst" class="simple-table-header-color simple-table-header">Tensor</th><th id="n\rI" class="simple-table-header-color simple-table-header">Best Config</th></tr></thead><tbody><tr id="246afc51-2b04-80b8-9554-fc9b895b08d6"><td id="i_Dk" class="">8B</td><td id="Kec{" class="">✅</td><td id="IrIc" class="">✅</td><td id="wvst" class="">✅</td><td id="n\rI" class="">(1D, 1P, 8T)</td></tr><tr id="246afc51-2b04-804b-beb4-f42238e2d288"><td id="i_Dk" class="">70B</td><td id="Kec{" class="">❌</td><td id="IrIc" class="">✅</td><td id="wvst" class="">✅</td><td id="n\rI" class="">(1D, 1P, 8T)</td></tr></tbody></table><ul id="246afc51-2b04-800d-bcae-c14448546e7a" class="bulleted-list"><li style="list-style-type:disc"><strong>Tensor parallelism</strong> is the most effective strategy for intra-node setups due to fast NVLink collective operations.</li></ul><ul id="246afc51-2b04-80df-a95c-d3c7187f123b" class="bulleted-list"><li style="list-style-type:disc"><strong>Data parallelism</strong>, surprisingly, suffers from CPU contention and can hurt performance without careful thread management.</li></ul><ul id="246afc51-2b04-8092-9194-c66f9653f398" class="bulleted-list"><li style="list-style-type:disc"><strong>Pipeline parallelism</strong> alone provides limited gains unless combined with async scheduling.</li></ul><hr id="246afc51-2b04-8079-bc5a-d198e7dbd1f5"/><h2 id="246afc51-2b04-805c-bfe6-ef4a9a56a176" class="">💡 Takeaways</h2><ul id="246afc51-2b04-807c-9429-d610e923ceea" class="bulleted-list"><li style="list-style-type:disc"><strong>Speculative decoding and pipeline parallelism are compatible</strong>—but require thoughtful system-level design.</li></ul><ul id="246afc51-2b04-807c-9d9d-e0a211590066" class="bulleted-list"><li style="list-style-type:disc">For <strong>large models</strong>, pipeline + tensor parallelism is necessary to enable inference at all.</li></ul><ul id="246afc51-2b04-801d-8708-e12c1b91693c" class="bulleted-list"><li style="list-style-type:disc">For <strong>small models</strong>, intra-node tensor parallelism often gives the best speedup.</li></ul><ul id="246afc51-2b04-80ac-a1e6-c833eedec5bb" class="bulleted-list"><li style="list-style-type:disc">NVLink enables <strong>super-efficient collective ops</strong>, making tensor parallelism highly favorable in single-node setups.</li></ul><ul id="246afc51-2b04-80f8-adbc-ee8828bf950d" class="bulleted-list"><li style="list-style-type:disc">With more fine-tuning (e.g., fixing CPU contention in DP), multi-strategy hybrid setups may perform even better.</li></ul><hr id="246afc51-2b04-809e-8592-d6e5736218d7"/><h2 id="246afc51-2b04-809e-b828-f9a343fc4303" class="">🧪 Try It Yourself</h2><p id="246afc51-2b04-8058-a653-cb67f9f8bbd8" class="">We are preparing a public release of our code with detailed docs and examples. Our goal is to upstream the changes to vLLM once we complete additional validation.</p><p id="246afc51-2b04-80e5-9c23-d2a0dae32aea" class="">Stay tuned on GitHub!</p><hr id="246afc51-2b04-8051-8a90-dbc0d488d8c8"/><h2 id="246afc51-2b04-80bb-8fc1-fa43d61d6ebb" class="">📚 References</h2><p id="246afc51-2b04-80f2-b94a-d34e83f6bf10" class="">This work builds upon prior research and tooling:</p><ul id="246afc51-2b04-80ef-9532-fe500cf20712" class="bulleted-list"><li style="list-style-type:disc"><a href="https://github.com/vllm-project/vllm">vLLM</a></li></ul><ul id="246afc51-2b04-806c-89d7-c285a339ce85" class="bulleted-list"><li style="list-style-type:disc"><a href="https://arxiv.org/abs/2403.18997">Eagle-3: Scaling Speculative Decoding</a></li></ul><ul id="246afc51-2b04-80fb-b896-fcf484038a3f" class="bulleted-list"><li style="list-style-type:disc"><a href="https://arxiv.org/abs/2309.00541">PagedAttention</a></li></ul><ul id="246afc51-2b04-8096-ab4b-c4577777465f" class="bulleted-list"><li style="list-style-type:disc"><a href="https://arxiv.org/abs/2402.17764">Medusa</a></li></ul><hr id="246afc51-2b04-802f-946e-f0f3cae91d5e"/><h2 id="246afc51-2b04-8075-8a1c-defe61368e70" class="">🔧 Acknowledgements</h2><p id="246afc51-2b04-802c-9ffb-c2ee06b105bc" class="">We thank the maintainers of vLLM and the authors of EAGLE for their open-source work, which enabled our research. This project was completed using limited compute resources on a single node with 8x H100s and demonstrates what’s possible with careful engineering.</p><hr id="246afc51-2b04-8072-9a1c-d303726b0da3"/></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
